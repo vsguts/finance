@@ -1,0 +1,17 @@
+/messages/*/*.local.php
+/config/components/db.php
+/config/components/constants.php
+
+# composer
+/vendor
+composer.phar
+
+# node
+node_modules
+
+# Mac DS_Store Files
+.DS_Store
+
+# sublime project files
+*.sublime-*
+plog.log
