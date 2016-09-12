@@ -48,18 +48,19 @@ echo $form->field($model, 'timestamp')->widget('app\widgets\DatePicker', ['optio
     'id' => $form_id . '-timestamp',
 ]]);
 
-echo $form->field($model, 'account_id')->dropDownList(Account::find()->scroll(), [
+echo $form->field($model, 'account_id')->dropDownList(Account::find()->active($model->account_id)->scroll(), [
     'id' => $form_id . '-account_id',
     'class' => 'form-control app-select2',
 ]);
 
 echo $form->field($model, 'classification_id')->dropDownList(Classification::find()->inout()->scroll(), [
     'id' => $form_id . '-classification_id',
-    'class' => 'app-classification form-control',
+    'class' => 'form-control app-classification app-select2',
 ]);
 
 echo $form->field($model, 'counterparty_id')->dropDownList(Counterparty::find()->scroll(['empty' => true]), [
     'id' => $form_id . '-counterparty_id',
+    'class' => 'form-control app-select2',
 ]);
 
 

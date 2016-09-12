@@ -3,10 +3,25 @@
 namespace app\models\query;
 
 use Yii;
+use app\models\Account;
 
 class AccountQuery extends ActiveQuery
 {
     protected $permission_included = false;
+
+    public function active($current_id = null)
+    {
+        $condition = ['status' => Account::STATUS_ACTIVE];
+        if ($current_id) {
+            $condition = [
+                'or',
+                $condition,
+                ['account.id' => $current_id],
+            ];
+        }
+
+        return $this->andWhere($condition);
+    }
 
     public function permission()
     {

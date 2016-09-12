@@ -72,6 +72,15 @@ $detailsLink = function($model) {
             ],
 
             [
+                'attribute' => 'status',
+                'value' => function($model, $key, $index, $column){
+                    if ($model->status) {
+                        return $model->getLookupItem('status', $model->status);
+                    }
+                },
+            ],
+
+            [
                 'class' => 'app\widgets\grid\CounterColumn',
                 'label' => __('Transactions'),
                 'modelClass' => 'app\models\Transaction',

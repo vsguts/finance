@@ -7,6 +7,8 @@ use app\models\query\AccountQuery;
 
 class Account extends AbstractModel
 {
+    const STATUS_ACTIVE = 'active';
+
     /**
      * @inheritdoc
      */
@@ -34,6 +36,7 @@ class Account extends AbstractModel
             [['currency_id', 'name'], 'required'],
             [['currency_id'], 'integer'],
             [['name', 'bank', 'account_number'], 'string', 'max' => 64],
+            [['status'], 'in', 'range' => ['active', 'disabled']],
             [['import_processor', 'notes'], 'string'],
             [['init_balance'], 'default', 'value' => 0],
             [['init_balance'], 'number'],
@@ -50,6 +53,7 @@ class Account extends AbstractModel
         return array_merge(parent::attributeLabels(), [
             'id' => __('ID'),
             'currency_id' => __('Currency'),
+            'status' => __('Status'), 
             'name' => __('Name'), 
             'bank' => __('Bank'),
             'account_number' => __('Account number'),

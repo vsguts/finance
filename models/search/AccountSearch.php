@@ -29,7 +29,7 @@ class AccountSearch extends Account
     {
         return [
             [['id', 'currency_id'], 'integer'],
-            [['name', 'bank', 'account_number', 'notes'], 'safe'],
+            [['status', 'name', 'bank', 'account_number', 'notes'], 'safe'],
         ];
     }
 
@@ -73,6 +73,7 @@ class AccountSearch extends Account
             'sort' => [
                 'defaultOrder' => [
                     'name' => SORT_ASC,
+                    'currency' => SORT_ASC,
                 ],
             ],
         ]);
@@ -96,6 +97,7 @@ class AccountSearch extends Account
         $query->andFilterWhere([
             'id' => $this->id,
             'currency_id' => $this->currency_id,
+            'status' => $this->status,
             'init_balance' => $this->init_balance,
         ]);
 

@@ -56,7 +56,7 @@ foreach ($templates as $template) {
                 ?>
             </div>
             <div class="btn-group">
-                <?= Html::a(__('Transfer'), ['transfer', '_return_url' => Url::to()], [
+                <?= Html::a(__('Create transfer'), ['transfer', '_return_url' => Url::to()], [
                     'class' => 'btn btn-success app-modal app-modal-force',
                     'data-target-id' => 'transaction_transfer',
                 ]) ?>

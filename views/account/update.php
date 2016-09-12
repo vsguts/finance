@@ -41,6 +41,10 @@ echo $form->field($model, 'name')->textInput([
     'id' => $form_id . '-name',
 ]);
 
+echo $form->field($model, 'status')->dropDownList($model->getLookupItems('status', ['empty' => true]), [
+    'id' => $form_id . '-status',
+]);
+
 echo $form->field($model, 'currency_id')->dropDownList(Currency::find()->scroll(), [
     'id' => $form_id . '-currency_id',
 ]);

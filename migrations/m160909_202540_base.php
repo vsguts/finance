@@ -29,6 +29,8 @@ class m160909_202540_base extends Migration
         $this->insert('lookup', ['table'=>'classification', 'field'=>'type', 'position'=>20, 'code'=>'outflow', 'name'=>'Outflow']);
         $this->insert('lookup', ['table'=>'classification', 'field'=>'type', 'position'=>30, 'code'=>'transfer', 'name'=>'Transfer']);
         $this->insert('lookup', ['table'=>'classification', 'field'=>'type', 'position'=>40, 'code'=>'conversion', 'name'=>'Currency conversion']);
+        $this->insert('lookup', ['table'=>'account', 'field'=>'status', 'code'=>'active', 'name'=>'Active']);
+        $this->insert('lookup', ['table'=>'account', 'field'=>'status', 'code'=>'disabled', 'name'=>'Disabled']);
         $this->insert('lookup', ['table'=>'account', 'field'=>'import_processor', 'code'=>'custom', 'name'=>'Custom']);
         $this->insert('lookup', ['table'=>'account', 'field'=>'import_processor', 'code'=>'inexfinance', 'name'=>'Inexfinance Dirty']);
 
@@ -119,6 +121,7 @@ class m160909_202540_base extends Migration
         $this->createTable('account', [
             'id' => $this->primaryKey(),
             'currency_id' => $this->integer()->notNull(),
+            'status' => "enum('active', 'disabled') not null default 'active'",
             'name' => $this->string(64)->notNull(),
             'bank' => $this->string(64),
             'account_number' => $this->string(64),

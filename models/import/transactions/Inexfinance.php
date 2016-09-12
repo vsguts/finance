@@ -22,7 +22,7 @@ class Inexfinance extends AbstractProvider
 
     public function prepareData($data)
     {
-        // $this->importAccounts($data['resources']);
+        $this->importAccounts($data['resources']);
         // $this->importClassifications($data['categories']);
         $this->prepareItems($data['items']);
         $this->importTransactions($data['transactions']);

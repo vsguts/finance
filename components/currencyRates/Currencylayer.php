@@ -28,16 +28,18 @@ class Currencylayer extends AbstractCurrencyRate
             ]);
             $response = file_get_contents($link);
             $data = json_decode($response, true);
-            foreach ($data['quotes'] as $code => $rate) {
-                $code = substr($code, 3);
-                if ($currency_id = $this->currency->getCurrencyId($code)) {
-                    $result[] = [
-                        'year' => $date['year'],
-                        'month' => $date['month'],
-                        'day' => $date['day'],
-                        'currency_id' => $currency_id,
-                        'rate' => $rate,
-                    ];
+            if (!empty($data['quotes'])) {
+                foreach ($data['quotes'] as $code => $rate) {
+                    $code = substr($code, 3);
+                    if ($currency_id = $this->currency->getCurrencyId($code)) {
+                        $result[] = [
+                            'year' => $date['year'],
+                            'month' => $date['month'],
+                            'day' => $date['day'],
+                            'currency_id' => $currency_id,
+                            'rate' => $rate,
+                        ];
+                    }
                 }
             }
             
