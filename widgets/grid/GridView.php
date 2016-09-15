@@ -27,7 +27,7 @@ class GridView extends YGridView
         parent::init();
         
         if ($this->ajaxPager) {
-            $this->pager['resultIds'] = $this->id;
+            $this->pager['targetId'] = $this->id;
         }
     }
 

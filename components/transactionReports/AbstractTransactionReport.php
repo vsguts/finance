@@ -32,8 +32,7 @@ abstract class AbstractTransactionReport extends Object
                 ->permission()
                 ->joinWith(['currency'])
                 ->orderBy([
-                    'bank' => SORT_ASC,
-                    'account_number' => SORT_ASC,
+                    'name' => SORT_ASC,
                     'currency.code' => SORT_ASC,
                 ])
                 ->indexBy('id')

@@ -3,7 +3,7 @@
 namespace app\models\import\transactions;
 
 use Yii;
-use app\models\BankTransaction;
+use app\models\Transaction;
 
 /**
  * Custom import schema
@@ -27,13 +27,13 @@ class Custom extends AbstractProvider
     {
         $uniqid = $this->getUniqid($data, ['Date', 'Value', 'Balance', 'Reference', 'Description']);
 
-        $transaction = BankTransaction::find()->where([
+        $transaction = Transaction::find()->where([
             'account_id' => $this->account->id,
             'uniqid' => $uniqid,
         ])->one();
         
         if (!$transaction) {
-            $transaction = new BankTransaction;
+            $transaction = new Transaction;
             $transaction->account_id = $this->account->id;
             $transaction->uniqid = $uniqid;
         }

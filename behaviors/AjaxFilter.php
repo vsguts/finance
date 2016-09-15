@@ -14,7 +14,7 @@ class AjaxFilter extends ActionFilter
 
     public function beforeAction($action)
     {
-        if (Yii::$app->getRequest()->getIsAjax()) {
+        if ($this->getIsAjax()) {
             $this->ajaxMode = true;
         }
         return parent::beforeAction($action);
@@ -31,9 +31,9 @@ class AjaxFilter extends ActionFilter
                     'html' => $res,
                 ]);
                 
-                if (!empty($_REQUEST['result_ids'])) {
-                    $result_ids = explode(',', $_REQUEST['result_ids']);
-                    $this->ajaxVars['html'] = $dom->getElementByIds($result_ids);
+                if (!empty($_REQUEST['target_id'])) {
+                    $target_id = explode(',', $_REQUEST['target_id']);
+                    $this->ajaxVars['html'] = $dom->getElementByIds($target_id);
                 }
 
                 list($scripts, $src) = $dom->getScripts();
@@ -68,6 +68,11 @@ class AjaxFilter extends ActionFilter
         if ($this->ajaxMode && isset($this->ajaxVars[$name])) {
             return $this->ajaxVars[$name];
         }
+    }
+
+    public function getIsAjax()
+    {
+        return Yii::$app->getRequest()->getIsAjax();
     }
 
 }

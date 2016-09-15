@@ -8,16 +8,16 @@ use yii\bootstrap\ButtonDropdown;
 
 class Pager extends LinkPager
 {
-    public $resultIds = '';
+    public $targetId = '';
 
     public function init()
     {
         parent::init();
 
         // Enable ajax
-        if ($this->resultIds) {
+        if ($this->targetId) {
             $this->linkOptions['class'] = 'app-ajax';
-            $this->linkOptions['data-result-ids'] = $this->resultIds;
+            $this->linkOptions['data-target-id'] = $this->targetId;
         }
     }
 

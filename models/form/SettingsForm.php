@@ -21,6 +21,7 @@ class SettingsForm extends Model
     public $poweredBy;
     public $adminEmail;
     public $supportEmail;
+    public $defaultCurrency;
     
     public $mainpage_description;
     public $aboutpage_description;
@@ -77,6 +78,9 @@ class SettingsForm extends Model
             'poweredBy' => __('Powered by'),
             'adminEmail' => __('Admin email'),
             'supportEmail' => __('Support email'),
+            'defaultCurrency' => __('Default currency'),
+            
+            // Descriptions
             'mainpage_description' => __('Main page'),
             'aboutpage_description' => __('About page'),
             'faqpage_description' => __('FAQ'),

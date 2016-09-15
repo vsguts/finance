@@ -13,6 +13,7 @@ $formatter = Yii::$app->formatter;
     <thead>
         <tr>
             <th><?= __('Account') ?></th>
+            <th><?= __('Currency') ?></th>
             <th align="center"><?= __('Transactions') ?></th>
             <th align="right"><?= __('Opening balance') ?></th>
             <th align="right"><?= __('Inflow') ?></th>
@@ -34,7 +35,8 @@ $formatter = Yii::$app->formatter;
             ?>
 
             <tr>
-                <td><?= $row['account']->fullName ?></td>
+                <td><?= $row['account']->name ?></td>
+                <td><?= $row['account']->currency->code ?></td>
                 <td align="center">
                     <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $row['transactions'] ?></span></a>
                 </td>

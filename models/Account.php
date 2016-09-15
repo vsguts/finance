@@ -36,6 +36,7 @@ class Account extends AbstractModel
             [['currency_id', 'name'], 'required'],
             [['currency_id'], 'integer'],
             [['name', 'bank', 'account_number'], 'string', 'max' => 64],
+            [['status'], 'default', 'value' => 'active'],
             [['status'], 'in', 'range' => ['active', 'disabled']],
             [['import_processor', 'notes'], 'string'],
             [['init_balance'], 'default', 'value' => 0],

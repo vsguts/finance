@@ -43,7 +43,7 @@ $(document).on('click', function(e) {
         $.appAjax('request', jelm.attr('href'), {
             method: jelm.data('appMethod') || 'get',
             data: {
-                result_ids: jelm.data('appResultIds'),
+                target_id: jelm.data('appTargetId'),
             },
         });
         return false;
@@ -64,7 +64,7 @@ $(document).on('click', function(e) {
             if (href.length) {
                 $.appAjax('request', href, {
                     data: {
-                        result_ids: target_id,
+                        target_id: target_id,
                     },
                     callback: function(data){
                         if (data.html && data.html[target_id]) {
@@ -150,7 +150,7 @@ $(document).on('submit', function(e) {
 
                 // Open another modal if need
                 if (form.hasClass('app-modal')) {
-                    var target_id = form.find('input[name="result_ids"]').val(),
+                    var target_id = form.find('input[name="target_id"]').val(),
                         target = $('#' + target_id);
                     
                     if (target.length) {
