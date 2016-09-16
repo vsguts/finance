@@ -30,11 +30,24 @@ $detailsLink = function($model) {
         <?= ActionsDropdown::widget([
             'layout' => 'info',
             'items' => [
-                ['label' => __('Delete'), 'url' => Url::to(['delete']), 'linkOptions' => [
-                    'data-app-process-items' => 'id',
-                    'data-confirm' => __('Are you sure you want to delete this item?'),
-                    'data-method' => 'post',
-                ]],
+                [
+                    'label' => __('Recalculate transaction balances'),
+                    'url' => Url::to(['transaction/recalculate-balance', '_return_url' => Url::to()]),
+                    'linkOptions' => [
+                        'data-app-process-items' => 'account_id',
+                        'data-confirm' => __('Are you sure you want to recalculate transaction balances of these items?'),
+                        'data-method' => 'post',
+                    ]
+                ],
+                [
+                    'label' => __('Delete selected'),
+                    'url' => Url::to(['delete']),
+                    'linkOptions' => [
+                        'data-app-process-items' => 'id',
+                        'data-confirm' => __('Are you sure you want to delete this item?'),
+                        'data-method' => 'post',
+                    ]
+                ],
             ],
         ]) ?>
     </div>

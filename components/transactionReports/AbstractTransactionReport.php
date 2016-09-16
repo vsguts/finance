@@ -74,7 +74,10 @@ abstract class AbstractTransactionReport extends Object
                     ['account_id' => $account_id],
                     ['<', 'timestamp', $this->timestamp],
                 ])
-                ->orderBy(['timestamp' => SORT_DESC])
+                ->orderBy([
+                    'timestamp' => SORT_DESC,
+                    'id' => SORT_DESC,
+                ])
                 ->limit(1)
                 ->one();
         }

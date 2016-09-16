@@ -27,6 +27,7 @@ class TransactionController extends AbstractController
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'recalculate-balance' => ['POST'],
                 ],
             ],
             'access' => [
@@ -230,11 +231,10 @@ class TransactionController extends AbstractController
 
     /**
      * Recalculate balances of Transaction model.
-     * @param integer $account_id Bank Account ID
-     * @param string  $scenario        Scenario
+     * @param mixed $account_id Bank Account ID(s)
      * @return 302
      */
-    public function actionRecalculateBalance($account_id)
+    public function actionRecalculateBalance(array $account_id)
     {
         $this->recalculateBalance($account_id);
         return $this->redirect(['index']);
