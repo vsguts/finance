@@ -25,6 +25,7 @@ class CounterpartyTurnovers extends AbstractTransactionReport
         ];
 
         $data = $template;
+        $data['counterparties'] = [];
 
         foreach ($this->getCounterparties() as $counterparty) {
             $data['counterparties'][$counterparty->id]['counterparty'] = $counterparty;

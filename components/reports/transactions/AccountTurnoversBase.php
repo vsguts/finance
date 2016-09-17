@@ -27,6 +27,7 @@ class AccountTurnoversBase extends AbstractTransactionReport
                 'transactions' => 0,
                 'difference' => 0,
             ],
+            'accounts' => [],
         ];
 
         foreach ($this->getAccounts() as $account) {

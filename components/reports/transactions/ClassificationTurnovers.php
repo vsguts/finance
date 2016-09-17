@@ -25,6 +25,7 @@ class ClassificationTurnovers extends AbstractTransactionReport
         ];
 
         $data = $template;
+        $data['classifications'] = [];
 
         foreach ($this->getClassifications() as $classification) {
             $data['classifications'][$classification->id]['classification'] = $classification;

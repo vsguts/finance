@@ -15,7 +15,9 @@ class AccountTurnovers extends AbstractTransactionReport
 
     public function execute()
     {
-        $data = [];
+        $data = [
+            'accounts' => [],
+        ];
 
         foreach ($this->getAccounts() as $account) {
             $data['accounts'][$account->id] = [
