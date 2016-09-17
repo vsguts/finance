@@ -1,13 +1,17 @@
 <?php
 
-namespace app\components\transactionReports;
+namespace app\components\reports\transactions;
 
 use Yii;
 use yii\base\Object;
 
 class BalanceDynamics extends AbstractTransactionReport
 {
-    public $report_name = 'Balance dynamics';
+
+    public function getReportName()
+    {
+        return __('Balance dynamics');
+    }
 
     public function execute()
     {

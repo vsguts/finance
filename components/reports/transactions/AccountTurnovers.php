@@ -1,13 +1,17 @@
 <?php
 
-namespace app\components\transactionReports;
+namespace app\components\reports\transactions;
 
 use Yii;
 use yii\base\Object;
 
 class AccountTurnovers extends AbstractTransactionReport
 {
-    public $report_name = 'Account turnovers';
+
+    public function getReportName()
+    {
+        return __('Account turnovers');
+    }
 
     public function execute()
     {
@@ -55,8 +59,6 @@ class AccountTurnovers extends AbstractTransactionReport
     {
         return [
             'Name' => 'account.name',
-            'Bank' => 'account.bank',
-            'Account number' => 'account.account_number',
             'Currency' => 'account.currency.code',
             'Transactions' => 'transactions',
             'Opening balance' => 'opening_balance|simpleMoney',

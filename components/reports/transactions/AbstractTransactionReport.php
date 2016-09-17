@@ -1,27 +1,16 @@
 <?php
 
-namespace app\components\transactionReports;
+namespace app\components\reports\transactions;
 
 use Yii;
-use yii\base\Object;
+use app\components\reports\ReportAbstract;
 use app\models\Account;
+use app\models\Classification;
+use app\models\Counterparty;
 use app\models\Transaction;
 
-abstract class AbstractTransactionReport extends Object
+abstract class AbstractTransactionReport extends ReportAbstract
 {
-    public $timestamp;
-
-    public $timestamp_to;
-
-    abstract public function execute();
-
-    public function exportGetColumns()
-    {
-    }
-
-    public function exportPrepareData($data)
-    {
-    }
 
     protected $_accounts;
 
@@ -42,6 +31,34 @@ abstract class AbstractTransactionReport extends Object
         return $this->_accounts;
     }
 
+    protected $_classifications;
+
+    protected function getClassifications()
+    {
+        if (!$this->_classifications) {
+            $this->_classifications = Classification::find()
+                ->orderBy(['name' => SORT_ASC])
+                ->indexBy('id')
+                ->all();
+        }
+
+        return $this->_classifications;
+    }
+
+    protected $_counterparties;
+
+    protected function getCounterparties()
+    {
+        if (!$this->_counterparties) {
+            $this->_counterparties = Counterparty::find()
+                ->orderBy(['name' => SORT_ASC])
+                ->indexBy('id')
+                ->all();
+        }
+
+        return $this->_counterparties;
+    }
+
     protected $_transactions;
 
     protected function getTransactions()
@@ -56,7 +73,10 @@ abstract class AbstractTransactionReport extends Object
                     ['>=', 'timestamp', $this->timestamp],
                     ['<=', 'timestamp', $this->timestamp_to + SECONDS_IN_DAY - 1],
                 ])
-                ->orderBy(['timestamp' => SORT_ASC, 'id' => SORT_ASC])
+                ->orderBy([
+                    'timestamp' => SORT_ASC,
+                    'id' => SORT_ASC,
+                ])
                 ->all();
         }
 
@@ -83,53 +103,6 @@ abstract class AbstractTransactionReport extends Object
         }
 
         return $this->_previous_transactions[$account_id];
-    }
-
-    protected function getChartDateMask()
-    {
-        $diff = $this->timestamp_to - $this->timestamp;
-        if ($diff > 10 * 365 * SECONDS_IN_DAY) {
-            return 'Y'; // Year
-        } elseif ($diff > 10 * 30 * SECONDS_IN_DAY) {
-            return 'M Y'; // month
-        } else {
-            return 'd M'; // day
-        }
-    }
-
-    protected function prepareDatesByMask($mask)
-    {
-        $dates = [];
-
-        $timestamp = $this->timestamp;
-        while ($timestamp <= $this->timestamp_to) {
-            $date = date($mask, $timestamp);
-            if (!in_array($date, $dates)) {
-                $dates[] = $date;
-            }
-            $timestamp += SECONDS_IN_DAY;
-        }
-        return $dates;
-    }
-
-    protected function getBaseCurrencyRates()
-    {
-        $component = Yii::$app->currency;
-        
-        $base_currency_id = $component->getBaseCurrencyId();
-
-        $rates = [
-            'opening' => $component->getPeriodRates($this->timestamp, $this->timestamp),
-            'closing' => $component->getPeriodRates($this->timestamp_to, $this->timestamp_to),
-        ];
-        
-        foreach ($rates as $schema => $_rates) {
-            foreach ($_rates as $currency_id => $currency_rates) {
-                $rates[$schema][$currency_id] = $currency_rates[$base_currency_id];
-            }
-        }
-
-        return $rates;
     }
 
 }

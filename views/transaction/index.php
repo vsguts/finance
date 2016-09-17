@@ -125,6 +125,10 @@ foreach ($templates as $template) {
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'tableOptions' => ['class' => 'table table-striped table-bordered app-float-thead'],
+        'showFooter' => !empty($totals),
+        'footerRowOptions' => [
+            'class' => 'info',
+        ],
         'columns' => [
             ['class' => 'yii\grid\CheckboxColumn'],
 
@@ -190,11 +194,15 @@ foreach ($templates as $template) {
                 'attribute' => 'inflow',
                 'value' => 'inflowValue',
                 'contentOptions' => ['class' => 'nowrap text-success', 'align' => 'right'],
+                'footer' => !empty($totals) ? $totals['inflowValue'] : '',
+                'footerOptions' => ['class' => 'nowrap text-success', 'align' => 'right'],
             ],
             [
                 'attribute' => 'outflow',
                 'value' => 'outflowValue',
                 'contentOptions' => ['class' => 'nowrap text-danger', 'align' => 'right'],
+                'footer' => !empty($totals) ? $totals['outflowValue'] : '',
+                'footerOptions' => ['class' => 'nowrap text-danger', 'align' => 'right'],
             ],
             [
                 'attribute' => 'balance',

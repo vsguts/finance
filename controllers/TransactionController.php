@@ -81,6 +81,7 @@ class TransactionController extends AbstractController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'templates' => $templates,
+            'totals' => $searchModel->getTotals($dataProvider),
         ]);
     }
 

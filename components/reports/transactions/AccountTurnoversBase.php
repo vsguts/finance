@@ -1,13 +1,17 @@
 <?php
 
-namespace app\components\transactionReports;
+namespace app\components\reports\transactions;
 
 use Yii;
 use yii\base\Object;
 
 class AccountTurnoversBase extends AbstractTransactionReport
 {
-    public $report_name = 'Account turnovers in USD';
+
+    public function getReportName()
+    {
+        return __('Account turnovers in USD');
+    }
 
     public function execute()
     {
@@ -85,8 +89,6 @@ class AccountTurnoversBase extends AbstractTransactionReport
     {
         return [
             'Name' => 'account.name',
-            'Bank' => 'account.bank',
-            'Account number' => 'account.account_number',
             'Currency' => 'account.currency.code',
             'Base currency' => 'currency_code',
             'Opening exchange rate' => 'rate_open',

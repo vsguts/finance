@@ -3,8 +3,6 @@
 use yii\bootstrap\Tabs;
 use app\widgets\ActionsDropdown;
 
-/* @var $this yii\web\View */
-
 $this->title = __('Reports');
 $this->params['breadcrumbs'][] = ['label' => __('Bank transactions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -41,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('reports/components/search', ['model' => $searchModel]) ?>
+    <?= $this->render('/common/reports/search', ['model' => $searchModel]) ?>
 
     <?php
 
