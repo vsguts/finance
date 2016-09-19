@@ -39,12 +39,12 @@ echo $form->field($model, 'timestamp')->widget('app\widgets\DatePicker', ['optio
 
 echo $form->field($model, 'account_id_from')->dropDownList(Account::find()->active($model->account_id_from)->scroll(), [
     'id' => $form_id . '-account_id_from',
-    'class' => 'app-account form-control',
+    'class' => 'form-control app-account app-select2',
 ]);
 
 echo $form->field($model, 'account_id_to')->dropDownList(Account::find()->active($model->account_id_to)->scroll(), [
     'id' => $form_id . '-account_id_to',
-    'class' => 'app-account form-control',
+    'class' => 'form-control app-account app-select2',
 ]);
 
 // echo $form->field($model, 'classification_id')->dropDownList(Classification::find()->scroll(['empty' => true]), [
