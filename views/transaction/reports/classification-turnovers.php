@@ -10,7 +10,7 @@ $base_currency = Yii::$app->currency->getBaseCurrency();
 
 ?>
 
-<table class="table table-bordered app-float-thead">
+<table class="table table-condensed table-bordered table-hover table-highlighted app-float-thead">
     <thead>
         <tr class="va-middle">
             <th>

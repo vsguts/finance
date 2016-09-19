@@ -12,7 +12,7 @@ class GridView extends YGridView
 
     public $layout = "{pager}\n{items}\n{pager}";
     
-    public $tableOptions = ['class' => 'table table-striped'];
+    public $tableOptions = ['class' => 'table table-striped table-hover table-highlighted'];
 
     public $pager = [
         'class' => 'app\widgets\Pager',

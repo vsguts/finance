@@ -94,6 +94,16 @@ $(document).on('click', function(e) {
         }
     }
 
+    var elm = jelm.closest('.table-highlighted > tbody > tr');
+    if (elm.length) {
+        if (elm.hasClass('highlighted')) {
+            elm.removeClass('highlighted');
+        } else {
+            elm.closest('.table-highlighted').find('tr.highlighted').removeClass('highlighted');
+            elm.addClass('highlighted');
+        }
+    }
+
     // Grid
     var elm = jelm.closest('.app-grid-toggle');
     if (elm.length) {

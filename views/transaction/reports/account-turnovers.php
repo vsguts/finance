@@ -9,7 +9,7 @@ $formatter = Yii::$app->formatter;
 
 ?>
 
-<table class="table table-striped table-bordered app-float-thead">
+<table class="table table-condensed table-striped table-bordered table-hover table-highlighted app-float-thead">
     <thead>
         <tr>
             <th><?= __('Account') ?></th>

@@ -160,6 +160,9 @@ th[align="center"] {
 .table > tbody > tr.app-success > td {
     background-color: #c1e9c1;
 }
+.table-hover > tbody > tr:hover {
+    background-color: #e7e9f9;
+}
 .table {
     .table-section {
         background-color: #f3f3f3;
@@ -176,6 +179,11 @@ th[align="center"] {
                 padding-top: 3px;
                 padding-bottom: 3px;
             }
+        }
+    }
+    &.table-highlighted {
+        tr.highlighted {
+            background-color: #d6e9f8;
         }
     }
 }

@@ -124,7 +124,7 @@ foreach ($templates as $template) {
     
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'tableOptions' => ['class' => 'table table-striped table-bordered app-float-thead'],
+        'tableOptions' => ['class' => 'table table-condensed table-striped table-bordered table-hover table-highlighted app-float-thead'],
         'showFooter' => !empty($totals),
         'footerRowOptions' => [
             'class' => 'info',
