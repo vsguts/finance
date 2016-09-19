@@ -119,6 +119,14 @@ class Inexfinance extends AbstractProvider
                 if (!$to->save()) {
                     pd('Error saving to', $to->errors);
                 }
+                $from->related_id = $to->id;
+                $to->related_id = $from->id;
+                if (!$from->save()) {
+                    pd('Error saving from', $from->errors);
+                }
+                if (!$to->save()) {
+                    pd('Error saving to', $to->errors);
+                }
             } else {
                 pd('undefined mode', $item);
             }
@@ -164,21 +172,25 @@ class Inexfinance extends AbstractProvider
         return $classification[$direction];
     }
 
-    protected function getItemCounterparty($item)
+    protected $counterparties = [];
+
+    protected function getItemCounterparty(&$item)
     {
         if (!empty($item['cached_tag_list'])) {
             $tags = explode(',', $item['cached_tag_list']);
-            // Find counterparty by all tags
-            foreach ($tags as $tag) {
-                $counterparty = Counterparty::find()->where(['name' => $tag])->one();
-                if ($counterparty) {
-                    return $counterparty->id;
-                }
+            $first_tag = array_shift($tags);
+            if (!$this->counterparties) {
+                $this->counterparties = Counterparty::find()->indexBy('name')->all();
             }
-            // Create counterparty by first tag
-            $counterparty = new Counterparty;
-            $counterparty->name = reset($tags);
-            $counterparty->save();
+            if (!empty($this->counterparties[$first_tag])) {
+                $counterparty = $this->counterparties[$first_tag];
+            } else {
+                $counterparty = new Counterparty;
+                $counterparty->name = $first_tag;
+                $counterparty->save();
+                $this->counterparties[$counterparty->name] = $counterparty;
+            }
+            $item['cached_tag_list'] = implode(',', $tags); // Remove counterparty tag from tags list
             return $counterparty->id;
         }
         return null;
@@ -208,7 +220,7 @@ class Inexfinance extends AbstractProvider
         }
     }
 
-    protected function prepareItemComment($item)
+    protected function prepareItemComment(&$item)
     {
         $parts = [];
         if (!empty($item['comment'])) {
@@ -220,7 +232,7 @@ class Inexfinance extends AbstractProvider
         if (!empty($item['cached_tag_list'])) {
             $parts[] = sprintf("[tags] => %s", $item['cached_tag_list']);
         }
-        return implode("\n---\n", $parts);
+        return implode("\n", $parts);
     }
 
     protected function hashItems($items, $field = 'id')
