@@ -45,7 +45,7 @@ echo $form->field($model, 'name')->textInput([
 
 echo $form->field($model, 'category_id')->dropDownList(CounterpartyCategory::find()->scroll(['empty' => true]), [
     'id' => $obj_id . '-category_id',
-    'class' => ['form-control', 'app-dtoggle', 'app-dtoggle-category-' . $obj_id],
+    'class' => ['form-control', 'app-select2'],
 ]);
 
 echo $form->field($model, 'notes')->textarea([
