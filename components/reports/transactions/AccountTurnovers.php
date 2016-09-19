@@ -43,7 +43,7 @@ class AccountTurnovers extends AbstractTransactionReport
         }
         unset($account);
 
-        foreach ($data['accounts'] as &$account) {
+        foreach ($data['accounts'] as $key => &$account) {
             if (empty($account['transactions'])) {
                 $last_transaction = $this->getAccountPreviousTransaction($account['account']->id);
                 if ($last_transaction) {
@@ -52,6 +52,9 @@ class AccountTurnovers extends AbstractTransactionReport
                 }
             }
             $account['difference'] = $account['closing_balance'] - $account['opening_balance'];
+            if (!$account['transactions'] && !floatval($account['closing_balance'])) { // Remove empty
+                unset($data['accounts'][$key]);
+            }
         }
 
         return $data;

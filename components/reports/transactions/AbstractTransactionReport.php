@@ -20,6 +20,7 @@ abstract class AbstractTransactionReport extends ReportAbstract
             $this->_accounts = Account::find()
                 ->permission()
                 ->joinWith(['currency'])
+                ->active()
                 ->orderBy([
                     'name' => SORT_ASC,
                     'currency.code' => SORT_ASC,

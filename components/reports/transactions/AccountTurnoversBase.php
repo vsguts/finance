@@ -10,7 +10,7 @@ class AccountTurnoversBase extends AbstractTransactionReport
 
     public function getReportName()
     {
-        return __('Account turnovers in USD');
+        return __('Account turnovers Base');
     }
 
     public function execute()
@@ -54,7 +54,7 @@ class AccountTurnoversBase extends AbstractTransactionReport
         }
         unset($account);
 
-        foreach ($data['accounts'] as &$account) {
+        foreach ($data['accounts'] as $key => &$account) {
             if (empty($account['transactions'])) {
                 $last_transaction = $this->getAccountPreviousTransaction($account['account']->id);
                 if ($last_transaction) {
@@ -76,6 +76,12 @@ class AccountTurnoversBase extends AbstractTransactionReport
                     + $account['outflow']
                 ;
             }
+
+            if (!$account['transactions'] && !floatval($account['closing_balance'])) { // Remove empty
+                unset($data['accounts'][$key]);
+                continue;
+            }
+
             $account['difference'] = $account['closing_balance'] - $account['opening_balance'];
 
             foreach (array_keys($data['totals']) as $key) {
