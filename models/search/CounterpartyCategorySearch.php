@@ -57,6 +57,12 @@ class CounterpartyCategorySearch extends CounterpartyCategory
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => $this->getPaginationDefaults(),
+            'sort' => [
+                'defaultOrder' => [
+                    'name' => SORT_ASC,
+                ],
+            ],
         ]);
 
         $params = $this->processParams($params);
