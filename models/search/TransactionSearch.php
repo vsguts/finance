@@ -49,7 +49,7 @@ class TransactionSearch extends Transaction
     public function rules()
     {
         return [
-            [['account_id', 'classification_id', 'counterparty_id', 'timestamp', 'description'], 'safe'],
+            [['id', 'account_id', 'classification_id', 'counterparty_id', 'timestamp', 'description'], 'safe'],
             [['inflow', 'outflow', 'balance'], 'number'],
             
             // Relations
@@ -143,7 +143,7 @@ class TransactionSearch extends Transaction
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'transaction.id' => $this->id,
             'account_id' => $this->account_id,
             'classification_id' => $this->classification_id,
             'counterparty_id' => $this->counterparty_id ?: '',
