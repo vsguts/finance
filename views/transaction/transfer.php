@@ -2,6 +2,7 @@
 
 use app\models\Account;
 use app\models\Classification;
+use app\models\Counterparty;
 use app\widgets\ActiveForm;
 use app\widgets\ButtonsContatiner;
 use app\widgets\Modal;
@@ -50,6 +51,11 @@ echo $form->field($model, 'account_id_to')->dropDownList(Account::find()->active
 // echo $form->field($model, 'classification_id')->dropDownList(Classification::find()->scroll(['empty' => true]), [
 //     'id' => $form_id . '-classification_id',
 // ]);
+
+echo $form->field($model, 'counterparty_id')->dropDownList(Counterparty::find()->scroll(['empty' => true]), [
+    'id' => $form_id . '-counterparty_id',
+    'class' => 'form-control app-select2',
+]);
 
 
 $field = $form->field($model, 'value_from')->textInput([

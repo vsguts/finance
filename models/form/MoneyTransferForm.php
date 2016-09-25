@@ -13,6 +13,7 @@ class MoneyTransferForm extends Model
     public $account_id_from;
     public $account_id_to;
     public $classification_id;
+    public $counterparty_id;
     public $value_from;
     public $value;
     public $timestamp;
@@ -78,7 +79,7 @@ class MoneyTransferForm extends Model
 
             // Common
             [
-                ['account_id_from', 'account_id_to', 'classification_id'],
+                ['account_id_from', 'account_id_to', 'classification_id', 'counterparty_id'],
                 'integer',
             ],
             [
@@ -99,6 +100,7 @@ class MoneyTransferForm extends Model
             'account_id_from' => __('From account'),
             'account_id_to' => __('To account'),
             'classification_id' => __('Classification'),
+            'counterparty_id' => __('Counterparty'),
             'value_from' => __('Value from'),
             'value' => __('Value to'),
             'timestamp' => __('Date'),
@@ -153,7 +155,7 @@ class MoneyTransferForm extends Model
         }
         $to->account_id = $this->account_id_to;
 
-        // Common fields: classification_id, timestamp, description
+        // Common fields: classification_id, counterparty, timestamp, description
         $from->load($this->attributes, '');
         $to->load($this->attributes, '');
 
