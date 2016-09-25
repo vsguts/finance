@@ -41,7 +41,7 @@ echo $form->field($model, 'name')->textInput([
     'id' => $form_id . '-name',
 ]);
 
-echo $form->field($model, 'status')->dropDownList($model->getLookupItems('status', ['empty' => true]), [
+echo $form->field($model, 'status')->dropDownList($model->getLookupItems('status'), [
     'id' => $form_id . '-status',
 ]);
 
