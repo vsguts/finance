@@ -14,7 +14,7 @@ use app\widgets\SearchForm;
 
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'account_id')->dropDownList(Account::find()->scroll(), [
+            <?= $form->field($model, 'account_id')->dropDownList(Account::find()->active($model->account_id)->scroll(), [
                 'class' => 'form-control app-select2',
                 'multiple' => true,
             ]) ?>
