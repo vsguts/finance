@@ -102,7 +102,7 @@ class AccountSearch extends Account
         ]);
 
         $query
-            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'account.name', $this->name])
             ->andFilterWhere(['like', 'bank', $this->bank])
             ->andFilterWhere(['like', 'account_number', $this->account_number])
             ->andFilterWhere(['like', 'notes', $this->notes])
