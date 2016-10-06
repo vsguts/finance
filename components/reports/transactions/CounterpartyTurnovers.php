@@ -17,10 +17,8 @@ class CounterpartyTurnovers extends AbstractTransactionReport
     {
         $template = [
             'transactions' => 0,
-            'opening_balance' => 0,
             'inflow' => 0,
             'outflow' => 0,
-            'closing_balance' => 0,
             'difference' => 0,
         ];
 
@@ -49,28 +47,26 @@ class CounterpartyTurnovers extends AbstractTransactionReport
                 continue;
             }
             foreach ($getSections($transaction) as & $section) {
-                $section['opening_balance'] += $transaction->openingBalanceConverted;
                 $section['inflow'] += $transaction->inflowConverted;
                 $section['outflow'] += $transaction->outflowConverted;
-                $section['closing_balance'] += $transaction->balanceConverted;
                 $section['transactions'] ++;
             }
         }
 
         // Finish changes: Calculate difference and remove empty items
-        $data['difference'] = $data['closing_balance'] - $data['opening_balance'];
+        $data['difference'] = $data['inflow'] - $data['outflow'];
         foreach ($data['counterparties'] as $counterparty_key => &$counterparty) {
             if (!floatval($counterparty['transactions'])) {
                 unset($data['counterparties'][$counterparty_key]);
                 continue;
             }
-            $counterparty['difference'] = $counterparty['closing_balance'] - $counterparty['opening_balance'];
+            $counterparty['difference'] = $counterparty['inflow'] - $counterparty['outflow'];
             foreach ($counterparty['accounts'] as $account_key => &$account) {
                 if (!floatval($account['transactions'])) {
                     unset($data['counterparties'][$counterparty_key]['accounts'][$account_key]);
                     continue;
                 }
-                $account['difference'] = $account['closing_balance'] - $account['opening_balance'];
+                $account['difference'] = $account['inflow'] - $account['outflow'];
             }
         }
 
@@ -85,10 +81,8 @@ class CounterpartyTurnovers extends AbstractTransactionReport
             'Original currency' => 'account.currency.code',
             'Base currency' => 'base_currency_code',
             'Transactions' => 'transactions',
-            'Opening balance' => 'opening_balance|simpleMoney',
             'Inflow' => 'inflow|simpleMoney',
             'Outflow' => 'outflow|simpleMoney',
-            'Closing balance' => 'closing_balance|simpleMoney',
             'Difference' => 'difference|simpleMoney',
         ];
     }

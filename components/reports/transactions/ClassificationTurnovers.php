@@ -17,10 +17,8 @@ class ClassificationTurnovers extends AbstractTransactionReport
     {
         $template = [
             'transactions' => 0,
-            'opening_balance' => 0,
             'inflow' => 0,
             'outflow' => 0,
-            'closing_balance' => 0,
             'difference' => 0,
         ];
 
@@ -46,28 +44,26 @@ class ClassificationTurnovers extends AbstractTransactionReport
 
         foreach ($this->getTransactions() as $transaction) {
             foreach ($getSections($transaction) as & $section) {
-                $section['opening_balance'] += $transaction->openingBalanceConverted;
                 $section['inflow'] += $transaction->inflowConverted;
                 $section['outflow'] += $transaction->outflowConverted;
-                $section['closing_balance'] += $transaction->balanceConverted;
                 $section['transactions'] ++;
             }
         }
 
         // Finish changes: Calculate difference and remove empty items
-        $data['difference'] = $data['closing_balance'] - $data['opening_balance'];
+        $data['difference'] = $data['inflow'] - $data['outflow'];
         foreach ($data['classifications'] as $classification_key => &$classification) {
             if (!floatval($classification['transactions'])) {
                 unset($data['classifications'][$classification_key]);
                 continue;
             }
-            $classification['difference'] = $classification['closing_balance'] - $classification['opening_balance'];
+            $classification['difference'] = $classification['inflow'] - $classification['outflow'];
             foreach ($classification['accounts'] as $account_key => &$account) {
                 if (!floatval($account['transactions'])) {
                     unset($data['classifications'][$classification_key]['accounts'][$account_key]);
                     continue;
                 }
-                $account['difference'] = $account['closing_balance'] - $account['opening_balance'];
+                $account['difference'] = $account['inflow'] - $account['outflow'];
             }
         }
 
@@ -82,10 +78,8 @@ class ClassificationTurnovers extends AbstractTransactionReport
             'Original currency' => 'account.currency.code',
             'Base currency' => 'base_currency_code',
             'Transactions' => 'transactions',
-            'Opening balance' => 'opening_balance|simpleMoney',
             'Inflow' => 'inflow|simpleMoney',
             'Outflow' => 'outflow|simpleMoney',
-            'Closing balance' => 'closing_balance|simpleMoney',
             'Difference' => 'difference|simpleMoney',
         ];
     }
