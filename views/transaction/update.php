@@ -100,21 +100,28 @@ if (!$model->isNewRecord) {
 
 
 // Inflow, outflow
-$inflow_fields = $form->field($model, 'inflow')->hint($converted['inflow']);
-$outflow_field = $form->field($model, 'outflow')->hint($converted['outflow']);
+$calc_template = '{input}<div class="help-block app-input-calc-view h"></div>';
 
 echo Html::activeHiddenInput($model, 'inflow', ['value' => 0, 'id' => $form_id . '-inflow-hidden']);
-$field = $inflow_fields->textInput([
-    'maxlength' => true,
-    'id' => $form_id . '-inflow',
-]);
+$field = $form
+    ->field($model, 'inflow', ['inputTemplate' => $calc_template])
+    ->hint($converted['inflow'])
+    ->textInput([
+        'class' => 'form-control app-input-calc',
+        'id' => $form_id . '-inflow',
+        'maxlength' => true,
+    ]);
 echo Html::tag('div', $field, ['class' => 'app-classification-inflow']);
 
 echo Html::activeHiddenInput($model, 'outflow', ['value' => 0, 'id' => $form_id . '-outflow-hidden']);
-$field = $outflow_field->textInput([
-    'maxlength' => true,
-    'id' => $form_id . '-outflow',
-]);
+$field = $form
+    ->field($model, 'outflow', ['inputTemplate' => $calc_template])
+    ->hint($converted['outflow'])
+    ->textInput([
+        'class' => 'form-control app-input-calc',
+        'id' => $form_id . '-outflow',
+        'maxlength' => true,
+    ]);
 echo Html::tag('div', $field, ['class' => 'app-classification-outflow']);
 
 

@@ -146,6 +146,16 @@ $.extend({
         }
     },
 
+    appCalc: function(string) {
+        var result;
+        try {
+            result = eval(string.replace(/[^-()\d/*+.]/g, ''));
+        } catch(e) {
+            result = string;
+        }
+        return result || '';
+    },
+
 });
 
 $.fn.extend({

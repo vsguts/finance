@@ -143,6 +143,11 @@ $(document).on('change', function(e) {
     if (jelm.hasClass('app-classification')) {
         jelm.appClassificationSelect();
     }
+
+    if (jelm.hasClass('app-input-calc')) {
+        jelm.val($.appCalc(jelm.val()));
+        jelm.parent().find('.app-input-calc-view').hide();
+    }
 });
 
 $(document).on('submit', function(e) {
@@ -175,6 +180,22 @@ $(document).on('submit', function(e) {
         });
         return false;
     }
+});
+
+$(document).on('keyup', function(e) {
+    $('.app-input-calc').each(function(){
+        var jelm = $(this),
+            value = jelm.val(),
+            calulated = $.appCalc(value),
+            view = jelm.parent().find('.app-input-calc-view');
+        if (view.length) {
+            if (value != calulated) {
+                view.html('=' + calulated).show();
+            } else {
+                view.hide();
+            }
+        }
+    });
 });
 
 

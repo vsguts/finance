@@ -58,9 +58,12 @@ echo $form->field($model, 'counterparty_id')->dropDownList(Counterparty::find()-
 ]);
 
 
-$field = $form->field($model, 'value_from')->textInput([
-    'maxlength' => true,
+$calc_template = '{input}<div class="help-block app-input-calc-view h"></div>';
+
+$field = $form->field($model, 'value_from', ['inputTemplate' => $calc_template])->textInput([
+    'class' => 'form-control app-input-calc',
     'id' => $form_id . '-value_from',
+    'maxlength' => true,
 ]);
 echo Html::tag('div', $field, [
     'class' => 'h app-accounts-currency',
@@ -68,9 +71,10 @@ echo Html::tag('div', $field, [
     'data-account-to' => $form_id . '-account_id_to',
 ]);
 
-echo $form->field($model, 'value')->textInput([
-    'maxlength' => true,
+echo $form->field($model, 'value', ['inputTemplate' => $calc_template])->textInput([
+    'class' => 'form-control app-input-calc',
     'id' => $form_id . '-value',
+    'maxlength' => true,
 ]);
 
 
