@@ -52,7 +52,8 @@ class AccountTurnovers extends AbstractTransactionReport
                 }
             }
             $account['difference'] = $account['closing_balance'] - $account['opening_balance'];
-            if (!$account['transactions'] && !floatval($account['closing_balance'])) { // Remove empty
+            // Remove empty
+            if (!$account['transactions'] && !floatval($account['closing_balance'])) {
                 unset($data['accounts'][$key]);
             }
         }

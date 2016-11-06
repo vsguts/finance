@@ -77,7 +77,8 @@ class AccountTurnoversBase extends AbstractTransactionReport
                 ;
             }
 
-            if (!$account['transactions'] && !floatval($account['closing_balance'])) { // Remove empty
+            // Remove empty
+            if (!$account['transactions'] && !floatval($account['closing_balance'])) {
                 unset($data['accounts'][$key]);
                 continue;
             }
