@@ -49,15 +49,7 @@ class TransactionSearch extends Transaction
     public function rules()
     {
         return [
-            [['id', 'account_id', 'classification_id', 'counterparty_id', 'timestamp', 'description'], 'safe'],
-            [['inflow', 'outflow', 'balance'], 'number'],
-            
-            // Relations
-            [['currency_id'], 'safe'],
-            [['category_id'], 'safe'],
-            
-            // Range fields
-            [['timestamp_to', 'inflow_to', 'outflow_to', 'balance_to'], 'safe'],
+            [$this->attributes(), 'safe'],
         ];
     }
 
@@ -147,6 +139,7 @@ class TransactionSearch extends Transaction
             'account_id' => $this->account_id,
             'classification_id' => $this->classification_id,
             'counterparty_id' => $this->counterparty_id ?: '',
+            'user_id' => $this->user_id,
             'account.currency_id' => $this->currency_id,
         ]);
 

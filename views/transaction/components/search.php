@@ -1,9 +1,10 @@
 <?php
 
 use app\models\Account;
-use app\models\Currency;
 use app\models\Classification;
 use app\models\Counterparty;
+use app\models\Currency;
+use app\models\User;
 use app\widgets\SearchForm;
 
 ?>
@@ -22,11 +23,11 @@ use app\widgets\SearchForm;
                 'class' => 'form-control app-select2',
                 'multiple' => true,
             ]) ?>
-            <?= $form->field($model, 'counterparty_id')->dropDownList(Counterparty::find()->scroll(), [
+            <?= $form->field($model, 'classification_id')->dropDownList(Classification::find()->scroll(), [
                 'class' => 'form-control app-select2',
                 'multiple' => true,
             ]) ?>
-            <?= $form->field($model, 'classification_id')->dropDownList(Classification::find()->scroll(), [
+            <?= $form->field($model, 'counterparty_id')->dropDownList(Counterparty::find()->scroll(), [
                 'class' => 'form-control app-select2',
                 'multiple' => true,
             ]) ?>
@@ -34,6 +35,9 @@ use app\widgets\SearchForm;
         <div class="col-md-6">
             <?= $form->field($model, 'timestamp')->widget('app\widgets\DatePickerRange') ?>
             <?= $form->field($model, 'description') ?>
+            <?= $form->field($model, 'user_id')->dropDownList(User::find()->scroll(['empty' => true]), [
+                'class' => 'form-control app-select2',
+            ]) ?>
         </div>
     </div>
 
