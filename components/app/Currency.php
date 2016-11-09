@@ -24,7 +24,7 @@ class Currency extends Component
      * @var array
      */
     protected $currencyMap = [];
-    
+
     /**
      * Currency models
      * [currency_id => Currency]
@@ -57,8 +57,16 @@ class Currency extends Component
      * @param  int   $to             Period end timestamp, if not set $from will be used
      * @return float
      */
-    public function convert($value, $currency_id, $to_currency_id, $from, $to = null, $precision = null)
+    public function convert($value, $currency_id, $to_currency_id = null, $from = null, $to = null, $precision = null)
     {
+        if (!$from) {
+            $from = time();
+        }
+
+        if (!$to_currency_id) {
+            $to_currency_id = $this->getBaseCurrencyId();
+        }
+
         if ($currency_id == $to_currency_id) {
             return $value;
         }
@@ -124,11 +132,11 @@ class Currency extends Component
     {
         $from = Yii::$app->calendar->dayTimestamp($from);
         $to = Yii::$app->calendar->dayTimestamp($to);
-        
+
         if ($from > time()) {
             $from = Yii::$app->calendar->dayTimestamp(time());
         }
-        
+
         if ($to > time()) {
             $to = Yii::$app->calendar->dayTimestamp(time());
         }
@@ -141,7 +149,7 @@ class Currency extends Component
             foreach ($models as $model) {
                 $currency_rates[$model->currency_id][] = $model->rate;
             }
-            
+
             // Base currency rates
             $base_currency_id = $this->getCurrencyId(self::BASE_CURRENCY);
             $this->rates[$key][$base_currency_id][$base_currency_id] = 1;
@@ -151,14 +159,20 @@ class Currency extends Component
 
             $currency_ids = $this->getCurrencyIds(true);
             foreach ($currency_ids as $from_currency_id) {
+                if (!isset($this->rates[$key][$base_currency_id][$from_currency_id])) {
+                    continue; // Skip rates if empty
+                }
                 $from_rate = $this->rates[$key][$base_currency_id][$from_currency_id];
                 $this->rates[$key][$from_currency_id][$base_currency_id] = 1 / $from_rate;
                 foreach ($currency_ids as $to_currency_id) {
+                    if (!isset($this->rates[$key][$base_currency_id][$to_currency_id])) {
+                        continue; // Skip rates if empty
+                    }
                     $to_rate = $this->rates[$key][$base_currency_id][$to_currency_id];
                     $this->rates[$key][$from_currency_id][$to_currency_id] = $to_rate / $from_rate;
                 }
             }
-            
+
         }
 
         return $this->rates[$key];
@@ -200,11 +214,11 @@ class Currency extends Component
     public function getCurrencyIds($exclude_base = false)
     {
         $map = $this->getCurrencyIdsMap();
-        
+
         if ($exclude_base) {
             unset($map[self::BASE_CURRENCY]);
         }
-        
+
         return array_values($map);
     }
 
@@ -232,6 +246,12 @@ class Currency extends Component
         return $this->currencies;
     }
 
+    public function getCurrency($id)
+    {
+        $currencies = $this->getCurrencies();
+        return isset($currencies[$id]) ? $currencies[$id] : null;
+    }
+
     protected function prepareRates($from, $to)
     {
         $dates = Yii::$app->calendar->getPeriodDays($from, $to);
@@ -252,8 +272,8 @@ class Currency extends Component
         }
 
         if ($need_dates) {
-            $this->downloadExternalRates($need_dates);
-            $models = $this->getRateModels($dates, $currencies);
+            $not_found = $this->downloadExternalRates($need_dates);
+            $models = array_merge($not_found, $this->getRateModels($dates, $currencies));
         }
 
         return $models;
@@ -262,9 +282,9 @@ class Currency extends Component
     protected function getRateModels($dates, $currency_ids = null)
     {
         $query = CurrencyRate::find();
-        
+
         $query->where(array_merge(['or'], $dates));
-        
+
         if ($currency_ids) {
             $query->andWhere(['currency_id' => $currency_ids]);
         }
@@ -274,6 +294,8 @@ class Currency extends Component
 
     protected function downloadExternalRates($dates)
     {
+        $models = [];
+        $today = date('Y-m-d');
         if (!$this->rates_object) {
             $this->rates_object = Yii::createObject([
                 'class' => $this->ratesClass,
@@ -303,9 +325,39 @@ class Currency extends Component
             $model->rate = $rate['rate'];
             $model->save();
         }
-        if ($not_found = array_diff_key($dates, $exists)) {
-            throw new UserException('Currency rates not found: ' . key($not_found));
+
+        $not_found = array_diff_key($dates, $exists);
+        if (isset($not_found[$today])) {
+            $not_found_date = $not_found[$today];
+            $timestamp = mktime(0, 0, 0, $not_found_date['month'], $not_found_date['day'], $not_found_date['year']) - SECONDS_IN_DAY;
+            $date = [
+                'year'  => date('Y', $timestamp),
+                'month' => date('n', $timestamp),
+                'day'   => date('j', $timestamp),
+            ];
+
+            $last_stored_currency_rates = CurrencyRate::find()
+                ->where($date)
+                ->all();
+
+
+            foreach ($last_stored_currency_rates as $last_stored_currency_rate) {
+                $model = new CurrencyRate;
+                $model->currency_id = $last_stored_currency_rate['currency_id'];
+                $model->year = $not_found_date['year'];
+                $model->month = $not_found_date['month'];
+                $model->day = $not_found_date['day'];
+                $model->rate = $last_stored_currency_rate['rate'];
+                $models[] = $model;
+            }
+
+            Yii::$app->session->setFlash(
+                'error',
+                __('Currency rates for today are not available yet. The latest available exchange rates are used. The amounts will be recalculated as soon as applicable exchange rates become available.')
+            );
         }
+
+        return $models;
     }
 
 }
