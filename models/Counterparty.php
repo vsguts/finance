@@ -2,10 +2,17 @@
 
 namespace app\models;
 
-use Yii;
-use yii\helpers\Url;
-use app\models\query\CounterpartyQuery;
-
+/**
+ * This is the model class for table "counterparty".
+ *
+ * @property integer $id
+ * @property integer $category_id
+ * @property string $name
+ * @property string $notes
+ *
+ * @property CounterpartyCategory $category
+ * @property Transaction[] $transactions
+ */
 class Counterparty extends AbstractModel
 {
     /**
@@ -32,24 +39,10 @@ class Counterparty extends AbstractModel
     public function rules()
     {
         return [
-            [
-                ['name'],
-                'required'
-            ],
-            [
-                ['category_id'],
-                'integer'
-            ],
-            [
-                ['notes'],
-                'string'
-            ],
-            [
-                ['name'],
-                'string',
-                'max' => 128
-            ],
-            
+            [['name'], 'required'],
+            [['category_id'], 'integer'],
+            [['notes'], 'string'],
+            [['name'], 'string', 'max' => 128],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => CounterpartyCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
     }

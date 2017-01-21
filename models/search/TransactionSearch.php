@@ -2,26 +2,17 @@
 
 namespace app\models\search;
 
-use Yii;
-use yii\base\Model;
-use yii\data\ActiveDataProvider;
-use app\models\Account;
+use app\models\components\SearchTrait;
 use app\models\Transaction;
+use Yii;
+use yii\data\ActiveDataProvider;
 
 /**
  * TransactionSearch represents the model behind the search form about `app\models\Transaction`.
  */
 class TransactionSearch extends Transaction
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors[] = 'app\behaviors\SearchBehavior';
-        return $behaviors;
-    }
+    use SearchTrait;
 
     /**
      * @inheritdoc
@@ -41,25 +32,6 @@ class TransactionSearch extends Transaction
             'outflow_to',
             'balance_to',
         ]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [$this->attributes(), 'safe'],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
     }
 
     /**

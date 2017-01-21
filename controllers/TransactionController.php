@@ -90,14 +90,16 @@ class TransactionController extends AbstractController
      * If update is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @param integer $form_template_id
+     * @param null    $copy_id
      * @return mixed
+     * @throws ForbiddenHttpException
      */
     public function actionUpdate($id = null, $form_template_id = null, $copy_id = null)
     {
         $touch_account_ids = [];
 
         if ($id) {
-            $model = $this->findModel(Transaction::className(), $id);
+            $model = $this->findModel($id, Transaction::className());
             $touch_account_ids[] = $model->account_id;
         } else {
             $model = new Transaction;
@@ -137,7 +139,10 @@ class TransactionController extends AbstractController
 
     /**
      * Money transfer.
+     * @param null $id
+     * @param null $copy_id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionTransfer($id = null, $copy_id = null)
     {
@@ -187,7 +192,7 @@ class TransactionController extends AbstractController
     /**
      * Deletes an existing Transaction model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param array|int $id
      * @return mixed
      */
     public function actionDelete(array $id)
@@ -227,7 +232,7 @@ class TransactionController extends AbstractController
      */
     public function actionDownload($id, $field)
     {
-        $this->download($this->findModel(Transaction::className(), $id)->getPath($field));
+        $this->download($this->findModel($id, Transaction::className())->getPath($field));
     }
 
     /**

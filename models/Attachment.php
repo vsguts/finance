@@ -3,13 +3,22 @@
 namespace app\models;
 
 use Yii;
-use yii\db\ActiveRecord;
 use yii\base\Exception;
-use yii\helpers\Url;
+use yii\db\ActiveRecord;
 use yii\helpers\FileHelper;
 use yii\helpers\Inflector;
 use yii\web\UploadedFile;
 
+/**
+ * This is the model class for table "attachment".
+ *
+ * @property integer $id
+ * @property string $table
+ * @property integer $object_id
+ * @property string $object_type
+ * @property string $filename
+ * @property integer $filesize
+ */
 class Attachment extends AbstractModel
 {
     public $related_model;

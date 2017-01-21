@@ -1,7 +1,6 @@
 <?php
 
 use app\models\Account;
-use app\models\Classification;
 use app\models\Counterparty;
 use app\widgets\form\ActiveForm;
 use app\widgets\form\ButtonsContatiner;
@@ -88,11 +87,11 @@ echo $form->field($model, 'description')->textarea([
 if ($model->transaction) {
     if ($model->transaction->user) {
         echo $form->field($model->transaction, 'user')->text([
-            'value' => Html::a(
-                $model->transaction->user->name,
-                Url::to(['user/update', 'id' => $model->transaction->user->id]),
-                ['target' => '_blank']
-            ),
+            'value' => Html::a($model->transaction->user->name, null, [
+                'href' => Url::to(['user/update', 'id' => $model->transaction->user_id, '_return_url' => Url::to()]),
+                'class' => 'app-modal',
+                'data-target-id' => 'user_' . $model->transaction->user_id,
+            ]),
         ]);
     }
     if ($model->transaction->created_at) {

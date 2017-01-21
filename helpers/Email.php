@@ -23,4 +23,11 @@ class Email
         return array_unique($result);
     }
 
+    public static function getDomain($email)
+    {
+        list($email) = self::formatEmails($email);
+        list(, $domain) = explode('@', $email, 2);
+        return $domain;
+    }
+
 }

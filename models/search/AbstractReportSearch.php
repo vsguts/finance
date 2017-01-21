@@ -2,68 +2,27 @@
 
 namespace app\models\search;
 
+use app\helpers\FileHelper;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Inflector;
-use yii\base\Model;
 use yii\base\Exception;
-use yii\data\ActiveDataProvider;
 
-abstract class AbstractReportSearch extends Model
+
+abstract class AbstractReportSearch extends TimestampSearch
 {
 
     public $report;
 
-    public $timestamp;
-
-    public $timestamp_to;
-
-    /**
-     * @inheritdoc
-     */
-    public function formName()
-    {
-        return '';
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'app\behaviors\SearchBehavior',
-            [
-                'class' => 'app\behaviors\TimestampConvertBehavior',
-                'fields' => ['timestamp', 'timestamp_to']
-            ],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
-        $today = Yii::$app->formatter->asTimestamp(date('Y-m-d 00:00'));
-
-        return [
-            [['report', 'timestamp', 'timestamp_to'], 'safe'],
-
-            [['report'], 'default', 'value' => $this->getDefaultReportName()],
-            [['timestamp'], 'default', 'value' => $today - 30 * SECONDS_IN_DAY],
-            [['timestamp_to'], 'default', 'value' => $today],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'timestamp' => __('Time'),
-            'timestamp_to' => __('Time to'),
-        ];
+        return array_merge(
+            parent::rules(),
+            [
+                [['report', 'timestamp', 'timestamp_to'], 'safe'],
+                [['report'], 'default', 'value' => $this->getDefaultReportName()],
+            ]
+        );
     }
 
     public function search($params)
@@ -86,26 +45,17 @@ abstract class AbstractReportSearch extends Model
     public function getReports()
     {
         $path = '@app/components/reports/' . $this->getReportsNamespace();
-        $dir = Yii::getAlias($path);
-        $namespace = strtr($path, ['@' => '', '/' => '\\']) . '\\';
 
         $reports = [];
-        foreach (scandir($dir) as $file) {
-            if (in_array($file, ['.', '..'])) {
-                continue;
-            }
-            $file = str_replace('.php', '', $file);
-            $class = $namespace . $file;
-            if (class_exists($class)) {
-                if ((new \ReflectionClass($class))->isAbstract()) {
-                    continue;
-                }
-                $object = Yii::createObject($class);
-                $reports[Inflector::camel2id($file)] = $object->getReportName();
-            }
+        foreach (FileHelper::getPathClasses($path) as $id => $class) {
+            $object = Yii::createObject($class);
+            $reports[$id] = [
+                'label' => $object->getReportName(),
+                'position' => $object->position,
+            ];
         }
 
-        asort($reports);
+        ArrayHelper::multisort($reports, ['position', 'label']);
 
         return $reports;
     }

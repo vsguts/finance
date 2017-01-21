@@ -1,5 +1,6 @@
 <?php
 
+use app\models\ClassificationCategory;
 use app\widgets\form\ActiveForm;
 use app\widgets\form\ButtonsContatiner;
 use app\widgets\Modal;
@@ -37,6 +38,11 @@ $form = ActiveForm::begin([
 echo $form->field($model, 'name')->textInput([
     'maxlength' => true,
     'id' => $form_id . '-name',
+]);
+
+echo $form->field($model, 'category_id')->dropDownList(ClassificationCategory::find()->scroll(['empty' => true]), [
+    'id' => $obj_id . '-category_id',
+    'class' => ['form-control', 'app-select2'],
 ]);
 
 echo $form->field($model, 'type')->dropDownList($model->getLookupItems('type'), [

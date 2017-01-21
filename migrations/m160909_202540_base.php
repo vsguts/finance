@@ -145,14 +145,24 @@ class m160909_202540_base extends Migration
             'name' => $this->string(128)->notNull(),
             'notes' => $this->text(),
         ], $this->getTableOptions());
+        $this->addForeignKey('counterparty_category_id', 'counterparty', 'category_id', 'counterparty_category', 'id', 'RESTRICT', 'RESTRICT');
+
+
+        $this->createTable('classification_category', [
+            'id' => $this->primaryKey(),
+            'name' => $this->string(128)->notNull(),
+            'notes' => $this->text(),
+        ], $this->getTableOptions());
 
 
         $this->createTable('classification', [
             'id' => $this->primaryKey(),
+            'category_id' => $this->integer(),
             'name' => $this->string(128)->notNull(),
             'type' => "enum('inflow', 'outflow', 'transfer', 'conversion')",
             'notes' => $this->text(),
         ], $this->getTableOptions());
+        $this->addForeignKey('classification_category_id', 'classification', 'category_id', 'classification_category', 'id', 'RESTRICT', 'RESTRICT');
 
 
         $this->createTable('transaction', [
@@ -183,6 +193,7 @@ class m160909_202540_base extends Migration
     {
         $this->dropTable('transaction');
         $this->dropTable('classification');
+        $this->dropTable('classification_category');
         $this->dropTable('counterparty');
         $this->dropTable('counterparty_category');
         $this->dropTable('account');

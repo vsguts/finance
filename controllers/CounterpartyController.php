@@ -73,7 +73,7 @@ class CounterpartyController extends AbstractController
     public function actionUpdate($id = null)
     {
         if ($id) {
-            $model = $this->findModel(Counterparty::className(), $id);
+            $model = $this->findModel($id, Counterparty::className());
         } else {
             $model = new Counterparty;
             $model->validate(); // Fill default values
@@ -97,7 +97,7 @@ class CounterpartyController extends AbstractController
     /**
      * Deletes an existing Counterparty model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param array|int $id
      * @return mixed
      */
     public function actionDelete(array $id)
@@ -112,7 +112,7 @@ class CounterpartyController extends AbstractController
      */
     public function actionDownload($id, $field)
     {
-        $this->download($this->findModel(Counterparty::className(), $id)->getPath($field));
+        $this->download($this->findModel($id, Counterparty::className())->getPath($field));
     }
 
     public function actionOauth($id = null, $code = null)
@@ -120,7 +120,7 @@ class CounterpartyController extends AbstractController
         if ($id == null) {
             $id = Yii::$app->session['oauth_id'];
         }
-        $model = $this->findModel(Counterparty::className(), $id);
+        $model = $this->findModel($id, Counterparty::className());
 
         if ($model->getOauthIsConnected()) {
             $model->oauthDisconnect();

@@ -66,7 +66,7 @@ class CurrencyController extends AbstractController
     public function actionUpdate($id = null)
     {
         if ($id) {
-            $model = $this->findModel(Currency::className(), $id);
+            $model = $this->findModel($id, Currency::className());
         } else {
             $model = new Currency;
         }

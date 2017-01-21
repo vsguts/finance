@@ -2,10 +2,9 @@
 
 namespace app\helpers;
 
-use yii\base\Object;
 use yii\data\DataProviderInterface;
 
-class Statistic extends Object
+class Statistic
 {
     public static function sum(DataProviderInterface $provider, $field)
     {

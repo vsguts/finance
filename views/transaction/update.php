@@ -148,11 +148,11 @@ echo $form->field($model, 'attachmentsUpload[main][]')->fileInput(['multiple' =>
 // User
 if (!$model->isNewRecord && $model->user) {
     echo $form->field($model, 'user_id')->text([
-        'value' => Html::a(
-            $model->user->name,
-            Url::to(['user/update', 'id' => $model->user->id]),
-            ['target' => '_blank']
-        ),
+        'value' => Html::a($model->user->name, null, [
+            'href' => Url::to(['user/update', 'id' => $model->user_id, '_return_url' => Url::to()]),
+            'class' => 'app-modal',
+            'data-target-id' => 'user_' . $model->user_id,
+        ]),
     ]);
 }
 

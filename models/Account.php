@@ -2,9 +2,24 @@
 
 namespace app\models;
 
-use Yii;
 use app\models\query\AccountQuery;
 
+/**
+ * This is the model class for table "account".
+ *
+ * @property integer $id
+ * @property integer $currency_id
+ * @property string $status
+ * @property string $name
+ * @property string $bank
+ * @property string $account_number
+ * @property string $init_balance
+ * @property string $import_processor
+ * @property string $notes
+ *
+ * @property Currency $currency
+ * @property Transaction[] $transactions
+ */
 class Account extends AbstractModel
 {
     const STATUS_ACTIVE = 'active';

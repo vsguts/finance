@@ -2,8 +2,6 @@
 
 namespace app\models\search;
 
-use Yii;
-
 class TransactionReportSearch extends AbstractReportSearch
 {
 

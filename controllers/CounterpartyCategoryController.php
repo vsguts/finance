@@ -2,12 +2,11 @@
 
 namespace app\controllers;
 
-use Yii;
-use yii\web\NotFoundHttpException;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use app\models\CounterpartyCategory;
 use app\models\search\CounterpartyCategorySearch;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 
 /**
  * CounterpartyCategoryController implements the CRUD actions for CounterpartyCategory model.
@@ -24,7 +23,7 @@ class CounterpartyCategoryController extends AbstractController
                 ],
             ],
             'access' => [
-                'class' => 'yii\filters\AccessControl',
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'allow' => true,
@@ -66,7 +65,7 @@ class CounterpartyCategoryController extends AbstractController
     public function actionUpdate($id = null)
     {
         if ($id) {
-            $model = $this->findModel(CounterpartyCategory::className(), $id);
+            $model = $this->findModel($id, CounterpartyCategory::className());
         } else {
             $model = new CounterpartyCategory();
         }
@@ -88,7 +87,7 @@ class CounterpartyCategoryController extends AbstractController
     /**
      * Deletes an existing CounterpartyCategory model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param array|int $id
      * @return mixed
      */
     public function actionDelete(array $id)

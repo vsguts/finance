@@ -3,6 +3,7 @@
 namespace app\widgets\form;
 
 use app\widgets\Tooltip;
+use Yii;
 use yii\bootstrap\ActiveField as YActiveField;
 use yii\helpers\Html;
 
@@ -17,6 +18,11 @@ class ActiveField extends YActiveField
         Html::removeCssClass($options, 'form-control');
         Html::addCssClass($options, 'form-control-static');
         $value = isset($options['value']) ? $options['value'] : Html::getAttributeValue($this->model, $this->attribute);
+        $method = 'asRaw';
+        if (isset($options['formatter'])) {
+            $method = 'as' . ucfirst($options['formatter']);
+        }
+        $value = Yii::$app->formatter->$method($value);
         $this->parts['{input}'] = Html::tag('p', $value, $options);
 
         return $this;

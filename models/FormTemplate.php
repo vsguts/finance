@@ -2,8 +2,14 @@
 
 namespace app\models;
 
-use Yii;
-
+/**
+ * This is the model class for table "form_template".
+ *
+ * @property integer $id
+ * @property string $model
+ * @property string $template
+ * @property string $data
+ */
 class FormTemplate extends AbstractModel
 {
     /**

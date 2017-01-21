@@ -2,45 +2,16 @@
 
 namespace app\models\search;
 
-use Yii;
-use yii\base\Model;
-use yii\data\ActiveDataProvider;
+use app\models\components\SearchTrait;
 use app\models\Counterparty;
+use yii\data\ActiveDataProvider;
 
 /**
  * CounterpartySearch represents the model behind the search form about `app\models\Counterparty`.
  */
 class CounterpartySearch extends Counterparty
 {
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['id', 'category_id'], 'integer'],
-            [['name'], 'safe'],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors[] = 'app\behaviors\SearchBehavior';
-        return $behaviors;
-    }
+    use SearchTrait;
 
     /**
      * Creates data provider instance with search query applied
@@ -52,7 +23,8 @@ class CounterpartySearch extends Counterparty
     public function search($params)
     {
         $query = Counterparty::find()
-            ->joinWith('category category');
+            ->joinWith('category category')
+        ;
 
         // add conditions that should always apply here
 
@@ -96,6 +68,7 @@ class CounterpartySearch extends Counterparty
 
         $query
             ->andFilterWhere(['like', 'counterparty.name', $this->name])
+            ->andFilterWhere(['like', 'counterparty.notes', $this->notes])
         ;
 
         return $dataProvider;

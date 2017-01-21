@@ -1,17 +1,17 @@
 <?php
 
-use app\models\CounterpartyCategory;
 use app\widgets\form\ActiveForm;
 use app\widgets\form\ButtonsContatiner;
 use app\widgets\Modal;
+use app\widgets\Checkboxes;
 
 if ($model->isNewRecord) {
-    $obj_id = 'counterparty_create';
-    $header = __('Create counterparty');
+    $obj_id = 'classification-category_create';
+    $header = __('Create classification category');
 } else {
-    $obj_id = 'counterparty_' . $model->id;
-    $header = __('Counterparty: {counterparty}', [
-        'counterparty' => $model->name,
+    $obj_id = 'classification-category_' . $model->id;
+    $header = __('Classification: {classification-category}', [
+        'classification-category' => $model->name,
     ]);
 }
 
@@ -23,7 +23,7 @@ Modal::begin([
     'id' => $obj_id,
     'footer' => ButtonsContatiner::widget([
         'model' => $model,
-        'saveLink' => Yii::$app->user->can('counterparty_manage'),
+        'saveLink' => Yii::$app->user->can('classification_manage'),
         'form' => $form_id,
     ]),
 ]);
@@ -34,20 +34,14 @@ $form = ActiveForm::begin([
     ]
 ]);
 
-
 echo $form->field($model, 'name')->textInput([
     'maxlength' => true,
-    'id' => $obj_id . '-name',
-]);
-
-echo $form->field($model, 'category_id')->dropDownList(CounterpartyCategory::find()->scroll(['empty' => true]), [
-    'id' => $obj_id . '-category_id',
-    'class' => ['form-control', 'app-select2'],
+    'id' => $form_id . '-name',
 ]);
 
 echo $form->field($model, 'notes')->textarea([
     'rows' => 6,
-    'id' => $obj_id . '-notes',
+    'id' => $form_id . '-notes',
 ]);
 
 ActiveForm::end();

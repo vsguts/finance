@@ -2,11 +2,11 @@
 
 namespace app\models\form;
 
-use Yii;
-use yii\base\Model;
+use app\behaviors\TimestampConvertBehavior;
 use app\models\Account;
-use app\models\Transaction;
 use app\models\Classification;
+use app\models\Transaction;
+use yii\base\Model;
 
 class MoneyTransferForm extends Model
 {
@@ -30,7 +30,7 @@ class MoneyTransferForm extends Model
     public function behaviors()
     {
         return [
-            'app\behaviors\TimestampConvertBehavior',
+            TimestampConvertBehavior::className(),
         ];
     }
 

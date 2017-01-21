@@ -2,45 +2,16 @@
 
 namespace app\models\search;
 
-use Yii;
-use yii\base\Model;
-use yii\data\ActiveDataProvider;
 use app\models\Account;
+use app\models\components\SearchTrait;
+use yii\data\ActiveDataProvider;
 
 /**
  * AccountSearch represents the model behind the search form about `app\models\Account`.
  */
 class AccountSearch extends Account
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors[] = 'app\behaviors\SearchBehavior';
-        return $behaviors;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['id', 'currency_id'], 'integer'],
-            [['status', 'name', 'bank', 'account_number', 'notes'], 'safe'],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
-    }
+    use SearchTrait;
 
     /**
      * @inheritdoc

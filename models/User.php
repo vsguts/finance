@@ -172,5 +172,13 @@ class User extends AbstractModel implements \yii\web\IdentityInterface
     {
         $this->password_reset_token = null;
     }
-    
+
+    public function canUpdate()
+    {
+        if (Yii::$app->user->can('user_manage_own', ['user' => $this])) {
+            return true;
+        }
+        return Yii::$app->user->can('user_manage');
+    }
+
 }

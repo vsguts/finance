@@ -2,8 +2,6 @@
 
 namespace app\behaviors;
 
-use Yii;
-use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior as YTimestampBehavior;
 
 class TimestampBehavior extends YTimestampBehavior
@@ -15,8 +13,8 @@ class TimestampBehavior extends YTimestampBehavior
     public function attributeLabels()
     {
         return [
-            'created_at' => __('Created At'),
-            'updated_at' => __('Updated At'),
+            'created_at' => __('Created at'),
+            'updated_at' => __('Updated at'),
         ];
     }
 

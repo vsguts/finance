@@ -41,6 +41,10 @@ $detailsLink = function($model) {
 
     <?php endif; ?>
 
+    <ul class="nav nav-pills app-tool-links">
+        <li role="presentation"><a href="<?= Url::to(['classification-category/index']) ?>"><?= __('Classification categories') ?></a></li>
+    </ul>
+
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('components/search', ['model' => $searchModel]) ?>
@@ -53,6 +57,21 @@ $detailsLink = function($model) {
             [
                 'attribute' =>'name',
                 'link' => $detailsLink,
+            ],
+
+            [
+                'attribute' => 'category',
+                'label' => __('Category'),
+                'value' => 'category.name',
+                'link' => function($model) {
+                    if ($model->category) {
+                        return [
+                            'class' => 'app-modal',
+                            'href' => Url::to(['/classification-category/update', 'id' => $model->category->id, '_return_url' => Url::to()]),
+                            'data-target-id' => 'classification-category_' . $model->category->id,
+                        ];
+                    }
+                },
             ],
 
             [

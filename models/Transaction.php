@@ -5,6 +5,31 @@ namespace app\models;
 use Yii;
 use app\models\query\TransactionQuery;
 
+/**
+ * This is the model class for table "transaction".
+ *
+ * @property integer $id
+ * @property integer $account_id
+ * @property integer $classification_id
+ * @property integer $counterparty_id
+ * @property integer $user_id
+ * @property integer $related_id
+ * @property integer $timestamp
+ * @property integer $created_at
+ * @property string $inflow
+ * @property string $outflow
+ * @property string $opening_balance
+ * @property string $balance
+ * @property integer $has_attachments
+ * @property string $description
+ *
+ * @property Account $account
+ * @property Classification $classification
+ * @property Counterparty $counterparty
+ * @property Transaction $related
+ * @property Transaction[] $transactions
+ * @property User $user
+ */
 class Transaction extends AbstractModel
 {
 

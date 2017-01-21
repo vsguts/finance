@@ -67,7 +67,7 @@ class ClassificationController extends AbstractController
     public function actionUpdate($id = null)
     {
         if ($id) {
-            $model = $this->findModel(Classification::className(), $id);
+            $model = $this->findModel($id, Classification::className());
         } else {
             $model = new Classification;
         }

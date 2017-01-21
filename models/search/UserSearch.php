@@ -2,44 +2,40 @@
 
 namespace app\models\search;
 
-use Yii;
-use yii\base\Model;
-use yii\data\ActiveDataProvider;
+use app\helpers\Tools;
+use app\models\components\SearchTrait;
 use app\models\User;
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\db\Query;
 
 /**
  * UserSearch represents the model behind the search form about `app\models\User`.
  */
 class UserSearch extends User
 {
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['email', 'name', 'auth_key', 'password_hash', 'password_reset_token'], 'safe'],
-        ];
-    }
+    use SearchTrait;
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
+    public function attributes()
     {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
+        // add related fields to searchable attributes
+        return array_merge(parent::attributes(), [
+            // Range fields
+            'user_role_id',
+            'has_role',
+            'permission',
+        ]);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
+    public function attributeLabels()
     {
-        $behaviors = parent::behaviors();
-        $behaviors[] = 'app\behaviors\SearchBehavior';
-        return $behaviors;
+        return array_merge(parent::attributeLabels(), [
+            'has_role' => __('Has role'),
+            'permission' => __('Permission'),
+        ]);
     }
 
     /**
@@ -84,6 +80,29 @@ class UserSearch extends User
             ->andFilterWhere(['like', 'password_hash', $this->password_hash])
             ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
         ;
+
+        if ($this->user_role_id) {
+            $query->andWhere(['user.id' => Yii::$app->authManager->getUserIdsByRole($this->user_role_id)]);
+        }
+
+        if ($this->permission) {
+            $authManager = Yii::$app->authManager;
+            $roles = $authManager->getRolesByPermission($this->permission);
+            $query->andWhere(['user.id' => $authManager->getUserIdsByRole($roles)]);
+        }
+
+        if (Tools::stringNotEmpty($this->has_role)) {
+            $assigned = (new Query)
+                ->select('user_id')
+                ->distinct()
+                ->from(Yii::$app->authManager->assignmentTable)
+                ->column();
+            if ($this->has_role) {
+                $query->andWhere(['user.id' => $assigned]);
+            } else {
+                $query->andWhere(['not', ['user.id' => $assigned]]);
+            }
+        }
 
         return $dataProvider;
     }

@@ -9,7 +9,9 @@ $this->params['breadcrumbs'][] = $this->title;
 $detailsLink = function($model) {
     return [
         'label' => __('Edit'),
-        'href' => Url::to(['/user/update', 'id' => $model->id]),
+        'href' => Url::to(['/user/update', 'id' => $model->id, '_return_url' => Url::to()]),
+        'class' => 'app-modal',
+        'data-target-id' => 'user_' . $model->id,
     ];
 };
 
@@ -39,8 +41,8 @@ $detailsLink = function($model) {
     <?php endif; ?>
 
     <h1><?= Html::encode($this->title) ?></h1>
-    
-    <?= $this->render('components/search', ['model' => $searchModel]); ?>
+
+    <?= $this->render('components/search', ['model' => $searchModel, 'permissions' => $permissions]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

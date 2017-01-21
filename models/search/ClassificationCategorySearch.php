@@ -2,14 +2,14 @@
 
 namespace app\models\search;
 
+use app\models\ClassificationCategory;
 use app\models\components\SearchTrait;
-use app\models\CounterpartyCategory;
 use yii\data\ActiveDataProvider;
 
 /**
- * CounterpartyCategorySearch represents the model behind the search form about `app\models\CounterpartyCategory`.
+ * ClassificationCategorySearch represents the model behind the search form about `app\models\ClassificationCategory`.
  */
-class CounterpartyCategorySearch extends CounterpartyCategory
+class ClassificationCategorySearch extends ClassificationCategory
 {
     use SearchTrait;
 
@@ -22,7 +22,7 @@ class CounterpartyCategorySearch extends CounterpartyCategory
      */
     public function search($params)
     {
-        $query = CounterpartyCategory::find();
+        $query = ClassificationCategory::find();
 
         // add conditions that should always apply here
 

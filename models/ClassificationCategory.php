@@ -2,23 +2,25 @@
 
 namespace app\models;
 
+use Yii;
+
 /**
- * This is the model class for table "counterparty_category".
+ * This is the model class for table "classification_category".
  *
  * @property integer $id
  * @property string $name
  * @property string $notes
  *
- * @property Counterparty[] $counterparties
+ * @property Classification[] $classifications
  */
-class CounterpartyCategory extends AbstractModel
+class ClassificationCategory extends AbstractModel
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'counterparty_category';
+        return 'classification_category';
     }
 
     /**
@@ -39,18 +41,17 @@ class CounterpartyCategory extends AbstractModel
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'notes' => 'Notes',
+            'id' => __('ID'),
+            'name' => __('Name'),
+            'notes' => __('Notes'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCounterparties()
+    public function getClassifications()
     {
-        return $this->hasMany(Counterparty::className(), ['category_id' => 'id']);
+        return $this->hasMany(Classification::className(), ['category_id' => 'id']);
     }
-
 }

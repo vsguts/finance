@@ -2,45 +2,16 @@
 
 namespace app\models\search;
 
-use Yii;
-use yii\base\Model;
-use yii\data\ActiveDataProvider;
+use app\models\components\SearchTrait;
 use app\models\Currency;
+use yii\data\ActiveDataProvider;
 
 /**
  * CurrencySearch represents the model behind the search form about `app\models\Currency`.
  */
 class CurrencySearch extends Currency
 {
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['id'], 'integer'],
-            [['name', 'code', 'symbol'], 'safe'],
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors[] = 'app\behaviors\SearchBehavior';
-        return $behaviors;
-    }
+    use SearchTrait;
 
     /**
      * Creates data provider instance with search query applied
