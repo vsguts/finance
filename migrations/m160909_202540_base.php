@@ -55,10 +55,10 @@ class m160909_202540_base extends Migration
             'id'                   => $this->primaryKey(),
             'name'                 => $this->string()->notNull(),
             'email'                => $this->string()->notNull(),
+            'status'               => "enum('active','disabled') NOT NULL DEFAULT 'active'",
             'auth_key'             => $this->string(32)->notNull(),
             'password_hash'        => $this->string()->notNull(),
             'password_reset_token' => $this->string(),
-            'status'               => $this->integer()->defaultValue(1),
             'created_at'           => $this->integer()->notNull(),
             'updated_at'           => $this->integer()->notNull(),
         ], $this->getTableOptions());

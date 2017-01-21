@@ -2,9 +2,13 @@
 
 namespace app\models;
 
+use app\behaviors\LookupBehavior;
+use app\behaviors\TimestampBehavior;
+use app\behaviors\UserPasswordBehavior;
+use app\behaviors\UserRolesBehavior;
+use app\models\form\UserSignupForm;
 use Yii;
 use yii\base\NotSupportedException;
-use app\models\form\UserSignupForm;
 
 /**
  * This is the model class for table "user".
@@ -12,14 +16,14 @@ use app\models\form\UserSignupForm;
  * @property integer $id
  * @property string $name
  * @property string $email
- * @property integer $status
+ * @property string $status
  * @property string $auth_key
  * @property string $password_hash
  * @property string $password_reset_token
  */
 class User extends AbstractModel implements \yii\web\IdentityInterface
 {
-    const STATUS_ACTIVE = 1;
+    const STATUS_ACTIVE = 'active';
 
     public $password;
 
@@ -34,10 +38,10 @@ class User extends AbstractModel implements \yii\web\IdentityInterface
     public function behaviors()
     {
         return [
-            'app\behaviors\UserPasswordBehavior',
-            'app\behaviors\UserRolesBehavior',
-            'app\behaviors\TimestampBehavior',
-            'app\behaviors\LookupBehavior',
+            UserPasswordBehavior::class,
+            UserRolesBehavior::class,
+            TimestampBehavior::class,
+            LookupBehavior::class,
         ];
     }
 
@@ -48,7 +52,8 @@ class User extends AbstractModel implements \yii\web\IdentityInterface
             [['email'], 'unique', 'message' => __('This email address has already been taken.')],
             [['email'], 'email'],
             [['password'], 'string', 'min' => UserSignupForm::PASS_MIN_LEN],
-            [['status'], 'integer'],
+            [['status'], 'default', 'value' => self::STATUS_ACTIVE],
+            [['status'], 'string'],
             [['name', 'email', 'password_hash', 'password_reset_token'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32]
         ]);
@@ -60,8 +65,8 @@ class User extends AbstractModel implements \yii\web\IdentityInterface
             'id' => __('ID'),
             'name' => __('Name'),
             'email' => __('E-mail'),
-            'password' => __('Password'),
             'status' => __('Status'),
+            'password' => __('Password'),
         ]);
     }
 
