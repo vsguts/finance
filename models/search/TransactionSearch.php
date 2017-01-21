@@ -25,6 +25,7 @@ class TransactionSearch extends Transaction
             // Relations
             'currency_id',
             'category_id',
+            'classification_category_id',
 
             // Range fields
             'timestamp_to',
@@ -94,26 +95,24 @@ class TransactionSearch extends Transaction
             return $dataProvider;
         }
 
-        $this->commonConditions($query);
-
-        return $dataProvider;
-    }
-
-    protected function commonConditions($query)
-    {
-        if ($this->counterparty_id === '0') {
-            $query->andWhere('counterparty_id is NULL');
-        }
-
         // grid filtering conditions
         $query->andFilterWhere([
             'transaction.id' => $this->id,
             'account_id' => $this->account_id,
             'classification_id' => $this->classification_id,
             'counterparty_id' => $this->counterparty_id ?: '',
+            'classification.category_id' => $this->classification_category_id ?: '',
             'user_id' => $this->user_id,
             'account.currency_id' => $this->currency_id,
         ]);
+
+        if ($this->counterparty_id === '0') {
+            $query->andWhere('counterparty_id is NULL');
+        }
+
+        if ($this->classification_category_id === '0') {
+            $query->andWhere('classification.category_id is NULL');
+        }
 
         $query
             ->andFilterWhere(['like', 'transaction.description', $this->description])
@@ -123,6 +122,8 @@ class TransactionSearch extends Transaction
         $this->addRangeCondition($query, 'inflow');
         $this->addRangeCondition($query, 'outflow');
         $this->addRangeCondition($query, 'balance');
+
+        return $dataProvider;
     }
 
     public function getTotals(ActiveDataProvider $dataProvider)

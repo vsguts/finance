@@ -2,6 +2,7 @@
 
 namespace app\components\reports\transactions;
 
+use app\models\ClassificationCategory;
 use Yii;
 use app\components\reports\ReportAbstract;
 use app\models\Account;
@@ -14,6 +15,20 @@ abstract class AbstractTransactionReport extends ReportAbstract
 
     protected $_accounts;
 
+    protected $_classifications;
+
+    protected $_classification_categories;
+
+    protected $_counterparties;
+
+    protected $_transactions;
+
+    protected $_previous_transactions = [];
+
+
+    /**
+     * @return Account[]
+     */
     protected function getAccounts()
     {
         if (!$this->_accounts) {
@@ -32,8 +47,9 @@ abstract class AbstractTransactionReport extends ReportAbstract
         return $this->_accounts;
     }
 
-    protected $_classifications;
-
+    /**
+     * @return Classification[]
+     */
     protected function getClassifications()
     {
         if (!$this->_classifications) {
@@ -46,8 +62,24 @@ abstract class AbstractTransactionReport extends ReportAbstract
         return $this->_classifications;
     }
 
-    protected $_counterparties;
+    /**
+     * @return ClassificationCategory[]
+     */
+    protected function getClassificationCategories()
+    {
+        if (!$this->_classification_categories) {
+            $this->_classification_categories = ClassificationCategory::find()
+                ->orderBy(['name' => SORT_ASC])
+                ->indexBy('id')
+                ->all();
+        }
 
+        return $this->_classification_categories;
+    }
+
+    /**
+     * @return Counterparty[]
+     */
     protected function getCounterparties()
     {
         if (!$this->_counterparties) {
@@ -60,8 +92,9 @@ abstract class AbstractTransactionReport extends ReportAbstract
         return $this->_counterparties;
     }
 
-    protected $_transactions;
-
+    /**
+     * @return Transaction[]
+     */
     protected function getTransactions()
     {
         if (!$this->_transactions) {
@@ -84,8 +117,9 @@ abstract class AbstractTransactionReport extends ReportAbstract
         return $this->_transactions;
     }
 
-    protected $_previous_transactions = [];
-
+    /**
+     * @return Transaction
+     */
     protected function getAccountPreviousTransaction($account_id)
     {
         if (!array_key_exists($account_id, $this->_previous_transactions)) {

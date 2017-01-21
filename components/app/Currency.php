@@ -49,12 +49,12 @@ class Currency extends Component
 
     /**
      * Convert value to another currency
-     *
-     * @param  float $rate           Rate value
+     * @param  float $value          Rate value
      * @param  int   $currency_id    Current currency ID
      * @param  int   $to_currency_id Need currency ID
      * @param  int   $from           Period begin timestamp
      * @param  int   $to             Period end timestamp, if not set $from will be used
+     * @param  int   $precision
      * @return float
      */
     public function convert($value, $currency_id, $to_currency_id = null, $from = null, $to = null, $precision = null)
@@ -181,7 +181,7 @@ class Currency extends Component
     /**
      * Gets currency ID by currency code
      *
-     * @param  str $currency_code Currency code
+     * @param  string $currency_code Currency code
      * @return int
      */
     public function getCurrencyId($currency_code)

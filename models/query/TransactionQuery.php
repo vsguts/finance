@@ -28,6 +28,7 @@ class TransactionQuery extends ActiveQuery
                 'account',
                 'account.currency',
                 'counterparty',
+                'classification',
             ])
         ;
     }

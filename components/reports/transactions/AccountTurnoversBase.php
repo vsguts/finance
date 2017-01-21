@@ -3,7 +3,6 @@
 namespace app\components\reports\transactions;
 
 use Yii;
-use yii\base\Object;
 
 class AccountTurnoversBase extends AbstractTransactionReport
 {

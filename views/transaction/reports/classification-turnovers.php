@@ -1,12 +1,8 @@
 <?php
 
-use app\widgets\form\ActiveForm;
-use app\widgets\Tooltip;
-
 $this->render('components/functions');
 
 $formatter = Yii::$app->formatter;
-$base_currency = Yii::$app->currency->getBaseCurrency();
 
 ?>
 
@@ -40,9 +36,9 @@ $base_currency = Yii::$app->currency->getBaseCurrency();
             <td align="center">
                 <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $data['transactions'] ?></span></a>
             </td>
-            <td align="right" class="nowrap <?= getTextClass($data['inflow']) ?>"><?= $formatter->asMoney($data['inflow']) ?> <?= $base_currency->symbol ?></td>
-            <td align="right" class="nowrap <?= getTextClass($data['outflow'], true) ?>"><?= $formatter->asMoney($data['outflow']) ?> <?= $base_currency->symbol ?></td>
-            <td align="right" class="nowrap <?= getTextClass($data['difference']) ?>"><?= $formatter->asMoney($data['difference']) ?> <?= $base_currency->symbol ?></td>
+            <td align="right" class="nowrap <?= getTextClass($data['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($data['inflow']) ?></td>
+            <td align="right" class="nowrap <?= getTextClass($data['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($data['outflow']) ?></td>
+            <td align="right" class="nowrap <?= getTextClass($data['difference']) ?>"><?= $formatter->asMoneyWithSymbol($data['difference']) ?></td>
         </tr>
     </tbody>
 
@@ -68,9 +64,9 @@ $base_currency = Yii::$app->currency->getBaseCurrency();
                 <td align="center">
                     <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $classification['transactions'] ?></span></a>
                 </td>
-                <td align="right" class="nowrap <?= getTextClass($classification['inflow']) ?>"><?= $formatter->asMoney($classification['inflow']) ?> <?= $base_currency->symbol ?></td>
-                <td align="right" class="nowrap <?= getTextClass($classification['outflow'], true) ?>"><?= $formatter->asMoney($classification['outflow']) ?> <?= $base_currency->symbol ?></td>
-                <td align="right" class="nowrap <?= getTextClass($classification['difference']) ?>"><?= $formatter->asMoney($classification['difference']) ?> <?= $base_currency->symbol ?></td>
+                <td align="right" class="nowrap <?= getTextClass($classification['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($classification['inflow']) ?></td>
+                <td align="right" class="nowrap <?= getTextClass($classification['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($classification['outflow']) ?></td>
+                <td align="right" class="nowrap <?= getTextClass($classification['difference']) ?>"><?= $formatter->asMoneyWithSymbol($classification['difference']) ?></td>
             </tr>
         </tbody>
 
@@ -94,9 +90,9 @@ $base_currency = Yii::$app->currency->getBaseCurrency();
                 <td align="center">
                     <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $account['transactions'] ?></span></a>
                 </td>
-                <td align="right" class="nowrap <?= getTextClass($account['inflow']) ?>"><?= $formatter->asMoney($account['inflow']) ?> <?= $base_currency->symbol ?></td>
-                <td align="right" class="nowrap <?= getTextClass($account['outflow'], true) ?>"><?= $formatter->asMoney($account['outflow']) ?> <?= $base_currency->symbol ?></td>
-                <td align="right" class="nowrap <?= getTextClass($account['difference']) ?>"><?= $formatter->asMoney($account['difference']) ?> <?= $base_currency->symbol ?></td>
+                <td align="right" class="nowrap <?= getTextClass($account['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($account['inflow']) ?></td>
+                <td align="right" class="nowrap <?= getTextClass($account['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($account['outflow']) ?></td>
+                <td align="right" class="nowrap <?= getTextClass($account['difference']) ?>"><?= $formatter->asMoneyWithSymbol($account['difference']) ?></td>
             </tr>
 
         <?php endforeach ?>

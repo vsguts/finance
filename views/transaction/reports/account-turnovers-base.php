@@ -1,6 +1,5 @@
 <?php
 
-use app\widgets\form\ActiveForm;
 use app\widgets\Tooltip;
 
 $this->render('components/functions');
@@ -39,12 +38,12 @@ $formatter = Yii::$app->formatter;
             <td align="center">
                 <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $data['totals']['transactions'] ?></span></a>
             </td>
-            <td align="right" class="nowrap"><?= $formatter->asMoney($data['totals']['opening_balance']) ?> <?= $data['currency']->symbol ?></td>
-            <td align="right" class="nowrap"><?= $formatter->asMoney($data['totals']['inflow']) ?> <?= $data['currency']->symbol ?></td>
-            <td align="right" class="nowrap"><?= $formatter->asMoney($data['totals']['outflow']) ?> <?= $data['currency']->symbol ?></td>
-            <td align="right" class="nowrap"><?= $formatter->asMoney($data['totals']['forex']) ?> <?= $data['currency']->symbol ?></td>
-            <td align="right" class="nowrap"><?= $formatter->asMoney($data['totals']['closing_balance']) ?> <?= $data['currency']->symbol ?></td>
-            <td align="right" class="nowrap"><?= $formatter->asMoney($data['totals']['difference']) ?> <?= $data['currency']->symbol ?></td>
+            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['opening_balance']) ?></td>
+            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['inflow']) ?></td>
+            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['outflow']) ?></td>
+            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['forex']) ?></td>
+            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['closing_balance']) ?></td>
+            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['difference']) ?></td>
         </tr>
 
         <?php foreach ($data['accounts'] as $row) : ?>
@@ -69,17 +68,17 @@ $formatter = Yii::$app->formatter;
                     <?php endif; ?>    
                 </td>
                 <td>
-                    <?= $data['currency']->code ?>
+                    <?= Yii::$app->currency->getBaseCurrencyCode() ?>
                 </td>
                 <td align="center">
                     <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $row['transactions'] ?></span></a>
                 </td>
-                <td align="right" class="nowrap <?= getTextClass($row['opening_balance']) ?>"><?= $formatter->asMoney($row['opening_balance']) ?> <?= $data['currency']->symbol ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['inflow']) ?>"><?= $formatter->asMoney($row['inflow']) ?> <?= $data['currency']->symbol ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['outflow']) ?>"><?= $formatter->asMoney($row['outflow']) ?> <?= $data['currency']->symbol ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['forex']) ?>"><?= $formatter->asMoney($row['forex']) ?> <?= $data['currency']->symbol ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['closing_balance']) ?>"><?= $formatter->asMoney($row['closing_balance']) ?> <?= $data['currency']->symbol ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['difference']) ?>"><?= $formatter->asMoney($row['difference']) ?> <?= $data['currency']->symbol ?></td>
+                <td align="right" class="nowrap <?= getTextClass($row['opening_balance']) ?>"><?= $formatter->asMoneyWithSymbol($row['opening_balance']) ?></td>
+                <td align="right" class="nowrap <?= getTextClass($row['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($row['inflow']) ?></td>
+                <td align="right" class="nowrap <?= getTextClass($row['outflow']) ?>"><?= $formatter->asMoneyWithSymbol($row['outflow']) ?></td>
+                <td align="right" class="nowrap <?= getTextClass($row['forex']) ?>"><?= $formatter->asMoneyWithSymbol($row['forex']) ?></td>
+                <td align="right" class="nowrap <?= getTextClass($row['closing_balance']) ?>"><?= $formatter->asMoneyWithSymbol($row['closing_balance']) ?></td>
+                <td align="right" class="nowrap <?= getTextClass($row['difference']) ?>"><?= $formatter->asMoneyWithSymbol($row['difference']) ?></td>
             </tr>
 
         <?php endforeach; ?>
