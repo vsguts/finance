@@ -45,9 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
         $items = [];
 
-        foreach ($reports as $id => $report_label) {
+        foreach ($reports as $id => $report) {
             $item = [
-                'label' => $report_label,
+                'label' => $report['label'],
             ];
 
             if ($id == $report_id) {

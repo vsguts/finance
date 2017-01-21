@@ -7,6 +7,8 @@ use yii\base\Object;
 
 abstract class ReportAbstract extends Object implements ReportInterface
 {
+    public $position = 10;
+
     public $timestamp;
 
     public $timestamp_to;
