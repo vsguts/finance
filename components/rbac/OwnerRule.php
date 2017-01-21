@@ -2,24 +2,22 @@
 
 namespace app\components\rbac;
 
-use Yii;
-
-class OwnerRule extends ARule
+/**
+ * Checks if authorID matches user passed via params
+ */
+class OwnerRule extends AbstractRule
 {
     /**
-     * @param string|integer $user the user ID.
-     * @param Item $item the role or permission that this rule is associated with
-     * @param array $params parameters passed to ManagerInterface::checkAccess().
-     * @return boolean a value indicating whether the rule permits the role or permission it is associated with.
+     * @inheritdoc
      */
-    public function execute($user_id, $item, $params)
+    public function execute($user, $item, $params)
     {
-        if (!$user_id) {
+        if (!$user) {
             return false;
         }
-        
+
         if (isset($params['user'])) {
-            return $user_id == $params['user']->id;
+            return $user == $params['user']->id;
         }
 
         return false;

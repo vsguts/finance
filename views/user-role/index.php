@@ -1,5 +1,7 @@
 <?php
 
+use app\widgets\grid\ActionColumn;
+use app\widgets\grid\CounterColumn;
 use app\widgets\grid\GridView;
 use app\widgets\ActionsDropdown;
 
@@ -13,6 +15,17 @@ $detailsLink = function($model) {
         'href' => Url::to(['/user-role/update', 'id' => $model['id']]),
         'data-target-id' => 'user-role_' . $model['id'],
     ];
+};
+
+$showObjectsCount = function ($model, $object, $type = 'primary') {
+    $text = false;
+    if (!empty($model['data'][$object])) {
+        if (in_array('all', $model['data'][$object])) {
+            return Html::tag('span', __('All'), ['class' => 'label label-success']);
+        } else {
+            return Html::tag('span', count($model['data'][$object]), ['class' => 'label label-' . $type]);
+        }
+    }
 };
 
 ?>
@@ -45,6 +58,7 @@ $detailsLink = function($model) {
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'tableOptions' => ['class' => 'table table-hover table-highlighted app-float-thead'],
         'columns' => [
             [
                 'class' => 'yii\grid\CheckboxColumn'
@@ -55,12 +69,48 @@ $detailsLink = function($model) {
                 'link' => $detailsLink,
             ],
             [
-                'attribute' => 'name',
-                'label' => __('Code')
+                'label' => __('Permissions'),
+                'value' => function ($model) use ($showObjectsCount) {
+                    return $showObjectsCount($model, 'permissions');
+                },
+                'format' => 'raw',
+                'headerOptions' => ['align' => 'center'],
+                'contentOptions' => ['align' => 'center'],
             ],
-            // 'name',
             [
-                'class' => 'app\widgets\grid\ActionColumn',
+                'label' => __('Inherited roles'),
+                'value' => function ($model) use ($showObjectsCount) {
+                    return $showObjectsCount($model, 'roles', 'info');
+                },
+                'format' => 'raw',
+                'headerOptions' => ['align' => 'center'],
+                'contentOptions' => ['align' => 'center'],
+            ],
+            [
+                'label' => __('Accounts'),
+                'value' => function ($model) use ($showObjectsCount) {
+                    return $showObjectsCount($model, 'accounts');
+                },
+                'format' => 'raw',
+                'headerOptions' => ['align' => 'center'],
+                'contentOptions' => ['align' => 'center'],
+            ],
+            [
+                'class' => CounterColumn::className(),
+                'label' => __('Users'),
+                'count' => function($model) {
+                    if (empty($model['data']['system'])) {
+                        return count(Yii::$app->authManager->getUserIdsByRole($model['name']));
+                    }
+                },
+                'link' => function($model) {
+                    return Url::to(['user/index', 'user_role_id' => $model['name']]);
+                },
+                'headerOptions' => ['align' => 'center'],
+                'contentOptions' => ['align' => 'center'],
+            ],
+            [
+                'class' => ActionColumn::className(),
                 'size' => 'xs',
                 'items' => [
                     $detailsLink,
@@ -77,6 +127,12 @@ $detailsLink = function($model) {
                 ],
             ],
         ],
+        'rowOptions'   => function ($model) {
+            if (!empty($model['data']['system'])) {
+                return ['class' => 'bg-success'];
+            }
+            return [];
+        },
     ]); ?>
 
 </div>

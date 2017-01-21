@@ -2,22 +2,21 @@
 
 namespace app\components\rbac;
 
+use yii\helpers\Inflector;
 use yii\rbac\Rule;
 
-/**
- * Checks if authorID matches user passed via params
- */
-abstract class ARule extends Rule
+abstract class AbstractRule extends Rule
 {
     public function init()
     {
         parent::init();
-        
-        $name = static::className();
+
+        $name = get_class($this);
         if ($pos = strrpos($name, '\\')) {
             $name = substr($name, $pos + 1);
         }
-        
-        $this->name = str_replace('Rule', '', $name);
+
+        $name = str_replace('Rule', '', $name);
+        $this->name = Inflector::camel2id($name, '_');
     }
 }

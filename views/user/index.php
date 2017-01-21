@@ -22,7 +22,10 @@ $detailsLink = function($model) {
 
     <div class="pull-right buttons-container">
         <div class="btn-group">
-            <?= Html::a(__('Create user'), ['create'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a(__('Create user'), ['update', '_return_url' => Url::to()], [
+                'class' => 'btn btn-success app-modal',
+                'data-target-id' => 'user_create',
+            ]) ?>
         </div>
         <?= ActionsDropdown::widget([
             'layout' => 'info',
@@ -91,6 +94,11 @@ $detailsLink = function($model) {
                 ],
             ],
         ],
+        'rowOptions' => function($model) {
+            return [
+                'class' => 'status-' . $model->status,
+            ];
+        },
     ]); ?>
 
 </div>

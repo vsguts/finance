@@ -60,6 +60,11 @@ $detailsLink = function($model) {
     
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'rowOptions'   => function ($model) {
+            return [
+                'class' => 'status-' . $model->status,
+            ];
+        },
         'columns' => [
             ['class' => 'yii\grid\CheckboxColumn'],
 
@@ -129,6 +134,7 @@ $detailsLink = function($model) {
             ],
 
         ],
+
     ]) ?>
     
 </div>

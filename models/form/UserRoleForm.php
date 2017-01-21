@@ -3,6 +3,7 @@
 namespace app\models\form;
 
 use Yii;
+use yii\db\Expression;
 use yii\db\Query;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
@@ -17,9 +18,6 @@ class UserRoleForm extends Model
     public $permissions = [];
     public $roles = [];
 
-    // Application
-    public $accounts = [];
-
     /**
      * @return array the validation rules.
      */
@@ -28,9 +26,6 @@ class UserRoleForm extends Model
         return [
             [['name', 'description'], 'required'],
             [['data', 'permissions', 'roles'], 'safe'],
-
-            // Application
-            [['accounts'], 'safe'],
         ];
     }
 
@@ -112,7 +107,7 @@ class UserRoleForm extends Model
         return false;
     }
 
-    public static function findOne($name, $as_array = false)
+    public static function findOne($name)
     {
         $auth = Yii::$app->authManager;
         
@@ -159,7 +154,22 @@ class UserRoleForm extends Model
             asort($data);
             $roles = $data;
         }
-        
+
+        if (!empty($params['get_links'])) {
+            $query = (new Query)
+                ->select(['name', 'parent', 'type'])
+                ->from([$auth->itemTable, $auth->itemChildTable])
+                ->where(['name' => new Expression('[[child]]')]);
+
+            foreach ($query->all($auth->db) as $link) {
+                if ($link['type'] == Item::TYPE_ROLE) {
+                    $roles[$link['parent']]->data['roles'][] = $link['name'];
+                } elseif ($link['type'] == Item::TYPE_PERMISSION) {
+                    $roles[$link['parent']]->data['permissions'][] = $link['name'];
+                }
+            }
+        }
+
         return $roles;
     }
 
@@ -168,20 +178,22 @@ class UserRoleForm extends Model
         $auth = Yii::$app->authManager;
 
         $sections = [];
-        foreach ($auth->getPermissions() as $permission) {
-            list($section_name, $description) = explode('::', $permission->description, 2);
+        $permissions = $auth->getPermissions();
+        ArrayHelper::multisort($permissions, 'description');
+        foreach ($permissions as $permission) {
+            @list($header, $section_name, $description) = explode('::', $permission->description, 3);
             if (!$description) {
                 $description = $section_name;
-                $section_name = 'Common';
+                $section_name = $header;
+                $header = __('Common');
+                if (!$description) {
+                    $description = $section_name;
+                    $section_name = __('Common');
+                }
             }
-            $sections[__($section_name)][$permission->name] = __($description);
+            $sections[__($header)][__($section_name)][$permission->name] = __($description);
         }
 
-        ksort($sections);
-        foreach ($sections as &$section) {
-            asort($section);
-        }
-        
         return $sections;
     }
 

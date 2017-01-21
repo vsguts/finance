@@ -43,6 +43,7 @@ class AccountSearch extends Account
             'pagination' => $this->getPaginationDefaults(),
             'sort' => [
                 'defaultOrder' => [
+                    'status' => SORT_ASC,
                     'name' => SORT_ASC,
                     'currency' => SORT_ASC,
                 ],

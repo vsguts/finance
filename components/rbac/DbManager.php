@@ -4,25 +4,27 @@ namespace app\components\rbac;
 
 use Yii;
 use yii\db\Query;
-use yii\rbac\Rule;
 use yii\rbac\Item;
 
 class DbManager extends \yii\rbac\DbManager
 {
     const ALL_OBJECTS = 'all';
 
+    protected $assignments = [];
+
+    protected $userObjects = [];
+
     /**
      * Getting roles list. Applying for checkboxes
-     * 
-     * @param  str|array $skip_role_names Skip roles list
+     *
+     * @param  bool  $skip_system Skip roles list
      * @return array
      */
-    public function getRolesList($skip_role_names = [])
+    public function getRolesList($skip_system = false)
     {
         $roles = [];
-        $skip_role_names = (array)$skip_role_names;
         foreach ($this->getRoles() as $role) {
-            if (in_array($role->name, $skip_role_names)) {
+            if ($skip_system && !empty($role->data['system'])) {
                 continue;
             }
             $roles[$role->name] = $role->description;
@@ -32,14 +34,31 @@ class DbManager extends \yii\rbac\DbManager
         return $roles;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function updateItem($name, $item)
     {
         return parent::updateItem($name, $item);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getItem($name)
     {
         return parent::getItem($name);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAssignments($userId)
+    {
+        if (!isset($this->assignments[$userId])) {
+            $this->assignments[$userId] = parent::getAssignments($userId);
+        }
+        return $this->assignments[$userId];
     }
 
     /**
@@ -55,7 +74,7 @@ class DbManager extends \yii\rbac\DbManager
         foreach ($this->getRolesByUser($user_id) as $role) {
             $items = array_merge($items, $this->getItemsRecursive($role->name, $children));
         }
-        return $items;
+        return array_unique($items);
     }
 
     protected function getItemsRecursive($item, &$children)
@@ -83,27 +102,49 @@ class DbManager extends \yii\rbac\DbManager
 
     public function getUserObjects($object_name)
     {
-        $role_names = $this->getAllUserItemNames(Yii::$app->user->id);
+        if (!$this->userObjects) {
+            $data = array_fill_keys($this->getDataObjects(), []);
+            $role_names = $this->getAllUserItemNames(Yii::$app->user->id);
+            $query = (new Query)
+                ->from($this->itemTable)
+                ->where([
+                    'name' => $role_names,
+                    'type' => Item::TYPE_ROLE,
+                ]);
 
-        $query = (new Query)
-            ->from($this->itemTable)
-            ->where([
-                'name' => $role_names,
-                'type' => Item::TYPE_ROLE,
-            ]);
-
-        $object_ids = [];
-        foreach ($query->all($this->db) as $row) {
-            $role = $this->populateItem($row);
-            if (!empty($role->data[$object_name])) {
-                $object_ids = $object_ids + (array)$role->data[$object_name];
+            foreach ($query->all($this->db) as $row) {
+                $role = $this->populateItem($row);
+                if ($role->data) {
+                    foreach ($role->data as $name => $object) {
+                        if (is_array($object)) {
+                            if (isset($data[$name])) {
+                                $data[$name] = array_merge($data[$name], $object);
+                            } else {
+                                $data[$name] = $object;
+                            }
+                        }
+                    }
+                }
             }
+            $this->userObjects = $data;
         }
 
-        if (array_search('all', $object_ids) !== false) {
+        if (array_search('all', $this->userObjects[$object_name]) !== false) {
             return self::ALL_OBJECTS;
         }
 
-        return $object_ids;
+        return $this->userObjects[$object_name];
     }
+
+    public function getRolesByPermission($permission)
+    {
+        $parents = [];
+        foreach ($this->getChildrenList() as $parent => $children) {
+            foreach ($children as $child) {
+                $parents[$child][] = $parent;
+            }
+        }
+        return $this->getItemsRecursive($permission, $parents);
+    }
+
 }
