@@ -1,10 +1,9 @@
 <?php
 
-use yii\bootstrap\Tabs;
-use app\widgets\ActiveForm;
-use app\widgets\ButtonsContatiner;
-use app\widgets\Modal;
 use app\models\Currency;
+use app\widgets\form\ActiveForm;
+use app\widgets\form\ButtonsContatiner;
+use app\widgets\Modal;
 
 if ($model->isNewRecord) {
     $obj_id = 'account_create';

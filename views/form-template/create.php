@@ -1,6 +1,6 @@
 <?php
 
-use app\widgets\ActiveForm;
+use app\widgets\form\ActiveForm;
 use app\widgets\Modal;
 
 $_form_id = 'form-template_create_form';

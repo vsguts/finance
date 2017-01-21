@@ -4,14 +4,22 @@ namespace app\models\query;
 
 class ActiveQuery extends \yii\db\ActiveQuery
 {
+    protected static $idsCache = [];
+
     public function ids()
     {
-        return $this
-            ->select('id')
-            ->column();
+        $key = $this->createCommand()->getRawSql();
+
+        if (!isset(self::$idsCache[$key])) {
+            self::$idsCache[$key] = $this
+                ->select('id')
+                ->column();
+        }
+
+        return self::$idsCache[$key];
     }
 
-    public function scroll($params = [], $data = null)
+    public function scroll($params = [])
     {
         $params = array_merge([
             'field' => 'name',
@@ -20,7 +28,10 @@ class ActiveQuery extends \yii\db\ActiveQuery
             'without_key' => '0',
             'all' => false,
             'all_key' => '0',
+            'data' => null,
         ], $params);
+
+        $data = $params['data'];
 
         if (is_null($data)) {
             $data = $this
@@ -55,11 +66,6 @@ class ActiveQuery extends \yii\db\ActiveQuery
         return isset($data[$id]) ? $data[$id] : null;
     }
 
-    public function sorted()
-    {
-        return $this->orderBy(['name' => SORT_ASC]);
-    }
-
     /**
      * Override this if need
      * @return self
@@ -67,6 +73,16 @@ class ActiveQuery extends \yii\db\ActiveQuery
     public function permission()
     {
         return $this;
+    }
+
+    /**
+     * Override this if need
+     * Default sorting by name field
+     * @return self
+     */
+    public function sorted()
+    {
+        return $this->orderBy(['name' => SORT_ASC]);
     }
 
 }

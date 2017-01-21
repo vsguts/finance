@@ -1,11 +1,11 @@
 <?php
 
-use app\widgets\ActiveForm;
-use app\widgets\ButtonsContatiner;
-use app\widgets\Modal;
 use app\models\Account;
 use app\models\Classification;
 use app\models\Counterparty;
+use app\widgets\form\ButtonsContatiner;
+use app\widgets\form\ActiveForm;
+use app\widgets\Modal;
 
 if ($model->isNewRecord) {
     $obj_id = 'transaction_create';
@@ -44,7 +44,7 @@ $form = ActiveForm::begin([
     ]
 ]);
 
-echo $form->field($model, 'timestamp')->widget('app\widgets\DatePicker', ['options' => [
+echo $form->field($model, 'timestamp')->widget('app\widgets\form\DatePicker', ['options' => [
     'id' => $form_id . '-timestamp',
 ]]);
 
@@ -95,7 +95,7 @@ if (
 
 // Opening balance
 if (!$model->isNewRecord) {
-    echo $form->field($model, 'opening_balance')->widget('app\widgets\Text', ['value' => $model->openingBalanceValue])->hint($converted['opening_balance']);
+    echo $form->field($model, 'opening_balance')->text(['value' => $model->openingBalanceValue])->hint($converted['opening_balance']);
 }
 
 
@@ -127,7 +127,7 @@ echo Html::tag('div', $field, ['class' => 'app-classification-outflow']);
 
 // Closing balance
 if (!$model->isNewRecord) {
-    echo $form->field($model, 'balance')->widget('app\widgets\Text', ['value' => $model->balanceValue])->hint($converted['balance']);
+    echo $form->field($model, 'balance')->text(['value' => $model->balanceValue])->hint($converted['balance']);
 }
 
 
@@ -138,7 +138,7 @@ echo $form->field($model, 'description')->textarea([
 ]);
 
 // Attachments
-$widget = $form->field($model, 'attachments')->widget('app\widgets\Attachments');
+$widget = $form->field($model, 'attachments')->widget('app\widgets\form\Attachments');
 if ($widget->parts['{input}']) {
     echo $widget;
 }
@@ -147,7 +147,7 @@ echo $form->field($model, 'attachmentsUpload[main][]')->fileInput(['multiple' =>
 
 // User
 if (!$model->isNewRecord && $model->user) {
-    echo $form->field($model, 'user_id')->widget('app\widgets\Text', [
+    echo $form->field($model, 'user_id')->text([
         'value' => Html::a(
             $model->user->name,
             Url::to(['user/update', 'id' => $model->user->id]),
@@ -157,7 +157,7 @@ if (!$model->isNewRecord && $model->user) {
 }
 
 if (!$model->isNewRecord) {
-    echo $form->field($model, 'created_at')->widget('app\widgets\Text', ['formatter' => 'datetime']);
+    echo $form->field($model, 'created_at')->text(['formatter' => 'datetime']);
 }
 
 ActiveForm::end();

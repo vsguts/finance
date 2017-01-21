@@ -3,8 +3,8 @@
 use app\models\Account;
 use app\models\Classification;
 use app\models\Counterparty;
-use app\widgets\ActiveForm;
-use app\widgets\ButtonsContatiner;
+use app\widgets\form\ActiveForm;
+use app\widgets\form\ButtonsContatiner;
 use app\widgets\Modal;
 
 $obj_id = 'transaction_transfer';
@@ -34,7 +34,7 @@ $form = ActiveForm::begin([
     ]
 ]);
 
-echo $form->field($model, 'timestamp')->widget('app\widgets\DatePicker', ['options' => [
+echo $form->field($model, 'timestamp')->widget('app\widgets\form\DatePicker', ['options' => [
     'id' => $form_id . '-timestamp',
 ]]);
 
@@ -87,7 +87,7 @@ echo $form->field($model, 'description')->textarea([
 // User
 if ($model->transaction) {
     if ($model->transaction->user) {
-        echo $form->field($model->transaction, 'user')->widget('app\widgets\Text', [
+        echo $form->field($model->transaction, 'user')->text([
             'value' => Html::a(
                 $model->transaction->user->name,
                 Url::to(['user/update', 'id' => $model->transaction->user->id]),
@@ -96,7 +96,7 @@ if ($model->transaction) {
         ]);
     }
     if ($model->transaction->created_at) {
-        echo $form->field($model->transaction, 'created_at')->widget('app\widgets\Text', ['formatter' => 'datetime']);
+        echo $form->field($model->transaction, 'created_at')->text(['formatter' => 'datetime']);
     }
 }
 

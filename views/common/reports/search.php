@@ -1,7 +1,7 @@
 <?php
 
-use app\widgets\SearchForm;
 use app\widgets\PeriodLinks;
+use app\widgets\form\SearchForm;
 
 ?>
 
@@ -13,7 +13,7 @@ use app\widgets\PeriodLinks;
 
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'timestamp')->widget('app\widgets\DatePickerRange') ?>
+            <?= $form->field($model, 'timestamp')->widget('app\widgets\form\DatePickerRange') ?>
         </div>
         <div class="col-md-6">
         </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\widgets;
+namespace app\widgets\form;
 
 use Yii;
 use yii\helpers\Html;
@@ -10,7 +10,7 @@ class ActiveForm extends YActiveForm
 {
     const COLS_TOTAL = 12;
 
-    public $fieldClass = 'app\widgets\ActiveField';
+    public $fieldClass = 'app\widgets\form\ActiveField';
 
     public $layout = 'horizontal';
 
@@ -32,8 +32,13 @@ class ActiveForm extends YActiveForm
         $this->fieldConfig['horizontalCssClasses']['label'] = 'col-sm-' . $this->labelCols;
         $this->fieldConfig['horizontalCssClasses']['wrapper'] = 'col-sm-' . (self::COLS_TOTAL - $this->labelCols);
 
+        if (!isset($this->options['class'])) {
+            $this->options['class'] = [];
+        }
+        Html::addCssClass($this->options['class'], 'app-check-changes');
+
         parent::init();
-        
+
         $params = Yii::$app->request->queryParams;
         if (!empty($params['_return_url'])) {
             echo Html::hiddenInput('_return_url', $params['_return_url']);

@@ -1,10 +1,9 @@
 <?php
 
-namespace app\widgets;
+namespace app\widgets\form;
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\web\JsExpression;
 use yii\widgets\InputWidget;
 
 class SelectAjax extends InputWidget

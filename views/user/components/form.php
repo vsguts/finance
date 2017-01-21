@@ -1,7 +1,7 @@
 <?php
 
 use yii\bootstrap\Tabs;
-use app\widgets\ActiveForm;
+use app\widgets\form\ActiveForm;
 
 $form = ActiveForm::begin(['id' => 'user_form']);
 

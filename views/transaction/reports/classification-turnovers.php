@@ -1,6 +1,6 @@
 <?php
 
-use app\widgets\ActiveForm;
+use app\widgets\form\ActiveForm;
 use app\widgets\Tooltip;
 
 $this->render('components/functions');

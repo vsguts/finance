@@ -1,10 +1,9 @@
 <?php
 
-namespace app\widgets;
+namespace app\widgets\form;
 
-use Yii;
-use yii\helpers\Html;
 use yii\bootstrap\ActiveForm as BActiveForm;
+use yii\helpers\Html;
 
 class SearchForm extends BActiveForm
 {
@@ -22,8 +21,8 @@ class SearchForm extends BActiveForm
         'template' => "{label}\n{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
         'horizontalCssClasses' => [
             'label' => 'col-sm-3',
-            'offset' => 'col-sm-offset-4',
-            'wrapper' => 'col-sm-9',
+            'offset' => '',
+            'wrapper' => '',
             'error' => '',
             'hint' => '',
         ],

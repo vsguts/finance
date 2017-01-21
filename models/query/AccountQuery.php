@@ -63,7 +63,8 @@ class AccountQuery extends ActiveQuery
             $data[$model->id] = $model->$field;
         }
         asort($data);
-        return parent::scroll($params, $data);
+        $params['data'] = $data;
+        return parent::scroll($params);
     }
 
 }

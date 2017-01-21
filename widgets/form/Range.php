@@ -1,6 +1,6 @@
 <?php
 
-namespace app\widgets;
+namespace app\widgets\form;
 
 use yii\helpers\Html;
 use yii\widgets\InputWidget;
