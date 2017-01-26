@@ -106,7 +106,7 @@ abstract class AbstractExport extends Model
     public function attributeLabels()
     {
         return [
-            'filename' => __('Filename'),
+            'filename' => __('File name'),
             'formatter' => __('Format'),
             // CSV
             'delimiter' => __('Delimiter'),
