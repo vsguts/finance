@@ -155,6 +155,7 @@ foreach ($templates as $template) {
             ],
             [
                 'attribute' => 'classification',
+                'label' => __('Classification'),
                 'value' => function($model, $key, $index, $column){
                     return $model->classification ? $model->classification->name : null;
                 },
@@ -170,6 +171,7 @@ foreach ($templates as $template) {
             ],
             [
                 'attribute' => 'counterparty',
+                'label' => __('Counterparty'),
                 'value' => function($model, $key, $index, $column){
                     return $model->counterparty ? $model->counterparty->name : null;
                 },

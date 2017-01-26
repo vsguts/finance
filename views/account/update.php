@@ -7,7 +7,7 @@ use app\widgets\Modal;
 
 if ($model->isNewRecord) {
     $obj_id = 'account_create';
-    $header = __('Create bank account');
+    $header = __('Create account');
 } else {
     $obj_id = 'account_' . $model->id;
     $header = __('Account: {account}', [

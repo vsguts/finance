@@ -4,12 +4,14 @@ namespace app\controllers;
 
 use app\behaviors\AjaxFilter;
 use app\helpers\FileHelper;
+use app\models\Language;
 use Yii;
 use yii\db\ActiveQueryInterface;
 use yii\db\ActiveRecordInterface;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\Cookie;
 use yii\web\NotFoundHttpException;
 
 class AbstractController extends Controller
@@ -17,7 +19,30 @@ class AbstractController extends Controller
     public function init()
     {
         parent::init();
+
         Yii::$app->session->open();
+
+        $language = Yii::$app->request->cookies->getValue('language');
+        if ($language && strlen($language) == 5) {
+            Yii::$app->language = $language;
+        } else {
+            if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+                $languages = Language::find()->sorted()->all();
+                $codes = [];
+                foreach ($languages as $language) {
+                    $codes[] = $language->code;
+                }
+                if (preg_match("/(" . implode('|' , $codes) . ")+(-|;|,)?(.*)?/", $_SERVER['HTTP_ACCEPT_LANGUAGE'], $matches)) {
+                    $browser_language = $matches[1];
+                    Yii::$app->response->cookies->add(new Cookie([
+                        'name' => 'language',
+                        'value' => $browser_language,
+                        'expire' => (new \Datetime)->modify('+1 year')->getTimestamp(),
+                    ]));
+                    Yii::$app->language = $browser_language;
+                }
+            }
+        }
     }
 
     public function behaviors()

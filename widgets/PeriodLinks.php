@@ -60,7 +60,7 @@ class PeriodLinks extends Widget
                 $this->timestampToField => $timestamps['to'],
             ]));
 
-            $text = $month['year'] . ' ' . Yii::$app->params['months'][$month['month']];
+            $text = $month['year'] . ' ' . __(Yii::$app->params['months'][$month['month']]);
 
             $options = $this->linkOptions;
             if ($timestamps['from'] == $currentTimestampFrom && $timestamps['to'] == $currentTimestampTo) {

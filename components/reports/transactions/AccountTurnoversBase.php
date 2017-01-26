@@ -9,7 +9,7 @@ class AccountTurnoversBase extends AbstractTransactionReport
 
     public function getReportName()
     {
-        return __('Account turnovers Base');
+        return __('Account turnovers ({currency})', ['currency' => Yii::$app->currency->getBaseCurrencyCode()]);
     }
 
     public function execute()

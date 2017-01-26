@@ -73,6 +73,17 @@ $config = [
                 '<controller:[\w\-]+>/<id:\d+>' => '<controller>/update',
             ],
         ],
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    // 'fileMap' => [
+                    //     'app' => 'app.php',
+                    //     'app/error' => 'error.php',
+                    // ],
+                ],
+            ],
+        ],
 
         // Application components
         'appBootstrap' => [

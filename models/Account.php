@@ -73,7 +73,7 @@ class Account extends AbstractModel
             'name' => __('Name'), 
             'bank' => __('Bank'),
             'account_number' => __('Account number'),
-            'init_balance' => __('Init Balance'),
+            'init_balance' => __('Init balance'),
             'import_processor' => __('Import processor'),
             'notes' => __('Notes'),
         ]);

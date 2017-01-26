@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Language;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 
@@ -111,7 +112,7 @@ $menu_items = [
             ],
             [
                 [
-                    'label' => __('Classification'),
+                    'label' => __('Classifications'),
                     'url' => ['/classification/index'],
                     'visible' => $user->can('classification_view'),
                     'active' => $controller_id == 'classification',
@@ -208,6 +209,27 @@ $menu_items = [
         ],
     ]),
 ];
+
+
+// Languages
+$select_language = false;
+$lang_items = [];
+foreach (Language::find()->sorted()->all() as $language) {
+    if ($language->code == Yii::$app->language) {
+        $select_language = $language;
+        // break;
+    }
+    $lang_items[] = [
+        'label' => $language->name,
+        'url' => ['language/select', 'id' => $language->id, 'current_url' => Url::to()],
+        'active' => $language == $select_language,
+    ];
+}
+if (!$select_language) {
+    $select_language = Language::find()->where(['code' => 'en-US'])->one();
+}
+$menu_items[] = ['label' => $select_language->short_name, 'items' => $lang_items];
+
 
 // Account
 

@@ -2,25 +2,24 @@
 
 namespace app\controllers;
 
-use Yii;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
-use yii\web\BadRequestHttpException;
-use app\models\User;
 use app\models\Account;
-use app\models\Transaction;
+use app\models\Classification;
+use app\models\ClassificationCategory;
 use app\models\Counterparty;
 use app\models\CounterpartyCategory;
-use app\models\Classification;
 use app\models\Currency;
-use app\models\DocumentTemplate;
 use app\models\form\ContactForm;
 use app\models\form\UserLoginForm;
-use app\models\form\UserSignupForm;
 use app\models\form\UserPasswordResetRequestForm;
 use app\models\form\UserResetPasswordForm;
+use app\models\form\UserSignupForm;
+use app\models\Transaction;
+use app\models\User;
+use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\helpers\Url;
+use yii\web\BadRequestHttpException;
 
 class SiteController extends AbstractController
 {
@@ -107,6 +106,11 @@ class SiteController extends AbstractController
                 'link' => Url::to(['classification/index']),
                 'count' => Classification::find()->count(),
             ];
+            $dashboard[] = [
+                'name' => __('Classification categories'),
+                'link' => Url::to(['classification-category/index']),
+                'count' => ClassificationCategory::find()->count(),
+            ];
         }
 
         if ($user->can('counterparty_view')) {
@@ -115,11 +119,8 @@ class SiteController extends AbstractController
                 'link' => Url::to(['counterparty/index']),
                 'count' => Counterparty::find()->count(),
             ];
-        }
-
-        if ($user->can('counterparty_view')) {
             $dashboard[] = [
-                'name' => __('Counterparty category'),
+                'name' => __('Counterparty categories'),
                 'link' => Url::to(['counterparty-category/index']),
                 'count' => CounterpartyCategory::find()->count(),
             ];

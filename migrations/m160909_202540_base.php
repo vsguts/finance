@@ -51,6 +51,16 @@ class m160909_202540_base extends Migration
         $this->insert('setting', ['name' => 'mailSendMethod', 'value' => 'file']);
 
 
+        $this->createTable('language', [
+            'id'         => $this->primaryKey(),
+            'code'       => $this->string()->notNull(),
+            'short_name' => $this->string()->notNull(),
+            'name'       => $this->string()->notNull(),
+        ], $this->getTableOptions());
+        $this->insert('language', ['code'=>'en-US', 'name'=>'English', 'short_name'=>'EN']);
+        $this->insert('language', ['code'=>'ru-RU', 'name'=>'Русский', 'short_name'=>'RU']);
+
+
         $this->createTable('user', [
             'id'                   => $this->primaryKey(),
             'name'                 => $this->string()->notNull(),
@@ -202,6 +212,7 @@ class m160909_202540_base extends Migration
         $this->dropTable('form_template');
         $this->dropTable('attachment');
         $this->dropTable('user');
+        $this->dropTable('language');
         $this->dropTable('setting');
         $this->dropTable('lookup');
     }

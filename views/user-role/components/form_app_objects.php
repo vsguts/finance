@@ -25,7 +25,7 @@ echo Tabs::widget([
             'label' => __('Accounts'),
             'content' => $form
                 ->field($model, 'data[accounts]')
-                ->label(__('Bank accounts'))
+                ->label(__('Accounts'))
                 ->checkboxList($accounts, [
                     'item' => function($index, $label, $name, $checked, $value) use($model) {
                         $status_class = '';

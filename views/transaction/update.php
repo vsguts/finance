@@ -9,7 +9,7 @@ use app\widgets\Modal;
 
 if ($model->isNewRecord) {
     $obj_id = 'transaction_create';
-    $header = __('Create cash transaction');
+    $header = __('Create transaction');
 } else {
     $obj_id = 'transaction_' . $model->id;
     $header = __('Transaction: {transaction}', [
