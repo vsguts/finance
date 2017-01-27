@@ -25,8 +25,9 @@ $(document).on('click', function(e) {
 
     var elm = jelm.parents('.app-tabs-save');
     if (elm.length) {
-        var selected = elm.find('.active a');
-        $.cookie('app-tabs-' + elm.attr('id'), selected.attr('href'));
+        var selected = elm.find('.active a'),
+            id = elm.data('tabsId') || elm.attr('id');
+        $.cookie('app-tabs-' + id, selected.attr('href'), {path: '/'});
     }
 
     var elm = jelm.closest('.app-checkboxes-group-allow');

@@ -57,7 +57,7 @@ $base_currency = Yii::$app->currency->getBaseCurrency();
         <tbody>
             <tr class="table-section">
                 <td colspan="2">
-                    <span class="app-toggle pointer" data-target-class="report-category-<?= $category_id ?>">
+                    <span class="app-toggle app-toggle-save app-toggle-save-inverse pointer" data-target-class="report-category-<?= $category_id ?>">
                         <span class="glyphicon glyphicon-chevron-down report-category-<?= $category_id ?>-on h"></span>
                         <span class="glyphicon glyphicon-chevron-right report-category-<?= $category_id ?>-off"></span>
                         <?= $category['category'] ? $category['category']->name : '' ?>

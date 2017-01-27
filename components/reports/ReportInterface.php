@@ -2,8 +2,6 @@
 
 namespace app\components\reports;
 
-use Yii;
-
 interface ReportInterface
 {
 

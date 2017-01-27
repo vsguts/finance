@@ -58,23 +58,27 @@ $.extend({
         $('.app-toggle-save', context).each(function(){
             var elm = $(this),
                 target_class = elm.data('targetClass'),
-                status = $.cookie('app-toggle-' + target_class);
-            
-            elm.appToggle(!!status);
-        });
+                status = !!$.cookie('app-toggle-' + target_class);
 
-        $('.app-tabs-save', context).each(function(){
-            var elm = $(this),
-                selected_href = $.cookie('app-tabs-' + elm.attr('id'));
-            
-            var href = elm.find('[href="' + selected_href + '"]');
-            if (href.is(':visible')) {
-                href.click();
+            if (elm.hasClass('app-toggle-save-inverse')) {
+                status = !status;
             }
+            elm.appToggle(status, true);
         });
 
         $('.app-dtoggle', context).each(function(){
             $(this).appDToggle();
+        });
+
+        $('.app-tabs-save', context).each(function(){
+            var elm = $(this),
+                id = elm.data('tabsId') || elm.attr('id'),
+                selected_href = $.cookie('app-tabs-' + id);
+
+            var href = elm.find('[href="' + selected_href + '"]');
+            if (href.is(':visible')) {
+                href.click();
+            }
         });
 
         $('.app-select2', context).each(function(){
@@ -188,10 +192,11 @@ $.fn.extend({
         return o;
     },
 
-    appToggle: function(display) {
+    appToggle: function(display, skip_saving) {
         var target_class = this.data('targetClass'),
             toggle_class = this.data('toggleClass'),
-            target = $('.' + target_class);
+            target = $('.' + target_class),
+            skip_saving = skip_saving || false;
 
         target.toggle(display);
         var status = target.is(':visible');
@@ -201,11 +206,16 @@ $.fn.extend({
         if (toggle_class) {
             this.toggleClass(toggle_class, display);
         }
-        if (this.hasClass('app-toggle-save') && typeof(display) == 'undefined') {
-            if (target.is(':visible')) {
-                $.cookie('app-toggle-' + target_class, 1);
+        if (this.hasClass('app-toggle-save') && !skip_saving) {
+            var save = target.is(':visible');
+            if (this.hasClass('app-toggle-save-inverse')) {
+                save = !save;
+            }
+
+            if (save) {
+                $.cookie('app-toggle-' + target_class, 1, {path: '/'});
             } else {
-                $.removeCookie('app-toggle-' + target_class);
+                $.removeCookie('app-toggle-' + target_class, {path: '/'});
             }
         }
 
@@ -216,7 +226,7 @@ $.fn.extend({
         var prefix = this.data('targetPrefix'),
             status = !this.data('displayStatus'),
             items = $('.app-toggle[data-target-class^="' + prefix + '"]');
-        
+
         items.each(function(){
             $(this).appToggle(status);
         });
@@ -233,19 +243,19 @@ $.fn.extend({
             sel_dep_all = '[class^="app-dtoggle-' + name + '-"',
             sel_dep = '.app-dtoggle-' + name + '-' + value;
 
+        if (value.length) {
+            sel_dep = sel_dep + ', .app-dtoggle-' + name + '-all';
+        }
+
         this.find('option').each(function(i, elm){
             var val = $(elm).val();
-            if (val != value) {
-                sel_dep = sel_dep + ', .app-dtoggle-' + name + '-n' + val;
+            if (val.length && val != value) {
+                sel_dep = sel_dep + ', .app-dtoggle-' + name + '-n-' + val;
             }
         });
-        
-        if (!value && !sel_dep.length) {
-            $(sel_dep_all).appShow();
-        } else {
-            $(sel_dep_all).appHide();
-            $(sel_dep).appShow();
-        }
+
+        $(sel_dep_all).appHide();
+        $(sel_dep).appShow();
     },
 
     appSelect2: function() {

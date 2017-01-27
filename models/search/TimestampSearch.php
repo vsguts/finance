@@ -40,11 +40,17 @@ class TimestampSearch extends Model
      */
     public function rules()
     {
-        $today = mktime(0, 0, 0);
+        $year = date('Y');
+        $month = date('n');
+        $first_month_day = mktime(0, 0, 0, $month, 1, $year);
+        $month_days = date('t', $first_month_day);
+        $last_month_day = mktime(0, 0, 0, $month, $month_days, $year);
 
         return [
-            [['timestamp'], 'default', 'value' => $today - 30 * SECONDS_IN_DAY],
-            [['timestamp_to'], 'default', 'value' => $today],
+            // [['timestamp'], 'default', 'value' => $today - 30 * SECONDS_IN_DAY],
+            // [['timestamp_to'], 'default', 'value' => $today],
+            [['timestamp'], 'default', 'value' => $first_month_day],
+            [['timestamp_to'], 'default', 'value' => $last_month_day],
         ];
     }
 
