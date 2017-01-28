@@ -6,6 +6,7 @@ use Yii;
 
 class ClassificationTurnovers extends AbstractTransactionReport
 {
+    public $position = 30;
 
     public function getReportName()
     {

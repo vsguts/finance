@@ -12,7 +12,7 @@ class TransactionReportSearch extends AbstractReportSearch
 
     protected function getDefaultReportName()
     {
-        return 'classification-category-turnovers';
+        return 'account-turnovers';
     }
 
 }

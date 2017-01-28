@@ -5,6 +5,8 @@ namespace app\components\reports\transactions;
 class AccountTurnovers extends AbstractTransactionReport
 {
 
+    public $position = 10;
+
     public function getReportName()
     {
         return __('Account turnovers');

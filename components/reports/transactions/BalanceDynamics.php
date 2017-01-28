@@ -6,6 +6,7 @@ use Yii;
 
 class BalanceDynamics extends AbstractTransactionReport
 {
+    public $position = 100;
 
     public function getReportName()
     {

@@ -6,6 +6,7 @@ use Yii;
 
 class CounterpartyTurnovers extends AbstractTransactionReport
 {
+    public $position = 50;
 
     public function getReportName()
     {

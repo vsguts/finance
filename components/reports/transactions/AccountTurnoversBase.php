@@ -6,6 +6,7 @@ use Yii;
 
 class AccountTurnoversBase extends AbstractTransactionReport
 {
+    public $position = 20;
 
     public function getReportName()
     {
