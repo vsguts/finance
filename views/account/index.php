@@ -22,7 +22,7 @@ $detailsLink = function($model) {
 
     <div class="pull-right buttons-container">
         <div class="btn-group">
-            <?= Html::a(__('Create bank account'), ['update', '_return_url' => Url::to()], [
+            <?= Html::a(__('Create account'), ['update', '_return_url' => Url::to()], [
                 'class' => 'btn btn-success app-modal',
                 'data-target-id' => 'account_create',
             ]) ?>
