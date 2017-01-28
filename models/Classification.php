@@ -90,13 +90,4 @@ class Classification extends AbstractModel
         return new ClassificationQuery(get_called_class());
     }
 
-    public function getExtendedName()
-    {
-        $name = $this->name;
-        if ($this->category_id && $this->category) {
-            $name .= ' (' . $this->category->name . ')';
-        }
-        return $name;
-    }
-
 }
