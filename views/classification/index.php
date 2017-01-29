@@ -3,7 +3,7 @@
 use app\widgets\grid\GridView;
 use app\widgets\ActionsDropdown;
 
-$this->title = __('Classification');
+$this->title = __('Classifications');
 $this->params['breadcrumbs'][] = $this->title;
 
 $detailsLink = function($model) {

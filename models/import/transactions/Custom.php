@@ -2,8 +2,10 @@
 
 namespace app\models\import\transactions;
 
+use app\models\Classification;
 use Yii;
 use app\models\Transaction;
+use yii\base\Exception;
 
 /**
  * Custom import schema
@@ -47,7 +49,29 @@ class Custom extends AbstractProvider
             $transaction->outflow = abs($gross_value);
         }
 
+        $transaction->classification_id = $this->getClassification($transaction, $data);
+
         return $transaction->save();
+    }
+
+    protected function getClassification($transaction, $data)
+    {
+        $classification = null;
+        $type = floatval($transaction->inflow) ? 'inflow' : 'outflow';
+
+        if (!empty($data['Classification'])) {
+            $classification = Classification::find()->where([
+                'name' => $data['Classification'],
+                'type' => $type,
+            ])->one();
+        }
+        if (!$classification) {
+            $classification = Classification::find()->sorted()->where(['type' => $type])->limit(1)->one();
+        }
+        if (!$classification) {
+            throw new Exception('Classification not found: ' . $type);
+        }
+        return $classification->id;
     }
 
 }
