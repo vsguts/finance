@@ -14,6 +14,8 @@ return [
         'file_stored' => '@app/files/stored/',
     ],
 
+    'mime_types_to_display' => ['pdf', 'image'],
+
     'months' => [
         1  => 'January',
         2  => 'February',

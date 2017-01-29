@@ -2,10 +2,10 @@
 
 namespace app\models;
 
+use app\helpers\FileHelper;
 use Yii;
 use yii\base\Exception;
 use yii\db\ActiveRecord;
-use yii\helpers\FileHelper;
 use yii\helpers\Inflector;
 use yii\web\UploadedFile;
 
@@ -96,7 +96,7 @@ class Attachment extends AbstractModel
         $file_name = $file->getBaseName();
         $file_ext = $file->getExtension();
 
-        $filename = $file_name .'.'. $file_ext;
+        $filename = $file_name . '.' . $file_ext;
         $index = 0;
         while (file_exists($dir . $filename)) {
             $index ++;
@@ -110,6 +110,15 @@ class Attachment extends AbstractModel
         }
 
         return false;
+    }
+
+    /**
+     * Check if file can be displayed in browser
+     * @return array
+     */
+    public function canShow()
+    {
+        return FileHelper::canShow($this->getPath());
     }
 
 }
