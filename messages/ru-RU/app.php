@@ -134,6 +134,7 @@ $messages = [
     'Counterparty turnovers' => 'Обороты по контрагенту',
     'Account currency' => 'Валюта счета',
     'Presentation currency' => 'Валюта отображения',
+    'Recalculate transaction balances' => 'Парасчитать балансы транзакций',
 ];
 
 return $messages;
