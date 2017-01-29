@@ -25,18 +25,8 @@ class Custom extends AbstractProvider
 
     public function processData($data)
     {
-        $uniqid = $this->getUniqid($data, ['Date', 'Value', 'Balance', 'Reference', 'Description']);
-
-        $transaction = Transaction::find()->where([
-            'account_id' => $this->account->id,
-            'uniqid' => $uniqid,
-        ])->one();
-        
-        if (!$transaction) {
-            $transaction = new Transaction;
-            $transaction->account_id = $this->account->id;
-            $transaction->uniqid = $uniqid;
-        }
+        $transaction = new Transaction;
+        $transaction->account_id = $this->account->id;
 
         if (!empty($data['Reference'])) {
             $transaction->reference = $data['Reference'];
