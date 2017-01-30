@@ -20,6 +20,16 @@ class UserRolesBehavior extends Behavior
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'roles' => __('Roles'),
+        ];
+    }
+
     public function prepareAuth($event)
     {
         $model = $this->owner;

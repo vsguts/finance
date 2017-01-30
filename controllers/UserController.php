@@ -134,7 +134,7 @@ class UserController extends AbstractController
 
     public function actionActOnBehalf($id)
     {
-        $model = $this->findModel(User::className(), $id);
+        $model = $this->findModel($id, User::className());
         Yii::$app->user->switchIdentity($model);
         return $this->goHome();
     }

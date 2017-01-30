@@ -39,9 +39,9 @@ class CounterpartyCategory extends AbstractModel
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'notes' => 'Notes',
+            'id' => __('ID'),
+            'name' => __('Name'),
+            'notes' => __('Notes'),
         ];
     }
 

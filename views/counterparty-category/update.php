@@ -7,7 +7,7 @@ use app\widgets\Checkboxes;
 
 if ($model->isNewRecord) {
     $obj_id = 'counterparty-category_create';
-    $header = __('Create counterparty category');
+    $header = __('Create category');
 } else {
     $obj_id = 'counterparty-category_' . $model->id;
     $header = __('Counterparty: {counterparty-category}', [

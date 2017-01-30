@@ -7,7 +7,7 @@ use app\widgets\Checkboxes;
 
 if ($model->isNewRecord) {
     $obj_id = 'classification-category_create';
-    $header = __('Create classification category');
+    $header = __('Create category');
 } else {
     $obj_id = 'classification-category_' . $model->id;
     $header = __('Classification: {classification-category}', [

@@ -34,7 +34,10 @@ class User extends AbstractModel implements \yii\web\IdentityInterface
     {
         return 'user';
     }
-    
+
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return [
@@ -45,6 +48,9 @@ class User extends AbstractModel implements \yii\web\IdentityInterface
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return array_merge(parent::rules(), [
@@ -59,6 +65,9 @@ class User extends AbstractModel implements \yii\web\IdentityInterface
         ]);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return array_merge(parent::attributeLabels(), [
