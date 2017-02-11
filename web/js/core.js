@@ -153,7 +153,7 @@ $.extend({
     appCalc: function(string) {
         var result;
         try {
-            result = eval(string.replace(/[^-()\d/*+.]/g, ''));
+            result = eval(string.split(',').join('.').replace(/[^-()\d/*+.]/g, ''));
             result = Math.round(result * 100) / 100;
         } catch(e) {
             result = string;
