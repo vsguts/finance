@@ -35,6 +35,7 @@ $messages = [
     'Status' => 'Статус',
     'Password' => 'Пароль',
     'Name' => 'Имя',
+    'Copy' => 'Копировать',
     'Type' => 'Тип',
     'Notes' => 'Заметки',
     'Powered by' => 'Работает на',
@@ -106,6 +107,9 @@ $messages = [
     'Upload attachments' => 'Загрузить файлы',
     'Save as template' => 'Сохранить как шаблон',
     'Value from' => 'Значение из',
+    'Value to' => 'Значение в',
+    'From account' => 'Из счета',
+    'To account' => 'В счет',
     'Start date' => 'Дата начала',
     'End date' => 'Дата окончания',
     'Yes' => 'Да',
@@ -152,6 +156,7 @@ $messages = [
     'Account currency' => 'Валюта счета',
     'Presentation currency' => 'Валюта отображения',
     'Recalculate transaction balances' => 'Парасчитать балансы транзакций',
+    'Your changes have been saved successfully.' => 'Ваши изменения были успешно сохранены.',
 ];
 
 return $messages;
