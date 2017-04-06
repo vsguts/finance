@@ -1,8 +1,10 @@
 <?php
 
 use app\assets\AppAsset;
+use app\models\Transaction;
 use app\widgets\ActionsDropdown;
 use app\widgets\grid\GridView;
+use app\widgets\Tooltip;
 
 $this->registerJs(AppAsset::appAccounts());
 $this->registerJs(AppAsset::appClassifications());
@@ -134,8 +136,15 @@ foreach ($templates as $template) {
 
             [
                 'attribute' => 'timestamp',
-                'format' => 'date',
-                'link' => $detailsLink,
+                'value' => function(Transaction $model) use($detailsLink) {
+                    $date = Yii::$app->formatter->asDate($model->timestamp);
+                    $value = Html::a($date, null, $detailsLink($model));
+                    if ($model->description) {
+                        $value .= ' ' . Tooltip::widget(['tooltip' => $model->description]);
+                    }
+                    return $value;
+                },
+                'format' => 'raw',
             ],
             [
                 'attribute' => 'account',
