@@ -206,7 +206,7 @@ class Transaction extends AbstractModel
 
     /**
      * @inheritdoc
-     * @return AccountQuery the active query used by this AR class.
+     * @return TransactionQuery the active query used by this AR class.
      */
     public static function find()
     {

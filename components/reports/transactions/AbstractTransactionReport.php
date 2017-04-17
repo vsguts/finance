@@ -107,10 +107,7 @@ abstract class AbstractTransactionReport extends ReportAbstract
                     ['>=', 'timestamp', $this->timestamp],
                     ['<=', 'timestamp', $this->timestamp_to + SECONDS_IN_DAY - 1],
                 ])
-                ->orderBy([
-                    'timestamp' => SORT_ASC,
-                    'id' => SORT_ASC,
-                ])
+                ->sorted(SORT_ASC)
                 ->all();
         }
 
@@ -129,10 +126,7 @@ abstract class AbstractTransactionReport extends ReportAbstract
                     ['account_id' => $account_id],
                     ['<', 'timestamp', $this->timestamp],
                 ])
-                ->orderBy([
-                    'timestamp' => SORT_DESC,
-                    'id' => SORT_DESC,
-                ])
+                ->sorted(SORT_DESC)
                 ->limit(1)
                 ->one();
         }

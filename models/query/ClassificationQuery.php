@@ -38,9 +38,4 @@ class ClassificationQuery extends ActiveQuery
             ->asArray();
     }
 
-    public function sorted()
-    {
-        return $this->orderBy(['name' => SORT_ASC]);
-    }
-
 }

@@ -43,14 +43,14 @@ class AccountQuery extends ActiveQuery
         ;
     }
 
-    public function sorted()
+    public function sorted($order = SORT_ASC)
     {
         return $this
             ->dependent()
             ->orderBy([
-                'account.name' => SORT_ASC,
-                'currency.code' => SORT_ASC,
-                'bank' => SORT_ASC,
+                'account.name' => $order,
+                'currency.code' => $order,
+                'bank' => $order,
             ])
         ;
     }

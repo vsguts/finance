@@ -33,4 +33,12 @@ class TransactionQuery extends ActiveQuery
         ;
     }
 
+    public function sorted($order = SORT_ASC)
+    {
+        return $this->orderBy([
+            'timestamp' => $order,
+            'id' => $order,
+        ]);
+    }
+
 }

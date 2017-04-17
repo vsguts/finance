@@ -78,11 +78,12 @@ class ActiveQuery extends \yii\db\ActiveQuery
     /**
      * Override this if need
      * Default sorting by name field
-     * @return self
+     * @param int $order
+     * @return ActiveQuery
      */
-    public function sorted()
+    public function sorted($order = SORT_ASC)
     {
-        return $this->orderBy(['name' => SORT_ASC]);
+        return $this->orderBy(['name' => $order]);
     }
 
 }
