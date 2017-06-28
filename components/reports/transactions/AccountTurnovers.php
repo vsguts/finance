@@ -2,6 +2,8 @@
 
 namespace app\components\reports\transactions;
 
+use Yii;
+
 class AccountTurnovers extends AbstractTransactionReport
 {
 
@@ -14,20 +16,18 @@ class AccountTurnovers extends AbstractTransactionReport
 
     public function execute()
     {
+        $fields = ['opening_balance', 'inflow', 'outflow', 'closing_balance', 'transactions', 'difference'];
+        $template = array_fill_keys($fields, 0);
+        $currenciesTemplate = array_fill_keys(Yii::$app->currency->getCurrencyIds(), 0);
+
         $data = [
             'accounts' => [],
+            'totals' => array_fill_keys($fields, $currenciesTemplate),
         ];
 
         foreach ($this->getAccounts() as $account) {
-            $data['accounts'][$account->id] = [
-                'account' => $account,
-                'opening_balance' => 0,
-                'inflow' => 0,
-                'outflow' => 0,
-                'closing_balance' => 0,
-                'transactions' => 0,
-                'difference' => 0,
-            ];
+            $data['accounts'][$account->id] = $template;
+            $data['accounts'][$account->id]['account'] = $account;
         }
 
         foreach ($this->getTransactions() as $transaction) {
@@ -52,7 +52,11 @@ class AccountTurnovers extends AbstractTransactionReport
             }
             $account['difference'] = $account['closing_balance'] - $account['opening_balance'];
             // Remove empty
-            if (!$account['transactions'] && !floatval($account['closing_balance'])) {
+            if ($account['transactions'] || floatval($account['closing_balance'])) {
+                foreach ($fields as $field) {
+                    $data['totals'][$field][$account['account']->currency_id] += $account[$field];
+                }
+            } else {
                 unset($data['accounts'][$key]);
             }
         }

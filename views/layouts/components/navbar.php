@@ -17,14 +17,14 @@ NavBar::begin([
 ]);
 
 $user = Yii::$app->user;
-$controller_id = Yii::$app->controller->id;
-$action_id = Yii::$app->controller->action->id;
-$action_params = Yii::$app->controller->actionParams;
+$controllerId = Yii::$app->controller->id;
+$actionId = Yii::$app->controller->action->id;
+$actionParams = Yii::$app->controller->actionParams;
 
 
-$proccess_menu_item = function ($menu_item) {
-    $items = isset($menu_item['items']) ? $menu_item['items'] : [];
-    $sections = isset($menu_item['sections']) ? $menu_item['sections'] : [];
+$processMenuItem = function ($menuItem) {
+    $items = isset($menuItem['items']) ? $menuItem['items'] : [];
+    $sections = isset($menuItem['sections']) ? $menuItem['sections'] : [];
 
     if ($sections) {
         foreach ($sections as $key => $section) {
@@ -49,26 +49,26 @@ $proccess_menu_item = function ($menu_item) {
         }
     }
 
-    $menu_item['active'] = false;
-    $menu_item['visible'] = false;
+    $menuItem['active'] = false;
+    $menuItem['visible'] = false;
 
     if ($items) {
         foreach ($items as $item) {
             if (isset($item['active']) && $item['active']) {
-                $menu_item['active'] = true;
+                $menuItem['active'] = true;
             }
             if (isset($item['visible']) && $item['visible']) {
-                $menu_item['visible'] = true;
+                $menuItem['visible'] = true;
             }
         }
     }
-    $menu_item['items'] = $items;
+    $menuItem['items'] = $items;
 
-    return $menu_item;
+    return $menuItem;
 };
 
 
-$is_profile = $controller_id == 'user' && $action_id == 'update' && $user->identity->id == $action_params['id'];
+$is_profile = $controllerId == 'user' && $actionId == 'update' && $user->identity->id == $actionParams['id'];
 
 /**
  * Left nav
@@ -82,13 +82,13 @@ echo Nav::widget([
             'label' => __('Transactions'),
             'url' => ['/transaction/index'],
             'visible' => $user->can('transaction_view'),
-            'active' => $controller_id == 'transaction' && !in_array($action_id, ['report', 'import']),
+            'active' => $controllerId == 'transaction' && !in_array($actionId, ['report', 'import']),
         ],
         [
             'label' => __('Reports'),
             'url' => ['/transaction/report'],
             'visible' => $user->can('transaction_view'),
-            'active' => $controller_id == 'transaction' && $action_id == 'report',
+            'active' => $controllerId == 'transaction' && $actionId == 'report',
         ],
     ],
 ]);
@@ -98,8 +98,8 @@ echo Nav::widget([
  * Right nav
  */
 
-$menu_items = [
-    $proccess_menu_item([
+$menuItems = [
+    $processMenuItem([
         'label' => __('Registries'),
         'sections' => [
             [
@@ -107,7 +107,7 @@ $menu_items = [
                     'label' => __('Accounts'),
                     'url' => ['/account/index'],
                     'visible' => $user->can('account_view'),
-                    'active' => $controller_id == 'account',
+                    'active' => $controllerId == 'account',
                 ]
             ],
             [
@@ -115,13 +115,13 @@ $menu_items = [
                     'label' => __('Classifications'),
                     'url' => ['/classification/index'],
                     'visible' => $user->can('classification_view'),
-                    'active' => $controller_id == 'classification',
+                    'active' => $controllerId == 'classification',
                 ],
                 [
                     'label' => __('Classification categories'),
                     'url' => ['/classification-category/index'],
                     'visible' => $user->can('classification_view'),
-                    'active' => $controller_id == 'classification-category',
+                    'active' => $controllerId == 'classification-category',
                 ],
             ],
             [
@@ -129,13 +129,13 @@ $menu_items = [
                     'label' => __('Counterparties'),
                     'url' => ['/counterparty/index'],
                     'visible' => $user->can('counterparty_view'),
-                    'active' => $controller_id == 'counterparty',
+                    'active' => $controllerId == 'counterparty',
                 ],
                 [
                     'label' => __('Counterparty categories'),
                     'url' => ['/counterparty-category/index'],
                     'visible' => $user->can('counterparty_view'),
-                    'active' => $controller_id == 'counterparty-category',
+                    'active' => $controllerId == 'counterparty-category',
                 ],
             ],
             [
@@ -143,13 +143,13 @@ $menu_items = [
                     'label' => __('Currencies'),
                     'url' => ['/currency/index'],
                     'visible' => $user->can('currency_view'),
-                    'active' => $controller_id == 'currency',
+                    'active' => $controllerId == 'currency',
                 ],
             ],
         ],
     ]),
     // Administration
-    $proccess_menu_item([
+    $processMenuItem([
         'label'   => __('Administration'),
         'sections'   => [
             [
@@ -157,13 +157,13 @@ $menu_items = [
                     'label'   => __('Users'),
                     'url'     => ['/user/index'],
                     'visible' => $user->can('user_view'),
-                    'active'  => $controller_id == 'user',
+                    'active'  => $controllerId == 'user',
                 ],
                 [
                     'label'   => __('User roles'),
                     'url'     => ['/user-role/index'],
                     'visible' => $user->can('user_role_view'),
-                    'active'  => $controller_id == 'user-role',
+                    'active'  => $controllerId == 'user-role',
                 ]
             ],
             [
@@ -171,29 +171,21 @@ $menu_items = [
                     'label'   => __('Settings'),
                     'url'     => ['/setting/index'],
                     'visible' => $user->can('setting_view'),
-                    'active'  => $controller_id == 'setting',
+                    'active'  => $controllerId == 'setting',
                 ]
             ],
         ],
     ]),
     // Help
-    $proccess_menu_item([
+    $processMenuItem([
         'label' => __('Help'),
         'sections' => [
-            [
-                [
-                    'label'   => __('Currency rates'),
-                    'url'     => ['/currency/rates'],
-                    'visible' => $user->can('currency_view'),
-                    'active'  => $controller_id == 'currency' && $action_id == 'rates',
-                ]
-            ],
             [
                 [
                     'label'   => __('FAQ'),
                     'url'     => ['/site/faq'],
                     'visible' => $user->can('faq_page'),
-                    'active'  => $controller_id == 'site' && $action_id == 'faq',
+                    'active'  => $controllerId == 'site' && $actionId == 'faq',
                 ],
                 [
                     'label'   => __('Contact'),
@@ -212,36 +204,36 @@ $menu_items = [
 
 
 // Languages
-$select_language = false;
-$lang_items = [];
+$selectLanguage = false;
+$langItems = [];
 foreach (Language::find()->sorted()->all() as $language) {
     if ($language->code == Yii::$app->language) {
-        $select_language = $language;
+        $selectLanguage = $language;
         // break;
     }
-    $lang_items[] = [
+    $langItems[] = [
         'label' => $language->name,
         'url' => ['language/select', 'id' => $language->id, 'current_url' => Url::to()],
-        'active' => $language == $select_language,
+        'active' => $language == $selectLanguage,
     ];
 }
-if (!$select_language) {
-    $select_language = Language::find()->where(['code' => 'en-US'])->one();
+if (!$selectLanguage) {
+    $selectLanguage = Language::find()->where(['code' => 'en-US'])->one();
 }
-$menu_items[] = ['label' => $select_language->short_name, 'items' => $lang_items];
+$menuItems[] = ['label' => $selectLanguage->short_name, 'items' => $langItems];
 
 
 // Account
 
 if ($user->isGuest) {
-    $menu_items[] = ['label' => __('Signup'), 'url' => ['/site/signup']];
-    $menu_items[] = ['label' => __('Login'), 'url' => ['/site/login']];
+    $menuItems[] = ['label' => __('Signup'), 'url' => ['/site/signup']];
+    $menuItems[] = ['label' => __('Login'), 'url' => ['/site/login']];
 } else {
     $name = trim($user->identity->name);
     if (empty($name)) {
         $name = $user->identity->email;
     }
-    $menu_items[] = $proccess_menu_item([
+    $menuItems[] = $processMenuItem([
         'label' => '<i class="glyphicon glyphicon-user"></i>',
         'items' => [
             Html::tag(
@@ -272,7 +264,7 @@ if ($user->isGuest) {
 echo Nav::widget([
     'options' => ['class' => 'navbar-nav navbar-right'],
     'encodeLabels' => false,
-    'items' => $menu_items,
+    'items' => $menuItems,
 ]);
 
 /**

@@ -4,7 +4,7 @@ use yii\bootstrap\Tabs;
 use app\widgets\ActionsDropdown;
 
 $this->title = __('Reports');
-$this->params['breadcrumbs'][] = ['label' => __('Bank transactions'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => __('Transactions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

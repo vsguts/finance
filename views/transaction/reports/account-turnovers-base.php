@@ -1,8 +1,11 @@
 <?php
 
+use app\helpers\ViewHelper;
+use app\models\search\TransactionReportSearch;
 use app\widgets\Tooltip;
 
-$this->render('components/functions');
+/* @var TransactionReportSearch $searchModel */
+/* @var array $data */
 
 $formatter = Yii::$app->formatter;
 
@@ -25,29 +28,7 @@ $formatter = Yii::$app->formatter;
     </thead>
 
     <tbody>
-        
-        <?php
-            $transactions_url = Url::to(['index',
-                'timestamp' => $formatter->asDate($searchModel->timestamp),
-                'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
-            ]);
-        ?>
-
-        <tr class="app-table-totals">
-            <td colspan="3"><?= __('Totals') ?>:</td>
-            <td align="center">
-                <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $data['totals']['transactions'] ?></span></a>
-            </td>
-            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['opening_balance']) ?></td>
-            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['inflow']) ?></td>
-            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['outflow']) ?></td>
-            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['forex']) ?></td>
-            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['closing_balance']) ?></td>
-            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['difference']) ?></td>
-        </tr>
-
         <?php foreach ($data['accounts'] as $row) : ?>
-
             <?php
                 $transactions_url = Url::to(['index',
                     'account_id' => $row['account']->id,
@@ -55,7 +36,6 @@ $formatter = Yii::$app->formatter;
                     'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
                 ]);
             ?>
-
             <tr>
                 <td><?= $row['account']->fullName ?></td>
                 <td>
@@ -73,15 +53,37 @@ $formatter = Yii::$app->formatter;
                 <td align="center">
                     <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $row['transactions'] ?></span></a>
                 </td>
-                <td align="right" class="nowrap <?= getTextClass($row['opening_balance']) ?>"><?= $formatter->asMoneyWithSymbol($row['opening_balance']) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($row['inflow']) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['outflow']) ?>"><?= $formatter->asMoneyWithSymbol($row['outflow']) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['forex']) ?>"><?= $formatter->asMoneyWithSymbol($row['forex']) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['closing_balance']) ?>"><?= $formatter->asMoneyWithSymbol($row['closing_balance']) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['difference']) ?>"><?= $formatter->asMoneyWithSymbol($row['difference']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['opening_balance']) ?>"><?= $formatter->asMoneyWithSymbol($row['opening_balance']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($row['inflow']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['outflow']) ?>"><?= $formatter->asMoneyWithSymbol($row['outflow']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['forex']) ?>"><?= $formatter->asMoneyWithSymbol($row['forex']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['closing_balance']) ?>"><?= $formatter->asMoneyWithSymbol($row['closing_balance']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['difference']) ?>"><?= $formatter->asMoneyWithSymbol($row['difference']) ?></td>
             </tr>
-
         <?php endforeach; ?>
     </tbody>
+
+    <tfoot>
+        <?php
+            $transactions_url = Url::to(['index',
+                'timestamp' => $formatter->asDate($searchModel->timestamp),
+                'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
+            ]);
+        ?>
+        <tr class="info">
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td align="center">
+                <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $data['totals']['transactions'] ?></span></a>
+            </td>
+            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['opening_balance']) ?></td>
+            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['inflow']) ?></td>
+            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['outflow']) ?></td>
+            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['forex']) ?></td>
+            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['closing_balance']) ?></td>
+            <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['difference']) ?></td>
+        </tr>
+    </tfoot>
 
 </table>

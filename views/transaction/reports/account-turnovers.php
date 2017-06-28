@@ -1,6 +1,10 @@
 <?php
 
-$this->render('components/functions');
+use app\helpers\ViewHelper;
+use app\models\search\TransactionReportSearch;
+
+/* @var TransactionReportSearch $searchModel */
+/* @var array $data */
 
 $formatter = Yii::$app->formatter;
 
@@ -22,7 +26,6 @@ $formatter = Yii::$app->formatter;
 
     <tbody>
         <?php foreach ($data['accounts'] as $row) : ?>
-
             <?php
                 $transactions_url = Url::to(['index',
                     'account_id' => $row['account']->id,
@@ -30,21 +33,40 @@ $formatter = Yii::$app->formatter;
                     'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
                 ]);
             ?>
-
             <tr>
                 <td><?= $row['account']->name ?></td>
                 <td><?= $row['account']->currency->code ?></td>
                 <td align="center">
                     <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $row['transactions'] ?></span></a>
                 </td>
-                <td align="right" class="nowrap <?= getTextClass($row['opening_balance']) ?>"><?= $formatter->asMoneyWithSymbol($row['opening_balance'], $row['account']->currency_id) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($row['inflow'], $row['account']->currency_id) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['outflow']) ?>"><?= $formatter->asMoneyWithSymbol($row['outflow'], $row['account']->currency_id) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['closing_balance']) ?>"><?= $formatter->asMoneyWithSymbol($row['closing_balance'], $row['account']->currency_id) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($row['difference']) ?>"><?= $formatter->asMoneyWithSymbol($row['difference'], $row['account']->currency_id) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['opening_balance']) ?>"><?= $formatter->asMoneyWithSymbol($row['opening_balance'], $row['account']->currency_id) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($row['inflow'], $row['account']->currency_id) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['outflow']) ?>"><?= $formatter->asMoneyWithSymbol($row['outflow'], $row['account']->currency_id) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['closing_balance']) ?>"><?= $formatter->asMoneyWithSymbol($row['closing_balance'], $row['account']->currency_id) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['difference']) ?>"><?= $formatter->asMoneyWithSymbol($row['difference'], $row['account']->currency_id) ?></td>
             </tr>
-
         <?php endforeach; ?>
     </tbody>
+
+    <tfoot>
+        <?php
+            $transactions_url = Url::to(['index',
+                'timestamp' => $formatter->asDate($searchModel->timestamp),
+                'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
+            ]);
+        ?>
+        <tr class="info">
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td align="center">
+                <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= array_sum($data['totals']['transactions']) ?></span></a>
+            </td>
+            <td align="right" class="nowrap"><?= ViewHelper::getCurrencyValues($data['totals']['opening_balance']) ?></td>
+            <td align="right" class="nowrap"><?= ViewHelper::getCurrencyValues($data['totals']['inflow']) ?></td>
+            <td align="right" class="nowrap"><?= ViewHelper::getCurrencyValues($data['totals']['outflow']) ?></td>
+            <td align="right" class="nowrap"><?= ViewHelper::getCurrencyValues($data['totals']['closing_balance']) ?></td>
+            <td align="right" class="nowrap"><?= ViewHelper::getCurrencyValues($data['totals']['difference']) ?></td>
+        </tr>
+    </tfoot>
 
 </table>

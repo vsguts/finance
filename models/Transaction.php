@@ -16,10 +16,10 @@ use app\models\query\TransactionQuery;
  * @property integer $related_id
  * @property integer $timestamp
  * @property integer $created_at
- * @property string $inflow
- * @property string $outflow
- * @property string $opening_balance
- * @property string $balance
+ * @property float $inflow
+ * @property float $outflow
+ * @property float $opening_balance
+ * @property float $balance
  * @property integer $has_attachments
  * @property string $description
  *

@@ -1,6 +1,7 @@
 <?php
 
 use app\assets\AppAsset;
+use app\helpers\ViewHelper;
 use app\models\Transaction;
 use app\widgets\ActionsDropdown;
 use app\widgets\grid\GridView;
@@ -205,14 +206,14 @@ foreach ($templates as $template) {
                 'attribute' => 'inflow',
                 'value' => 'inflowValue',
                 'contentOptions' => ['class' => 'nowrap text-success', 'align' => 'right'],
-                'footer' => !empty($totals) ? $totals['inflowValue'] : '',
+                'footer' => !empty($totals) ? ViewHelper::getCurrencyValues($totals['inflow']) : '',
                 'footerOptions' => ['class' => 'nowrap text-success', 'align' => 'right'],
             ],
             [
                 'attribute' => 'outflow',
                 'value' => 'outflowValue',
                 'contentOptions' => ['class' => 'nowrap text-danger', 'align' => 'right'],
-                'footer' => !empty($totals) ? $totals['outflowValue'] : '',
+                'footer' => !empty($totals) ? ViewHelper::getCurrencyValues($totals['outflow']) : '',
                 'footerOptions' => ['class' => 'nowrap text-danger', 'align' => 'right'],
             ],
             [

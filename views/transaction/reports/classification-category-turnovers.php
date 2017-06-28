@@ -1,6 +1,6 @@
 <?php
 
-$this->render('components/functions');
+use app\helpers\ViewHelper;
 
 $formatter = Yii::$app->formatter;
 $base_currency = Yii::$app->currency->getBaseCurrency();
@@ -37,9 +37,9 @@ $base_currency = Yii::$app->currency->getBaseCurrency();
             <td align="center">
                 <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $data['transactions'] ?></span></a>
             </td>
-            <td align="right" class="nowrap <?= getTextClass($data['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($data['inflow'], $data['currency_id']) ?></td>
-            <td align="right" class="nowrap <?= getTextClass($data['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($data['outflow'], $data['currency_id']) ?></td>
-            <td align="right" class="nowrap <?= getTextClass($data['difference']) ?>"><?= $formatter->asMoneyWithSymbol($data['difference'], $data['currency_id']) ?></td>
+            <td align="right" class="nowrap <?= ViewHelper::getTextClass($data['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($data['inflow'], $data['currency_id']) ?></td>
+            <td align="right" class="nowrap <?= ViewHelper::getTextClass($data['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($data['outflow'], $data['currency_id']) ?></td>
+            <td align="right" class="nowrap <?= ViewHelper::getTextClass($data['difference']) ?>"><?= $formatter->asMoneyWithSymbol($data['difference'], $data['currency_id']) ?></td>
         </tr>
     </tbody>
 
@@ -66,9 +66,9 @@ $base_currency = Yii::$app->currency->getBaseCurrency();
                 <td align="center">
                     <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $category['transactions'] ?></span></a>
                 </td>
-                <td align="right" class="nowrap <?= getTextClass($category['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($category['inflow'], $data['currency_id']) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($category['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($category['outflow'], $data['currency_id']) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($category['difference']) ?>"><?= $formatter->asMoneyWithSymbol($category['difference'], $data['currency_id']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($category['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($category['inflow'], $data['currency_id']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($category['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($category['outflow'], $data['currency_id']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($category['difference']) ?>"><?= $formatter->asMoneyWithSymbol($category['difference'], $data['currency_id']) ?></td>
             </tr>
         </tbody>
 
@@ -89,9 +89,9 @@ $base_currency = Yii::$app->currency->getBaseCurrency();
                 <td align="center">
                     <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $classification['transactions'] ?></span></a>
                 </td>
-                <td align="right" class="nowrap <?= getTextClass($classification['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($classification['inflow'], $data['currency_id']) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($classification['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($classification['outflow'], $data['currency_id']) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($classification['difference']) ?>"><?= $formatter->asMoneyWithSymbol($classification['difference'], $data['currency_id']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($classification['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($classification['inflow'], $data['currency_id']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($classification['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($classification['outflow'], $data['currency_id']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($classification['difference']) ?>"><?= $formatter->asMoneyWithSymbol($classification['difference'], $data['currency_id']) ?></td>
             </tr>
 
         <?php endforeach ?>

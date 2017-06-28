@@ -1,6 +1,6 @@
 <?php
 
-$this->render('components/functions');
+use app\helpers\ViewHelper;
 
 $formatter = Yii::$app->formatter;
 
@@ -36,9 +36,9 @@ $formatter = Yii::$app->formatter;
             <td align="center">
                 <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $data['transactions'] ?></span></a>
             </td>
-            <td align="right" class="nowrap <?= getTextClass($data['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($data['inflow']) ?></td>
-            <td align="right" class="nowrap <?= getTextClass($data['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($data['outflow']) ?></td>
-            <td align="right" class="nowrap <?= getTextClass($data['difference']) ?>"><?= $formatter->asMoneyWithSymbol($data['difference']) ?></td>
+            <td align="right" class="nowrap <?= ViewHelper::getTextClass($data['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($data['inflow']) ?></td>
+            <td align="right" class="nowrap <?= ViewHelper::getTextClass($data['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($data['outflow']) ?></td>
+            <td align="right" class="nowrap <?= ViewHelper::getTextClass($data['difference']) ?>"><?= $formatter->asMoneyWithSymbol($data['difference']) ?></td>
         </tr>
     </tbody>
 
@@ -64,9 +64,9 @@ $formatter = Yii::$app->formatter;
                 <td align="center">
                     <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $counterparty['transactions'] ?></span></a>
                 </td>
-                <td align="right" class="nowrap <?= getTextClass($counterparty['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($counterparty['inflow']) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($counterparty['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($counterparty['outflow']) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($counterparty['difference']) ?>"><?= $formatter->asMoneyWithSymbol($counterparty['difference']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($counterparty['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($counterparty['inflow']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($counterparty['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($counterparty['outflow']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($counterparty['difference']) ?>"><?= $formatter->asMoneyWithSymbol($counterparty['difference']) ?></td>
             </tr>
         </tbody>
 
@@ -90,9 +90,9 @@ $formatter = Yii::$app->formatter;
                 <td align="center">
                     <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $account['transactions'] ?></span></a>
                 </td>
-                <td align="right" class="nowrap <?= getTextClass($account['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($account['inflow']) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($account['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($account['outflow']) ?></td>
-                <td align="right" class="nowrap <?= getTextClass($account['difference']) ?>"><?= $formatter->asMoneyWithSymbol($account['difference']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($account['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($account['inflow']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($account['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($account['outflow']) ?></td>
+                <td align="right" class="nowrap <?= ViewHelper::getTextClass($account['difference']) ?>"><?= $formatter->asMoneyWithSymbol($account['difference']) ?></td>
             </tr>
 
         <?php endforeach ?>

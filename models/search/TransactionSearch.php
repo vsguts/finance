@@ -128,30 +128,25 @@ class TransactionSearch extends Transaction
 
     public function getTotals(ActiveDataProvider $dataProvider)
     {
+        /** @var Transaction[] $models */
         $models = $dataProvider->getModels();
         if (!$models) {
             return false;
         }
 
+        $template = array_fill_keys(Yii::$app->currency->getCurrencyIds(), 0);
+
         $totals = [
-            'inflow' => 0,
-            'outflow' => 0,
+            'inflow' => $template,
+            'outflow' => $template,
         ];
 
-        $prev_currency_id = null;
         foreach ($models as $model) {
-            if ($prev_currency_id && $prev_currency_id != $model->account->currency_id) { // Currencies differs
-                return false;
-            }
-            $prev_currency_id = $model->account->currency_id;
             foreach ($totals as $key => $_value) {
-                $totals[$key] += $model->$key;
+                $totals[$key][$model->account->currency_id] += $model->$key;
             }
         }
 
-        foreach ($totals as $key => $value) {
-            $totals[$key . 'Value'] = Yii::$app->formatter->asDecimal($value, 2) . ' ' . $model->account->currency->symbol;
-        }
         return $totals;
     }
 
