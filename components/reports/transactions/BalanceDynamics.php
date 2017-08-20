@@ -18,6 +18,7 @@ class BalanceDynamics extends AbstractTransactionReport
         $open = [];
 
         // Prepare opening balance data
+
         foreach ($this->getAccounts() as $account) {
             $open[$account->id] = 0;
             if ($last_transaction = $this->getAccountPreviousTransaction($account->id)) {

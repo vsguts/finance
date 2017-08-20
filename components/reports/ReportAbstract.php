@@ -36,9 +36,9 @@ abstract class ReportAbstract extends Object implements ReportInterface
     protected function getChartDateMask()
     {
         $diff = $this->timestamp_to - $this->timestamp;
-        if ($diff > 10 * 365 * SECONDS_IN_DAY) {
+        if ($diff > 20 * 365 * SECONDS_IN_DAY) { // more than 20 years
             return 'Y'; // Year
-        } elseif ($diff > 10 * 30 * SECONDS_IN_DAY) {
+        } elseif ($diff > 24 * 31 * SECONDS_IN_DAY) { // more than 2 years
             return 'M Y'; // month
         } else {
             return 'd M'; // day
