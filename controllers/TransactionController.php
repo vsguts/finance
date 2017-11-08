@@ -203,6 +203,9 @@ class TransactionController extends AbstractController
             $account_ids = [];
             foreach ($models as $model) {
                 $account_ids[] = $model->account_id;
+                if ($model->related_id) {
+                    $account_ids[] = $model->related->account_id;
+                }
                 $model->delete();
             }
 
