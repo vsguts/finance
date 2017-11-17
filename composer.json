@@ -12,12 +12,13 @@
         "irc": "irc://irc.freenode.net/yii",
         "source": "https://github.com/yiisoft/yii2"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
-        "php": ">=5.4.0",
-        "yiisoft/yii2": "~2.0.5",
+        "php": ">=7.0.0",
+        "yiisoft/yii2": ">=2.0.6",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
+        "yiisoft/yii2-redis": "~2.0.0",
         "yiidoc/yii2-redactor": "*",
         "bower-asset/jquery.cookie": "1.4.*",
         "phpoffice/phpexcel": "*",
@@ -36,11 +37,21 @@
         "codeception/specify": "~0.4.3"
     },
     "config": {
-        "process-timeout": 1800
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "installer-paths": {
+                "npm-asset-library": "vendor/npm",
+                "bower-asset-library": "vendor/bower"
+            }
+        }
     },
     "scripts": {
+        "post-install-cmd": [
+            "yii\\composer\\Installer::postInstall"
+        ],
         "post-create-project-cmd": [
-            "yii\\composer\\Installer::postCreateProject"
+            "yii\\composer\\Installer::postCreateProject",
+            "yii\\composer\\Installer::postInstall"
         ]
     },
     "extra": {
@@ -51,14 +62,12 @@
                     "web/assets": "0777",
                     "yii": "0755"
                 }
-            ],
+            ]
+        },
+        "yii\\composer\\Installer::postInstall": {
             "generateCookieValidationKey": [
                 "config/web.php"
             ]
-        },
-        "asset-installer-paths": {
-            "npm-asset-library": "vendor/npm",
-            "bower-asset-library": "vendor/bower"
         }
     }
 }
