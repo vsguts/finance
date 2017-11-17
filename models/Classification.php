@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\components\LookupTrait;
 use app\models\query\ClassificationQuery;
 
 /**
@@ -18,6 +19,8 @@ use app\models\query\ClassificationQuery;
  */
 class Classification extends AbstractModel
 {
+    use LookupTrait;
+
     /**
      * @inheritdoc
      */
@@ -31,9 +34,7 @@ class Classification extends AbstractModel
      */
     public function behaviors()
     {
-        return [
-            'app\behaviors\LookupBehavior',
-        ];
+        return [];
     }
 
     /**
@@ -46,7 +47,7 @@ class Classification extends AbstractModel
             [['category_id'], 'integer'],
             [['type', 'notes'], 'string'],
             [['name'], 'string', 'max' => 128],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ClassificationCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ClassificationCategory::class, 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
 
@@ -69,7 +70,7 @@ class Classification extends AbstractModel
      */
     public function getCategory()
     {
-        return $this->hasOne(ClassificationCategory::className(), ['id' => 'category_id']);
+        return $this->hasOne(ClassificationCategory::class, ['id' => 'category_id']);
     }
 
     /**
@@ -77,7 +78,7 @@ class Classification extends AbstractModel
      */
     public function getTransactions()
     {
-        return $this->hasMany(Transaction::className(), ['classification_id' => 'id']);
+        return $this->hasMany(Transaction::class, ['classification_id' => 'id']);
     }
 
 

@@ -27,7 +27,7 @@ class FormTemplate extends AbstractModel
     {
         return [
             [
-                'class' => 'app\behaviors\EncoderBehavior',
+                'class' => 'app\models\behaviors\EncoderBehavior',
                 'fields' => 'data',
             ],
         ];

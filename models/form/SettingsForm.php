@@ -2,15 +2,17 @@
 
 namespace app\models\form;
 
-use Yii;
-use yii\base\Model;
+use app\models\components\LookupTrait;
 use app\models\Setting;
+use yii\base\Model;
 
 /**
  * SettingsForm is the model behind the contact form.
  */
 class SettingsForm extends Model
 {
+    use LookupTrait;
+
     /**
      * Settings
      */
@@ -40,12 +42,7 @@ class SettingsForm extends Model
 
     public function behaviors()
     {
-        return [
-            [
-                'class' => 'app\behaviors\LookupBehavior',
-                'table' => 'setting',
-            ],
-        ];
+        return [];
     }
 
     /**
@@ -132,5 +129,10 @@ class SettingsForm extends Model
             $setting->delete();
         }
     }
-    
+
+    protected function getLookupTable()
+    {
+        return 'setting';
+    }
+
 }

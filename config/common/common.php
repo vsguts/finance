@@ -53,6 +53,7 @@ $config = [
             'nullDisplay' => '',
         ],
         'security' => [
+            'class' => 'app\components\app\Security',
             'derivationIterations' => 10,
         ],
         'authManager' => [

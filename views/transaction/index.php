@@ -71,16 +71,17 @@ foreach ($templates as $template) {
         $items = [
             [
                 'label' => __('Export selected'),
-                'url' => Url::to(['/export/export/', 'object' => 'transaction']),
+                'url' => Url::to(['export']),
                 'linkOptions' => [
                     'class' => 'app-modal app-modal-force',
                     'data-target-id' => 'export',
                     'data-app-process-items' => 'ids',
+                    'data-method' => 'post'
                 ],
             ],
             [
                 'label' => __('Export all'),
-                'url' => Url::to(['/export/export/', 'object' => 'transaction', 'attributes' => ['queryParams' => Yii::$app->request->queryParams]]),
+                'url' => Url::to(array_merge(['export'], Yii::$app->request->queryParams)),
                 'linkOptions' => [
                     'class' => 'app-modal app-modal-force',
                     'data-target-id' => 'export',

@@ -41,7 +41,7 @@ abstract class ReportAbstract extends Object implements ReportInterface
         } elseif ($diff > 24 * 31 * SECONDS_IN_DAY) { // more than 2 years
             return 'M Y'; // month
         } else {
-            return 'd M'; // day
+            return 'd M Y'; // day
         }
     }
 

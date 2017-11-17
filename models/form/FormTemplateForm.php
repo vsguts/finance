@@ -2,9 +2,9 @@
 
 namespace app\models\form;
 
-use Yii;
-use yii\base\Model;
+use app\models\behaviors\TimestampConvertBehavior;
 use app\models\FormTemplate;
+use yii\base\Model;
 
 class FormTemplateForm extends Model
 {
@@ -18,7 +18,7 @@ class FormTemplateForm extends Model
     public function behaviors()
     {
         return [
-            'app\behaviors\TimestampConvertBehavior',
+            TimestampConvertBehavior::class,
         ];
     }
 

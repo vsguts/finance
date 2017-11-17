@@ -2,7 +2,7 @@
 
 namespace app\models\components;
 
-use app\behaviors\LookupBehavior;
+use app\helpers\StringHelper;
 use app\helpers\Tools;
 use Yii;
 use yii\base\InvalidParamException;
@@ -11,6 +11,7 @@ use yii\db\ActiveQuery;
 
 trait SearchTrait
 {
+    use LookupTrait;
 
     /**
      * @inheritdoc
@@ -36,9 +37,7 @@ trait SearchTrait
      */
     public function behaviors()
     {
-        return [
-            LookupBehavior::class,
-        ];
+        return [];
     }
 
     public function processParams($params)
@@ -124,7 +123,7 @@ trait SearchTrait
             $flag = $this->$field;
         }
 
-        if (Tools::stringNotEmpty($flag)) {
+        if (StringHelper::stringNotEmpty($flag)) {
             if ($flag) {
                 $query->andWhere(['!=', $field, '']);
             } else {

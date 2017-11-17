@@ -50,7 +50,7 @@ class CounterpartyCategory extends AbstractModel
      */
     public function getCounterparties()
     {
-        return $this->hasMany(Counterparty::className(), ['category_id' => 'id']);
+        return $this->hasMany(Counterparty::class, ['category_id' => 'id']);
     }
 
 }

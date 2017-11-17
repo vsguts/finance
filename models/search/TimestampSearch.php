@@ -3,12 +3,14 @@
 namespace app\models\search;
 
 
-use app\behaviors\SearchBehavior;
-use app\behaviors\TimestampConvertBehavior;
+use app\models\behaviors\TimestampConvertBehavior;
+use app\models\components\SearchTrait;
 use yii\base\Model;
 
 class TimestampSearch extends Model
 {
+    use SearchTrait;
+
     public $timestamp;
 
     public $timestamp_to;
@@ -27,9 +29,8 @@ class TimestampSearch extends Model
     public function behaviors()
     {
         return [
-            SearchBehavior::className(),
             [
-                'class' => TimestampConvertBehavior::className(),
+                'class' => TimestampConvertBehavior::class,
                 'fields' => ['timestamp', 'timestamp_to']
             ],
         ];
@@ -64,4 +65,15 @@ class TimestampSearch extends Model
             'timestamp_to' => __('Time to'),
         ];
     }
+
+    protected function getQueryTimestampFrom()
+    {
+        return $this->timestamp;
+    }
+
+    protected function getQueryTimestampTo()
+    {
+        return $this->timestamp_to + SECONDS_IN_DAY - 1;
+    }
+
 }

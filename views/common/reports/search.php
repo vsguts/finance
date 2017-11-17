@@ -1,6 +1,5 @@
 <?php
 
-use app\widgets\PeriodLinks;
 use app\widgets\form\SearchForm;
 
 ?>
@@ -11,20 +10,12 @@ use app\widgets\form\SearchForm;
 
     <?= Html::activeHiddenInput($model, 'report') ?>
 
-    <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($model, 'timestamp')->widget('app\widgets\form\DatePickerRange') ?>
-        </div>
-        <div class="col-md-6">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="pull-right">
-                <?= PeriodLinks::widget() ?>
-            </div>
-        </div>
-    </div>
+    <?= $this->render('/common/search/period', [
+        'model' => $model,
+        'form' => $form,
+    ]) ?>
+
+    <?= $this->blocks['searchContent'] ?? null ?>
 
     <?php SearchForm::end(); ?>
 

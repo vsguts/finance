@@ -19,6 +19,7 @@ class Yii extends \yii\BaseYii
  * @property \app\components\app\Formatter $formatter
  * @property \app\components\app\Calendar $calendar
  * @property \app\components\app\Currency $currency
+ * @property \app\components\app\Security $security
  */
 abstract class BaseApplication extends yii\base\Application
 {

@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\controllers\traits\ExportTrait;
+use app\models\export\TransactionExport;
 use Yii;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -15,6 +17,8 @@ use app\models\search\TransactionReportSearch;
 
 class TransactionController extends AbstractController
 {
+    use ExportTrait;
+
     const BATCH_LIMIT = 500;
 
     /**
@@ -37,6 +41,11 @@ class TransactionController extends AbstractController
                         'allow' => true,
                         'verbs' => ['GET'],
                         'actions' => ['index', 'update', 'transfer', 'download'],
+                        'roles' => ['transaction_view'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['export', 'export-download'],
                         'roles' => ['transaction_view'],
                     ],
                     [
@@ -238,6 +247,14 @@ class TransactionController extends AbstractController
         $this->download($this->findModel($id, Transaction::className())->getPath($field));
     }
 
+    public function actionExport()
+    {
+        return $this->performExport(
+            new TransactionExport,
+            (new TransactionSearch)->search(Yii::$app->request->queryParams)
+        );
+    }
+
     /**
      * Recalculate balances of Transaction model.
      * @param mixed $account_id Bank Account ID(s)
@@ -270,43 +287,9 @@ class TransactionController extends AbstractController
 
     protected function recalculateBalance($account_id)
     {
-        $accounts = Account::find()->where(['id' => $account_id])->all();
-        
+        $accounts = Account::find()->where(['id' => $account_id])->permission()->all();
         foreach ($accounts as $account) {
-            $balance = $account->init_balance;
-
-            $query = Transaction::find()
-                ->where([
-                    'account_id' => $account->id
-                ])
-                ->orderBy([
-                    'timestamp' => SORT_ASC,
-                    'id' => SORT_ASC,
-                ]);
-
-            $num = function($val) {
-                return round($val, 2);
-            };
-
-            foreach ($query->batch(self::BATCH_LIMIT) as $models) {
-                foreach ($models as $model) {
-                    $model->scenario = Transaction::SCENARIO_RECALCULATE;
-                    
-                    $current_opening_balance = $model->opening_balance;
-                    $current_balance = $model->balance;
-                    
-                    $model->opening_balance = $balance;
-                    $model->calculateBalance();
-                    $balance = $model->balance;
-
-                    if (
-                        $num($current_opening_balance) != $num($model->opening_balance)
-                        || $num($current_balance) != $num($model->balance)
-                    ) {
-                        $model->save();
-                    }
-                }
-            }
+            $account->recalculateTransactionBalances();
         }
     }
 

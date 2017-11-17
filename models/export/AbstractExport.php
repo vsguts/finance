@@ -2,10 +2,10 @@
 
 namespace app\models\export;
 
+use app\helpers\Classes;
 use Yii;
 use yii\base\Model;
 use yii\helpers\Inflector;
-use app\helpers\Tools;
 
 abstract class AbstractExport extends Model
 {
@@ -59,7 +59,7 @@ abstract class AbstractExport extends Model
         parent::init();
 
         // Prepare Filename
-        $this->filename = Inflector::underscore(Tools::className($this)) . '_' . date('Y-m-d');
+        $this->filename = Inflector::underscore(Classes::className($this)) . '_' . date('Y-m-d');
     }
 
     /**

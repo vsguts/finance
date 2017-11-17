@@ -54,7 +54,7 @@ class Currency extends AbstractModel
      */
     public function getAccounts()
     {
-        return $this->hasMany(Account::className(), ['currency_id' => 'id']);
+        return $this->hasMany(Account::class, ['currency_id' => 'id']);
     }
 
     /**
@@ -62,7 +62,7 @@ class Currency extends AbstractModel
      */
     public function getCurrencyRates()
     {
-        return $this->hasMany(CurrencyRate::className(), ['currency_id' => 'id']);
+        return $this->hasMany(CurrencyRate::class, ['currency_id' => 'id']);
     }
 
 }

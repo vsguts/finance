@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\models\behaviors\TransactionBehavior;
 use Yii;
 use app\models\query\TransactionQuery;
 
@@ -29,6 +30,8 @@ use app\models\query\TransactionQuery;
  * @property Transaction $related
  * @property Transaction[] $transactions
  * @property User $user
+ *
+ * @mixin TransactionBehavior
  */
 class Transaction extends AbstractModel
 {
@@ -46,13 +49,13 @@ class Transaction extends AbstractModel
     public function behaviors()
     {
         return [
-            'app\behaviors\TransactionBehavior',
-            'app\behaviors\TimestampConvertBehavior',
+            'app\models\behaviors\TransactionBehavior',
+            'app\models\behaviors\TimestampConvertBehavior',
             [
-                'class' => 'app\behaviors\TimestampBehavior',
+                'class' => 'app\models\behaviors\TimestampBehavior',
                 'updatedAtAttribute' => false,
             ],
-            'app\behaviors\AttachmentsBehavior',
+            'app\models\behaviors\AttachmentsBehavior',
         ];
     }
 
@@ -133,11 +136,11 @@ class Transaction extends AbstractModel
 
             /*
             // Relations
-            [['account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['account_id' => 'id']],
-            [['classification_id'], 'exist', 'skipOnError' => true, 'targetClass' => Classification::className(), 'targetAttribute' => ['classification_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
-            [['counterparty_id'], 'exist', 'skipOnError' => true, 'targetClass' => Counterparty::className(), 'targetAttribute' => ['counterparty_id' => 'id']],
-            [['related_id'], 'exist', 'skipOnError' => true, 'targetClass' => self::className(), 'targetAttribute' => ['related_id' => 'id']],
+            [['account_id'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['account_id' => 'id']],
+            [['classification_id'], 'exist', 'skipOnError' => true, 'targetClass' => Classification::class, 'targetAttribute' => ['classification_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['counterparty_id'], 'exist', 'skipOnError' => true, 'targetClass' => Counterparty::class, 'targetAttribute' => ['counterparty_id' => 'id']],
+            [['related_id'], 'exist', 'skipOnError' => true, 'targetClass' => self::class, 'targetAttribute' => ['related_id' => 'id']],
             */
         ]);
     }
@@ -169,7 +172,7 @@ class Transaction extends AbstractModel
      */
     public function getAccount()
     {
-        return $this->hasOne(Account::className(), ['id' => 'account_id']);
+        return $this->hasOne(Account::class, ['id' => 'account_id']);
     }
 
     /**
@@ -177,7 +180,7 @@ class Transaction extends AbstractModel
      */
     public function getClassification()
     {
-        return $this->hasOne(Classification::className(), ['id' => 'classification_id']);
+        return $this->hasOne(Classification::class, ['id' => 'classification_id']);
     }
 
     /**
@@ -185,7 +188,7 @@ class Transaction extends AbstractModel
      */
     public function getCounterparty()
     {
-        return $this->hasOne(Counterparty::className(), ['id' => 'counterparty_id']);
+        return $this->hasOne(Counterparty::class, ['id' => 'counterparty_id']);
     }
 
     /**
@@ -193,7 +196,7 @@ class Transaction extends AbstractModel
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**
@@ -201,7 +204,7 @@ class Transaction extends AbstractModel
      */
     public function getRelated()
     {
-        return $this->hasOne(self::className(), ['id' => 'related_id']);
+        return $this->hasOne(self::class, ['id' => 'related_id']);
     }
 
     /**

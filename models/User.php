@@ -2,10 +2,10 @@
 
 namespace app\models;
 
-use app\behaviors\LookupBehavior;
-use app\behaviors\TimestampBehavior;
-use app\behaviors\UserPasswordBehavior;
-use app\behaviors\UserRolesBehavior;
+use app\models\behaviors\TimestampBehavior;
+use app\models\behaviors\UserPasswordBehavior;
+use app\models\behaviors\UserRolesBehavior;
+use app\models\components\LookupTrait;
 use app\models\form\UserSignupForm;
 use Yii;
 use yii\base\NotSupportedException;
@@ -23,6 +23,8 @@ use yii\base\NotSupportedException;
  */
 class User extends AbstractModel implements \yii\web\IdentityInterface
 {
+    use LookupTrait;
+
     const STATUS_ACTIVE = 'active';
 
     public $password;
@@ -44,7 +46,6 @@ class User extends AbstractModel implements \yii\web\IdentityInterface
             UserPasswordBehavior::class,
             UserRolesBehavior::class,
             TimestampBehavior::class,
-            LookupBehavior::class,
         ];
     }
 

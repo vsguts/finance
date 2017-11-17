@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\models\components\LookupTrait;
+
 /**
  * This is the model class for table "counterparty".
  *
@@ -15,6 +17,8 @@ namespace app\models;
  */
 class Counterparty extends AbstractModel
 {
+    use LookupTrait;
+
     /**
      * @inheritdoc
      */
@@ -28,9 +32,7 @@ class Counterparty extends AbstractModel
      */
     public function behaviors()
     {
-        return [
-            'app\behaviors\LookupBehavior',
-        ];
+        return [];
     }
 
     /**
@@ -43,7 +45,7 @@ class Counterparty extends AbstractModel
             [['category_id'], 'integer'],
             [['notes'], 'string'],
             [['name'], 'string', 'max' => 128],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => CounterpartyCategory::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => CounterpartyCategory::class, 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
 
@@ -65,7 +67,7 @@ class Counterparty extends AbstractModel
      */
     public function getCategory()
     {
-        return $this->hasOne(CounterpartyCategory::className(), ['id' => 'category_id']);
+        return $this->hasOne(CounterpartyCategory::class, ['id' => 'category_id']);
     }
 
     /**
@@ -73,7 +75,7 @@ class Counterparty extends AbstractModel
      */
     public function getTransactions()
     {
-        return $this->hasMany(Transaction::className(), ['counterparty_id' => 'id']);
+        return $this->hasMany(Transaction::class, ['counterparty_id' => 'id']);
     }
 
 

@@ -64,6 +64,8 @@ class AbstractController extends Controller
     {
         $params = $_REQUEST;
 
+        $hash = isset($url['#']) ? $url['#'] : null;
+
         // Meta redirect
         if (headers_sent() || ob_get_contents()) {
             $url = !empty($params['_return_url']) ? $params['_return_url'] : $url;
@@ -73,7 +75,14 @@ class AbstractController extends Controller
         }
 
         if (!empty($params['_return_url']) && !$force) {
+            if ($hash) {
+                $params['_return_url'] .= '#' . $hash;
+            }
             return Yii::$app->getResponse()->redirect($params['_return_url'], $statusCode);
+        }
+
+        if ($hash) {
+            $url['#'] = $hash;
         }
 
         return parent::redirect($url, $statusCode);
@@ -182,6 +191,15 @@ class AbstractController extends Controller
         }
 
         return Yii::$app->response->sendFile($path, $filename);
+    }
+
+    /**
+     * @param string $param
+     * @return array|mixed
+     */
+    protected function getRequest($param = 'id')
+    {
+        return Yii::$app->request->post($param, Yii::$app->request->get($param));
     }
 
     /**

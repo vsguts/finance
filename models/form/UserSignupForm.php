@@ -29,7 +29,7 @@ class UserSignupForm extends Model
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => User::className(), 'message' => __('This email address has already been taken.')],
+            ['email', 'unique', 'targetClass' => User::class, 'message' => __('This email address has already been taken.')],
 
             ['password', 'required'],
             ['password', 'string', 'min' => static::PASS_MIN_LEN],

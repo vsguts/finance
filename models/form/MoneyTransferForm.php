@@ -2,7 +2,7 @@
 
 namespace app\models\form;
 
-use app\behaviors\TimestampConvertBehavior;
+use app\models\behaviors\TimestampConvertBehavior;
 use app\models\Account;
 use app\models\Classification;
 use app\models\Transaction;
@@ -30,7 +30,7 @@ class MoneyTransferForm extends Model
     public function behaviors()
     {
         return [
-            TimestampConvertBehavior::className(),
+            TimestampConvertBehavior::class,
         ];
     }
 

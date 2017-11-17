@@ -2,15 +2,13 @@
 
 namespace app\assets;
 
-use yii\helpers\Json;
-use yii\web\AssetBundle;
 use app\models\Account;
 use app\models\Classification;
+use yii\web\AssetBundle;
 
 class AppAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@app/assets/app';
     
     public $css = [
         'css/site.less',
@@ -18,9 +16,10 @@ class AppAsset extends AssetBundle
     ];
     
     public $js = [
-        'js/ajax.js',
-        'js/core.js',
+        'js/jq-extend.js',
+        'js/jq-fn-extend.js',
         'js/events.js',
+        'js/ajax.js',
     ];
     
     public $depends = [
@@ -83,31 +82,6 @@ class AppAsset extends AssetBundle
     protected static function encodeData($var, $data)
     {
         return sprintf('window.yii.app.%s = %s;', $var, json_encode($data, JSON_UNESCAPED_UNICODE));
-    }
-
-    public function publish($am)
-    {
-        parent::publish($am);
-        $this->css = $this->addLastModifiedParam($this->css);
-        $this->js = $this->addLastModifiedParam($this->js);
-    }
-
-    protected function addLastModifiedParam($assets){
-        foreach ($assets as $k => $asset) {
-            $file_path = sprintf(
-                '%s/%s',
-                $this->basePath,
-                $asset
-            );
-
-            $assets[$k] = sprintf(
-                '%s?t=%s',
-                $asset,
-                filemtime($file_path)
-            );
-        }
-
-        return $assets;
     }
 
 }

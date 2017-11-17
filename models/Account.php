@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use app\models\behaviors\AccountBehavior;
+use app\models\components\LookupTrait;
 use app\models\query\AccountQuery;
 
 /**
@@ -19,9 +21,13 @@ use app\models\query\AccountQuery;
  *
  * @property Currency $currency
  * @property Transaction[] $transactions
+ *
+ * @mixin AccountBehavior
  */
 class Account extends AbstractModel
 {
+    use LookupTrait;
+
     const STATUS_ACTIVE = 'active';
 
     /**
@@ -38,7 +44,7 @@ class Account extends AbstractModel
     public function behaviors()
     {
         return [
-            'app\behaviors\LookupBehavior',
+            AccountBehavior::class,
         ];
     }
 
@@ -57,7 +63,7 @@ class Account extends AbstractModel
             [['init_balance'], 'default', 'value' => 0],
             [['init_balance'], 'number'],
 
-            [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
+            [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::class, 'targetAttribute' => ['currency_id' => 'id']],
         ]);
     }
 
@@ -84,7 +90,7 @@ class Account extends AbstractModel
      */
     public function getCurrency()
     {
-        return $this->hasOne(Currency::className(), ['id' => 'currency_id']);
+        return $this->hasOne(Currency::class, ['id' => 'currency_id']);
     }
 
     /**
@@ -92,7 +98,7 @@ class Account extends AbstractModel
      */
     public function getTransactions()
     {
-        return $this->hasMany(Transaction::className(), ['account_id' => 'id']);
+        return $this->hasMany(Transaction::class, ['account_id' => 'id']);
     }
 
 

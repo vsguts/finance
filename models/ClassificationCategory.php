@@ -52,6 +52,6 @@ class ClassificationCategory extends AbstractModel
      */
     public function getClassifications()
     {
-        return $this->hasMany(Classification::className(), ['category_id' => 'id']);
+        return $this->hasMany(Classification::class, ['category_id' => 'id']);
     }
 }

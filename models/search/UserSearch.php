@@ -2,6 +2,7 @@
 
 namespace app\models\search;
 
+use app\helpers\StringHelper;
 use app\helpers\Tools;
 use app\models\components\SearchTrait;
 use app\models\User;
@@ -91,7 +92,7 @@ class UserSearch extends User
             $query->andWhere(['user.id' => $authManager->getUserIdsByRole($roles)]);
         }
 
-        if (Tools::stringNotEmpty($this->has_role)) {
+        if (StringHelper::stringNotEmpty($this->has_role)) {
             $assigned = (new Query)
                 ->select('user_id')
                 ->distinct()
