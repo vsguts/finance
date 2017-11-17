@@ -19,7 +19,7 @@ class AccountBehavior extends Behavior
         $balance = $this->owner->init_balance;
 
         $query = Transaction::find()
-            ->where(['bank_account_id' => $this->owner->id])
+            ->where(['account_id' => $this->owner->id])
             ->sorted(SORT_ASC);
 
         $num = function ($val) {

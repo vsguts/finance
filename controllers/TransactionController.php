@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\controllers\traits\ExportTrait;
 use app\models\export\TransactionExport;
 use Yii;
+use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -257,32 +258,18 @@ class TransactionController extends AbstractController
 
     /**
      * Recalculate balances of Transaction model.
-     * @param mixed $account_id Bank Account ID(s)
-     * @return 302
+     * @return \yii\web\Response 302
+     * @throws BadRequestHttpException
      */
-    public function actionRecalculateBalance(array $account_id)
+    public function actionRecalculateBalance()
     {
-        $this->recalculateBalance($account_id);
+        $accountId = $this->getRequest('account_id');
+        if (!$accountId) {
+            throw new BadRequestHttpException('Account ID field is empty');
+        }
+
+        $this->recalculateBalance($accountId);
         return $this->redirect(['index']);
-    }
-
-    /**
-     * Transaction Reports
-     * @return mixed
-     */
-    public function actionReport()
-    {
-        $searchModel = new TransactionReportSearch();
-
-        $report = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('report', [
-            'searchModel' => $searchModel,
-            'data' => $report->execute(),
-            'report' => $report,
-            'report_id' => $searchModel->report,
-            'reports' => $searchModel->getReports(),
-        ]);
     }
 
     protected function recalculateBalance($account_id)

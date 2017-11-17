@@ -1,20 +1,16 @@
 <?php
 
-namespace app\components\reports\transactions;
+namespace app\models\report\transactions;
 
-use Yii;
-
-class CounterpartyTurnovers extends AbstractTransactionReport
+class CounterpartyTurnoversReport extends AbstractTransactionsReport
 {
-    public $position = 50;
 
-    public function getReportName()
+    public function report($params = [])
     {
-        return __('Counterparty turnovers');
-    }
+        $params = $this->processParams($params);
+        $this->load($params);
+        $this->validate();
 
-    public function execute()
-    {
         $template = [
             'transactions' => 0,
             'inflow' => 0,
@@ -37,18 +33,18 @@ class CounterpartyTurnovers extends AbstractTransactionReport
         $getSections = function($transaction) use(&$data) {
             return [
                 & $data,
-                & $data['counterparties'][$transaction->counterparty_id],
-                & $data['counterparties'][$transaction->counterparty_id]['accounts'][$transaction->account_id],
+                & $data['counterparties'][$transaction['counterparty_id']],
+                & $data['counterparties'][$transaction['counterparty_id']]['accounts'][$transaction['account_id']],
             ];
         };
 
-        foreach ($this->getTransactions() as $transaction) {
-            if (!$transaction->counterparty_id) {
+        foreach ($this->getTransactionsData() as $transaction) {
+            if (!$transaction['counterparty_id']) {
                 continue;
             }
             foreach ($getSections($transaction) as & $section) {
-                $section['inflow'] += $transaction->inflowConverted;
-                $section['outflow'] += $transaction->outflowConverted;
+                $section['inflow'] += $transaction['inflow_converted'];
+                $section['outflow'] += $transaction['outflow_converted'];
                 $section['transactions'] ++;
             }
         }
@@ -71,34 +67,6 @@ class CounterpartyTurnovers extends AbstractTransactionReport
         }
 
         return $data;
-    }
-
-    public function exportGetColumns()
-    {
-        return [
-            'Counterparty' => 'counterparty.name',
-            'Account' => 'account.name',
-            'Original currency' => 'account.currency.code',
-            'Base currency' => 'base_currency_code',
-            'Transactions' => 'transactions',
-            'Inflow' => 'inflow|simpleMoney',
-            'Outflow' => 'outflow|simpleMoney',
-            'Difference' => 'difference|simpleMoney',
-        ];
-    }
-
-    public function exportPrepareData($data)
-    {
-        $result = [];
-        $base_currency_code = Yii::$app->currency->getBaseCurrencyCode();
-        foreach ($data['counterparties'] as $counterparty) {
-            foreach ($counterparty['accounts'] as $account) {
-                $account['counterparty'] = $counterparty['counterparty'];
-                $account['base_currency_code'] = $base_currency_code;
-                $result[] = $account;
-            }
-        }
-        return $result;
     }
 
 }

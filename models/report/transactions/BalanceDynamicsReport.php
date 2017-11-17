@@ -1,24 +1,21 @@
 <?php
 
-namespace app\components\reports\transactions;
+namespace app\models\report\transactions;
 
 use Yii;
 
-class BalanceDynamics extends AbstractTransactionReport
+class BalanceDynamicsReport extends AbstractTransactionsReport
 {
-    public $position = 100;
 
-    public function getReportName()
+    public function report($params = [])
     {
-        return __('Balance dynamics');
-    }
+        $params = $this->processParams($params);
+        $this->load($params);
+        $this->validate();
 
-    public function execute()
-    {
         $open = [];
 
         // Prepare opening balance data
-
         foreach ($this->getAccounts() as $account) {
             $open[$account->id] = 0;
             if ($last_transaction = $this->getAccountPreviousTransaction($account->id)) {
@@ -32,13 +29,13 @@ class BalanceDynamics extends AbstractTransactionReport
         $data = [];
         $previous_date = date($mask, $this->timestamp);
         $data[$previous_date] = $open;
-        foreach ($this->getTransactions() as $transaction) {
-            $date = date($mask, $transaction->timestamp);
+        foreach ($this->getTransactionsData() as $transactionDetails) {
+            $date = date($mask, $transactionDetails['timestamp']);
             if ($date != $previous_date) {
                 $data[$date] = $data[$previous_date];
                 $previous_date = $date;
             }
-            $data[$date][$transaction->account_id] = $transaction->balanceConverted;
+            $data[$date][$transactionDetails['account_id']] = $transactionDetails['balance_converted'];
         }
 
         // Prepare totals
@@ -52,7 +49,7 @@ class BalanceDynamics extends AbstractTransactionReport
             }
             $previous_date = $date;
         }
-        
+
         // Prepare chart
         $chart = [
             [__('Date'), __('Balance')]

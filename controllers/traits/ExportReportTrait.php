@@ -3,7 +3,6 @@
 namespace app\controllers\traits;
 
 use app\models\report\ReportInterface;
-use app\controllers\AbstractWebController;
 use app\models\export\ExportFormAbstract;
 use Yii;
 use yii\helpers\Url;
@@ -16,8 +15,6 @@ use yii\web\NotFoundHttpException;
  * You need to enable access to 'export-download' action
  *
  * @package app\controllers\traits
- *
- * @mixin AbstractWebController
  */
 trait ExportReportTrait
 {

@@ -1,20 +1,18 @@
 <?php
 
-namespace app\components\reports\transactions;
+namespace app\models\report\transactions;
 
 use Yii;
 
-class AccountTurnoversBase extends AbstractTransactionReport
+class AccountTurnoversBaseReport extends AbstractTransactionsReport
 {
-    public $position = 20;
 
-    public function getReportName()
+    public function report($params = [])
     {
-        return __('Account turnovers ({currency})', ['currency' => Yii::$app->currency->getBaseCurrencyCode()]);
-    }
+        $params = $this->processParams($params);
+        $this->load($params);
+        $this->validate();
 
-    public function execute()
-    {
         $data = [
             'currency' => Yii::$app->currency->getBaseCurrency(),
             'rates' => $this->getBaseCurrencyRates(),
@@ -35,21 +33,21 @@ class AccountTurnoversBase extends AbstractTransactionReport
             $data['accounts'][$account->id]['account'] = $account;
         }
 
-        foreach ($this->getTransactions() as $transaction) {
-            $account = & $data['accounts'][$transaction['account_id']];
+        foreach ($this->getTransactionsData() as $transactionDetails) {
+            $account = & $data['accounts'][$transactionDetails['account_id']];
             if (empty($account['transactions'])) {
                 $account['opening_balance'] =
-                    $transaction->opening_balance
-                    * $data['rates']['opening'][$transaction->account->currency_id]
+                    $transactionDetails['opening_balance']
+                    * $data['rates']['opening'][$transactionDetails['account.currency_id']]
                 ;
             }
             $account['closing_balance'] =
-                $transaction->balance
-                * $data['rates']['closing'][$transaction->account->currency_id]
+                $transactionDetails['balance']
+                * $data['rates']['closing'][$transactionDetails['account.currency_id']]
             ;
 
-            $account['inflow'] += $transaction->inflowConverted;
-            $account['outflow'] += $transaction->outflowConverted;
+            $account['inflow'] += $transactionDetails['inflow_converted'];
+            $account['outflow'] += $transactionDetails['outflow_converted'];
             $account['transactions'] ++;
         }
         unset($account);
@@ -58,7 +56,7 @@ class AccountTurnoversBase extends AbstractTransactionReport
             if (empty($account['transactions'])) {
                 $last_transaction = $this->getAccountPreviousTransaction($account['account']->id);
                 if ($last_transaction) {
-                    $account['opening_balance'] = 
+                    $account['opening_balance'] =
                         $last_transaction->balance
                         * $data['rates']['opening'][$last_transaction->account->currency_id]
                     ;
@@ -93,36 +91,24 @@ class AccountTurnoversBase extends AbstractTransactionReport
         return $data;
     }
 
-    public function exportGetColumns()
+    protected function getBaseCurrencyRates()
     {
-        return [
-            'Name' => 'account.name',
-            'Currency' => 'account.currency.code',
-            'Base currency' => 'currency_code',
-            'Opening exchange rate' => 'rate_open',
-            'Closing exchange rate' => 'rate_close',
-            'Transactions' => 'transactions',
-            'Opening balance' => 'opening_balance|simpleMoney',
-            'Inflow' => 'inflow|simpleMoney',
-            'Outflow' => 'outflow|simpleMoney',
-            'Realized Forex' => 'forex|simpleMoney',
-            'Closing balance' => 'closing_balance|simpleMoney',
-            'Difference' => 'difference|simpleMoney',
-        ];
-    }
+        $component = Yii::$app->currency;
 
-    public function exportPrepareData($data)
-    {
-        foreach ($data['accounts'] as &$account) {
-            $account['currency_code'] = $data['currency']->code;
-            $account['rate_open'] = 1;
-            $account['rate_close'] = 1;
-            if ($data['currency']->id != $account['account']->currency->id) {
-                $account['rate_open'] = round($data['rates']['opening'][$account['account']->currency->id], 8);
-                $account['rate_close'] = round($data['rates']['closing'][$account['account']->currency->id], 8);
+        $base_currency_id = $component->getBaseCurrencyId();
+
+        $rates = [
+            'opening' => $component->getPeriodRates($this->timestamp, $this->timestamp),
+            'closing' => $component->getPeriodRates($this->timestamp_to, $this->timestamp_to),
+        ];
+
+        foreach ($rates as $schema => $_rates) {
+            foreach ($_rates as $currency_id => $currency_rates) {
+                $rates[$schema][$currency_id] = $currency_rates[$base_currency_id];
             }
         }
-        return $data['accounts'];
+
+        return $rates;
     }
 
 }

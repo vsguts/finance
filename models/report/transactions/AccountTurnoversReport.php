@@ -1,21 +1,18 @@
 <?php
 
-namespace app\components\reports\transactions;
+namespace app\models\report\transactions;
 
 use Yii;
 
-class AccountTurnovers extends AbstractTransactionReport
+class AccountTurnoversReport extends AbstractTransactionsReport
 {
 
-    public $position = 10;
-
-    public function getReportName()
+    public function report($params = [])
     {
-        return __('Account turnovers');
-    }
+        $params = $this->processParams($params);
+        $this->load($params);
+        $this->validate();
 
-    public function execute()
-    {
         $fields = ['opening_balance', 'inflow', 'outflow', 'closing_balance', 'transactions', 'difference'];
         $template = array_fill_keys($fields, 0);
         $currenciesTemplate = array_fill_keys(Yii::$app->currency->getCurrencyIds(), 0);
@@ -30,14 +27,14 @@ class AccountTurnovers extends AbstractTransactionReport
             $data['accounts'][$account->id]['account'] = $account;
         }
 
-        foreach ($this->getTransactions() as $transaction) {
-            $account = & $data['accounts'][$transaction['account_id']];
+        foreach ($this->getTransactionsData() as $transactionDetails) {
+            $account = & $data['accounts'][$transactionDetails['account_id']];
             if (empty($account['transactions'])) {
-                $account['opening_balance'] = $transaction->opening_balance;
+                $account['opening_balance'] = $transactionDetails['opening_balance'];
             }
-            $account['closing_balance'] = $transaction->balance;
-            $account['inflow'] += $transaction->inflow;
-            $account['outflow'] += $transaction->outflow;
+            $account['closing_balance'] = $transactionDetails['balance'];
+            $account['inflow'] += $transactionDetails['inflow'];
+            $account['outflow'] += $transactionDetails['outflow'];
             $account['transactions'] ++;
         }
         unset($account);
@@ -62,25 +59,6 @@ class AccountTurnovers extends AbstractTransactionReport
         }
 
         return $data;
-    }
-
-    public function exportGetColumns()
-    {
-        return [
-            'Name' => 'account.name',
-            'Currency' => 'account.currency.code',
-            'Transactions' => 'transactions',
-            'Opening balance' => 'opening_balance|simpleMoney',
-            'Inflow' => 'inflow|simpleMoney',
-            'Outflow' => 'outflow|simpleMoney',
-            'Closing balance' => 'closing_balance|simpleMoney',
-            'Difference' => 'difference|simpleMoney',
-        ];
-    }
-
-    public function exportPrepareData($data)
-    {
-        return $data['accounts'];
     }
 
 }

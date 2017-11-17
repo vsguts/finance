@@ -1,20 +1,18 @@
 <?php
 
-namespace app\components\reports\transactions;
+namespace app\models\report\transactions;
 
 use Yii;
 
-class ClassificationCategoryTurnovers extends AbstractTransactionReport
+class ClassificationCategoryTurnoversReport extends AbstractTransactionsReport
 {
-    public $position = 40;
 
-    public function getReportName()
+    public function report($params = [])
     {
-        return __('Classification category turnovers (UAH)');
-    }
+        $params = $this->processParams($params);
+        $this->load($params);
+        $this->validate();
 
-    public function execute()
-    {
         $template = [
             'transactions' => 0,
             'inflow' => 0,
@@ -31,9 +29,8 @@ class ClassificationCategoryTurnovers extends AbstractTransactionReport
         }
 
         $classifications = $this->getClassifications();
-        $categories = $this->getClassificationCategories();
 
-        foreach ($categories as $category) {
+        foreach ($this->getClassificationCategories() as $category) {
             $data['categories'][$category->id]['category'] = $category;
             $data['categories'][$category->id] += $template;
         }
@@ -79,34 +76,6 @@ class ClassificationCategoryTurnovers extends AbstractTransactionReport
         }
 
         return $data;
-    }
-
-    public function exportGetColumns()
-    {
-        return [
-            'Classification' => 'category.name',
-            'Account' => 'classification.name',
-            'Original currency' => 'classification.currency.code',
-            'Base currency' => 'base_currency_code',
-            'Transactions' => 'transactions',
-            'Inflow' => 'inflow|simpleMoney',
-            'Outflow' => 'outflow|simpleMoney',
-            'Difference' => 'difference|simpleMoney',
-        ];
-    }
-
-    public function exportPrepareData($data)
-    {
-        $result = [];
-        $base_currency_code = Yii::$app->currency->getBaseCurrencyCode();
-        foreach ($data['categories'] as $category) {
-            foreach ($category['classifications'] as $classification) {
-                $classification['category'] = $category['category'];
-                $classification['base_currency_code'] = $base_currency_code;
-                $result[] = $classification;
-            }
-        }
-        return $result;
     }
 
 }

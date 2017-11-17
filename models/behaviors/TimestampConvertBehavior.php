@@ -11,12 +11,12 @@ class TimestampConvertBehavior extends Behavior
 {
     public $fields = ['timestamp'];
 
-    public $decodeFields = [];
+    public $decodeFields = []; // don't use this field, convert time values after getting model
 
     public function events()
     {
         return [
-            Model::EVENT_AFTER_VALIDATE => 'encodeTimestamp',
+            ActiveRecord::EVENT_BEFORE_VALIDATE => 'encodeTimestamp',
             ActiveRecord::EVENT_AFTER_FIND => 'decodeTimestamp',
             ActiveRecord::EVENT_AFTER_INSERT => 'decodeTimestamp',
             ActiveRecord::EVENT_AFTER_UPDATE => 'decodeTimestamp',
@@ -27,7 +27,7 @@ class TimestampConvertBehavior extends Behavior
     {
         $model = $this->owner;
         $formatter = Yii::$app->formatter;
-        foreach ($this->fields as $field) {
+        foreach ((array)$this->fields as $field) {
             if (isset($model->$field) && $model->$field) {
                 $model->$field = $formatter->asTimestamp($model->$field);
             }
@@ -38,7 +38,7 @@ class TimestampConvertBehavior extends Behavior
     {
         $model = $this->owner;
         $formatter = Yii::$app->formatter;
-        foreach ($this->decodeFields as $key => $field) {
+        foreach ((array)$this->decodeFields as $key => $field) {
             $format = 'date';
             if (!is_numeric($key)) {
                 $format = $field;

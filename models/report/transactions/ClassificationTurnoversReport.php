@@ -1,20 +1,16 @@
 <?php
 
-namespace app\components\reports\transactions;
+namespace app\models\report\transactions;
 
-use Yii;
-
-class ClassificationTurnovers extends AbstractTransactionReport
+class ClassificationTurnoversReport extends AbstractTransactionsReport
 {
-    public $position = 30;
 
-    public function getReportName()
+    public function report($params = [])
     {
-        return __('Classification turnovers');
-    }
+        $params = $this->processParams($params);
+        $this->load($params);
+        $this->validate();
 
-    public function execute()
-    {
         $template = [
             'transactions' => 0,
             'inflow' => 0,
@@ -37,15 +33,15 @@ class ClassificationTurnovers extends AbstractTransactionReport
         $getSections = function($transaction) use(&$data) {
             return [
                 & $data,
-                & $data['classifications'][$transaction->classification_id],
-                & $data['classifications'][$transaction->classification_id]['accounts'][$transaction->account_id],
+                & $data['classifications'][$transaction['classification_id']],
+                & $data['classifications'][$transaction['classification_id']]['accounts'][$transaction['account_id']],
             ];
         };
 
-        foreach ($this->getTransactions() as $transaction) {
+        foreach ($this->getTransactionsData() as $transaction) {
             foreach ($getSections($transaction) as & $section) {
-                $section['inflow'] += $transaction->inflowConverted;
-                $section['outflow'] += $transaction->outflowConverted;
+                $section['inflow'] += $transaction['inflow_converted'];
+                $section['outflow'] += $transaction['outflow_converted'];
                 $section['transactions'] ++;
             }
         }
@@ -68,34 +64,6 @@ class ClassificationTurnovers extends AbstractTransactionReport
         }
 
         return $data;
-    }
-
-    public function exportGetColumns()
-    {
-        return [
-            'Classification' => 'classification.name',
-            'Account' => 'account.name',
-            'Original currency' => 'account.currency.code',
-            'Base currency' => 'base_currency_code',
-            'Transactions' => 'transactions',
-            'Inflow' => 'inflow|simpleMoney',
-            'Outflow' => 'outflow|simpleMoney',
-            'Difference' => 'difference|simpleMoney',
-        ];
-    }
-
-    public function exportPrepareData($data)
-    {
-        $result = [];
-        $base_currency_code = Yii::$app->currency->getBaseCurrencyCode();
-        foreach ($data['classifications'] as $classification) {
-            foreach ($classification['accounts'] as $account) {
-                $account['classification'] = $classification['classification'];
-                $account['base_currency_code'] = $base_currency_code;
-                $result[] = $account;
-            }
-        }
-        return $result;
     }
 
 }

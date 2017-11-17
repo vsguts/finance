@@ -5,9 +5,8 @@ namespace app\widgets;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\base\Widget;
 
-class PeriodLinks extends Widget
+class PeriodLinks extends AbstractLinkWidget
 {
     /**
      * Default: One year ago
@@ -25,12 +24,6 @@ class PeriodLinks extends Widget
 
     public $timestampToField = 'timestamp_to';
 
-    public $linkOptions = [
-        'class' => 'btn btn-link',
-    ];
-
-    public $linkActiveClass = 'strong';
-
     public function init()
     {
         parent::init();
@@ -44,23 +37,41 @@ class PeriodLinks extends Widget
 
     public function run()
     {
-        $path = Yii::$app->request->pathInfo;
-        $queryParams = Yii::$app->request->queryParams;
+        $queryParams = $this->prepareQuery($this->timestampFromField, $this->timestampToField);
 
-        $currentTimestampFrom = isset($queryParams[$this->timestampFromField]) ? $queryParams[$this->timestampFromField] : null;
-        $currentTimestampTo = isset($queryParams[$this->timestampToField]) ? $queryParams[$this->timestampToField] : null;
+        $currentTimestampFrom = $queryParams[$this->timestampFromField] ?? null;
+        $currentTimestampTo = $queryParams[$this->timestampToField] ?? null;
+
+        if ($this->formName && isset($queryParams[$this->formName])) {
+            if (isset($queryParams[$this->formName][$this->timestampFromField])) {
+                $currentTimestampFrom = $queryParams[$this->formName][$this->timestampFromField];
+            }
+            if (isset($queryParams[$this->formName][$this->timestampToField])) {
+                $currentTimestampTo = $queryParams[$this->formName][$this->timestampToField];
+            }
+            unset($queryParams[$this->formName]);
+        }
+
+        if (!is_numeric($currentTimestampFrom)) {
+            $currentTimestampFrom = Yii::$app->formatter->asTimestamp($currentTimestampFrom);
+        }
+
+        if (!is_numeric($currentTimestampTo)) {
+            $currentTimestampTo = Yii::$app->formatter->asTimestamp($currentTimestampTo);
+        }
 
         $calendar = Yii::$app->calendar;
         $months = $calendar->getPeriodMonths($this->timestampFrom, $this->timestampTo);
+        $monthsList = Yii::$app->calendar->getMonthsList();
         foreach ($months as $month) {
             $timestamps = $calendar->getMonthTimestamps($month['year'], $month['month']);
 
-            $url = Url::to(array_merge([$path], $queryParams, [
+            $url = Url::to(array_merge([$this->path], $queryParams, [
                 $this->timestampFromField => $timestamps['from'],
                 $this->timestampToField => $timestamps['to'],
             ]));
 
-            $text = $month['year'] . ' ' . __(Yii::$app->params['months'][$month['month']]);
+            $text = $month['year'] . ' ' . $monthsList[$month['month']];
 
             $options = $this->linkOptions;
             if ($timestamps['from'] == $currentTimestampFrom && $timestamps['to'] == $currentTimestampTo) {
@@ -70,5 +81,4 @@ class PeriodLinks extends Widget
             echo Html::a($text, $url, $options);
         }
     }
-
 }

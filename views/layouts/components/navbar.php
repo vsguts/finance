@@ -85,10 +85,10 @@ echo Nav::widget([
             'active' => $controllerId == 'transaction' && !in_array($actionId, ['report', 'import']),
         ],
         [
-            'label' => __('Reports'),
-            'url' => ['/transaction/report'],
+            'label'   => __('Reports'),
+            'url'     => ['/reports/account-turnovers/view'],
             'visible' => $user->can('transaction_view'),
-            'active' => $controllerId == 'transaction' && $actionId == 'report',
+            'active'  => strpos($controllerId, 'reports/') === 0,
         ],
     ],
 ]);
