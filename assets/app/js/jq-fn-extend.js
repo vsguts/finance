@@ -4,6 +4,57 @@ window.yii.app = {}; // Common namespace
 
 var ajaxInProgress = false;
 
+var select2ajax = {
+    commonSingle: {
+        allowClear: true,
+        minimumInputLength: 2,
+        ajax: {
+            url: '', // data-app-url attr
+            dataType: 'json',
+            cache: true,
+            width: 'resolve',
+            data: function(params){
+                return {
+                    q: params
+                };
+            },
+            results: function(data){
+                return {
+                    results: data.list
+                };
+            }
+        },
+        initSelection: function(element, callback) {
+            callback({
+                text: element.data('initValueText')
+            });
+        }
+    },
+    commonMultiple: {
+        allowClear: true,
+        minimumInputLength: 2,
+        ajax: {
+            url: '',
+            dataType: 'json',
+            cache: true,
+            width: 'resolve',
+            data: function(params){
+                return {
+                    q: params
+                };
+            },
+            results: function(data){
+                return {
+                    results: data.list
+                };
+            }
+        },
+        initSelection: function(element, callback) {
+            callback(element.data('initValueText'));
+        }
+    }
+};
+
 function matchClass(elem, str) {
     var jelm = $(elem),
         cls = jelm.attr('class');
@@ -101,7 +152,7 @@ $.fn.extend({
         var prefix = this.data('targetPrefix'),
             status = !this.data('displayStatus'),
             items = $('.app-toggle[data-target-class^="' + prefix + '"]');
-        
+
         items.each(function(){
             $(this).appToggle(status);
         });

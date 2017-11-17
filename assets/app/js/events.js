@@ -1,9 +1,9 @@
 (function($){
 
 // Document ready
-$(document).on('ready', function() {
+$(document).ready(function() {
     $.appCommonInit();
-    
+
     // Open modal
     var hash = window.location.hash.replace('#', '');
     if (hash.length) {
@@ -221,7 +221,7 @@ $(document).on('submit', function(e) {
                 if (form.hasClass('app-modal')) {
                     var target_id = form.find('input[name="target_id"]').val(),
                         target = $('#' + target_id);
-                    
+
                     if (target.length) {
                         target.remove();
                     }
@@ -283,7 +283,7 @@ $(document).on('click.app', yii.clickableSelector, function(e) {
             method = jelm.data('method'),
             confirm = jelm.data('confirm'),
             keys = $('.grid-view').yiiGridView('getSelectedRows');
-        
+
         if (!keys.length) {
             alert(yii.app.langs['No items selected']);
             e.stopImmediatePropagation();
@@ -308,7 +308,7 @@ $(document).on('click.app', yii.clickableSelector, function(e) {
             e.stopImmediatePropagation();
             return false;
         }
-        
+
         url_params[obj_name] = keys;
         var delimiter = url.indexOf('?') == -1 ? '?' : '&';
         jelm.attr('href', url + delimiter + decodeURIComponent($.param(url_params)));
