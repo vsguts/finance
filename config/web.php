@@ -23,7 +23,7 @@ $config['components']['assetManager'] = [
         'class' => 'yii\web\AssetConverter',
     ],
     'appendTimestamp' => true,
-    'linkAssets' => true,
+    // 'linkAssets' => true,
 ];
 
 $config['modules']['redactor'] = [
