@@ -1,9 +1,8 @@
 <?php
 
 use app\helpers\ViewHelper;
-use app\models\search\TransactionReportSearch;
 
-/* @var TransactionReportSearch $searchModel */
+/* @var \app\models\report\transactions\CounterpartyTurnoversReport $searchModel */
 /* @var array $data */
 
 $formatter = Yii::$app->formatter;
@@ -30,7 +29,7 @@ $formatter = Yii::$app->formatter;
 
     <tbody>
     <?php
-    $transactions_url = Url::to(['index',
+    $transactions_url = Url::to(['transaction/index',
         'timestamp' => $formatter->asDate($searchModel->timestamp),
         'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
     ]);
@@ -49,7 +48,7 @@ $formatter = Yii::$app->formatter;
     <?php foreach ($data['counterparties'] as $counterparty) : ?>
 
         <?php
-        $transactions_url = Url::to(['index',
+        $transactions_url = Url::to(['transaction/index',
             'counterparty_id' => $counterparty['counterparty']->id,
             'timestamp' => $formatter->asDate($searchModel->timestamp),
             'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
@@ -78,7 +77,7 @@ $formatter = Yii::$app->formatter;
         <?php foreach ($counterparty['accounts'] as $account) : ?>
 
             <?php
-            $transactions_url = Url::to(['index',
+            $transactions_url = Url::to(['transaction/index',
                 'counterparty_id' => $counterparty['counterparty']->id,
                 'account_id' => $account['account']->id,
                 'timestamp' => $formatter->asDate($searchModel->timestamp),

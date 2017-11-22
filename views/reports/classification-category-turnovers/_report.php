@@ -1,9 +1,8 @@
 <?php
 
 use app\helpers\ViewHelper;
-use app\models\search\TransactionReportSearch;
 
-/* @var TransactionReportSearch $searchModel */
+/* @var \app\models\report\transactions\ClassificationCategoryTurnoversReport $searchModel */
 /* @var array $data */
 
 $formatter = Yii::$app->formatter;
@@ -31,7 +30,7 @@ $base_currency = Yii::$app->currency->getBaseCurrency();
 
     <tbody>
     <?php
-    $transactions_url = Url::to(['index',
+    $transactions_url = Url::to(['transaction/index',
         'timestamp' => $formatter->asDate($searchModel->timestamp),
         'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
     ]);
@@ -51,7 +50,7 @@ $base_currency = Yii::$app->currency->getBaseCurrency();
 
         <?php
         $category_id = $category['category'] ? $category['category']->id : 0;
-        $transactions_url = Url::to(['index',
+        $transactions_url = Url::to(['transaction/index',
             'classification_category_id' => $category_id,
             'timestamp' => $formatter->asDate($searchModel->timestamp),
             'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
@@ -80,7 +79,7 @@ $base_currency = Yii::$app->currency->getBaseCurrency();
         <?php foreach ($category['classifications'] as $classification) : ?>
 
             <?php
-            $transactions_url = Url::to(['index',
+            $transactions_url = Url::to(['transaction/index',
                 'classification_id' => $classification['classification']->id,
                 'timestamp' => $formatter->asDate($searchModel->timestamp),
                 'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),

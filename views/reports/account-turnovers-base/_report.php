@@ -3,6 +3,8 @@
 use app\helpers\ViewHelper;
 use app\widgets\Tooltip;
 
+/** @var \app\models\report\transactions\AccountTurnoversBaseReport $searchModel */
+
 $formatter = Yii::$app->formatter;
 
 ?>
@@ -26,7 +28,7 @@ $formatter = Yii::$app->formatter;
     <tbody>
 
     <?php
-    $transactions_url = Url::to(['transactions/transaction/index',
+    $transactions_url = Url::to(['transaction/index',
         'timestamp' => $formatter->asDate($searchModel->timestamp),
         'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
     ]);
@@ -48,7 +50,7 @@ $formatter = Yii::$app->formatter;
     <?php foreach ($data['accounts'] as $row) : ?>
 
         <?php
-        $transactions_url = Url::to(['transactions/transaction/index',
+        $transactions_url = Url::to(['transaction/index',
             'account_id' => $row['account']->id,
             'timestamp' => $formatter->asDate($searchModel->timestamp),
             'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),

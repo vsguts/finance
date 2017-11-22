@@ -1,9 +1,9 @@
 <?php
 
 use app\helpers\ViewHelper;
-use app\models\search\TransactionReportSearch;
+use app\models\report\transactions\AccountTurnoversReport;
 
-/* @var TransactionReportSearch $searchModel */
+/* @var AccountTurnoversReport $searchModel */
 /* @var array $data */
 
 $formatter = Yii::$app->formatter;
@@ -27,7 +27,7 @@ $formatter = Yii::$app->formatter;
     <tbody>
     <?php foreach ($data['accounts'] as $row) : ?>
         <?php
-        $transactions_url = Url::to(['index',
+        $transactions_url = Url::to(['transaction/index',
             'account_id' => $row['account']->id,
             'timestamp' => $formatter->asDate($searchModel->timestamp),
             'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
@@ -50,7 +50,7 @@ $formatter = Yii::$app->formatter;
 
     <tfoot>
     <?php
-    $transactions_url = Url::to(['index',
+    $transactions_url = Url::to(['transaction/index',
         'timestamp' => $formatter->asDate($searchModel->timestamp),
         'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
     ]);
