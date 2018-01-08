@@ -2,10 +2,7 @@
 
 namespace app\widgets\grid;
 
-use yii\helpers\Url;
-use yii\grid\GridView as YGridView;
-
-class GridView extends YGridView
+class GridView extends \yii\grid\GridView
 {
     
     public $dataColumnClass = 'app\widgets\grid\DataColumn';
@@ -27,7 +24,8 @@ class GridView extends YGridView
         parent::init();
         
         if ($this->ajaxPager) {
-            $this->pager['targetId'] = $this->id;
+            $this->pager['linkOptions']['class'] = 'app-ajax';
+            $this->pager['linkOptions']['data-target-id'] = $this->id;
         }
     }
 

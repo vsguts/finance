@@ -44,4 +44,14 @@ class ActiveForm extends YActiveForm
             echo Html::hiddenInput('_return_url', $params['_return_url']);
         }
     }
+
+    /**
+     * @inheritdoc
+     * @return ActiveField the created ActiveField object
+     */
+    public function field($model, $attribute, $options = [])
+    {
+        return parent::field($model, $attribute, $options);
+    }
+
 }
