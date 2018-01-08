@@ -60,8 +60,9 @@ $config = [
         ],
         'authManager' => [
             'class' => 'app\components\rbac\DbManager',
-            'defaultRoles' => ['guest', 'authorized'],
+            'defaultRoles' => ['role-guest', 'role-authorized'],
             'cache' => 'cache',
+            'cacheKey' => 'rbac',
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
