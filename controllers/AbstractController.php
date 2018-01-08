@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\behaviors\AjaxFilter;
+use app\controllers\behaviors\AjaxFilter;
 use app\helpers\FileHelper;
 use app\models\Language;
 use Yii;
