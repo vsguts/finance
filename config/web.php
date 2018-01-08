@@ -1,36 +1,37 @@
 <?php
 
-$config = require(__DIR__ . '/common/common.php');
-
-$config['components']['log']['traceLevel'] = YII_DEBUG ? 3 : 0;
-
-$config['components']['request'] = [
-    // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-    'cookieValidationKey' => '7UHHvisPXccbCuIgKg2dgRxhuJZD9CXJ',
-];
-
-$config['components']['user'] = [
-    'identityClass' => 'app\models\User',
-    'enableAutoLogin' => true,
-];
-
-$config['components']['errorHandler'] = [
-    'errorAction' => 'site/error',
-];
-
-$config['components']['assetManager'] = [
-    'converter' => [
-        'class' => 'yii\web\AssetConverter',
+$config = [
+    'components' => [
+        'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+        ],
+        'request' => [
+            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+            'cookieValidationKey' => '7UHHvisPXccbCuIgKg2dgRxhuJZD9CXJ',
+        ],
+        'user' => [
+            'identityClass' => 'app\models\User',
+            'enableAutoLogin' => true,
+        ],
+        'errorHandler' => [
+            'errorAction' => 'site/error',
+        ],
+        'assetManager' => [
+            'converter' => [
+                'class' => 'yii\web\AssetConverter',
+            ],
+            'appendTimestamp' => true,
+            // 'linkAssets' => true,
+        ],
     ],
-    'appendTimestamp' => true,
-    // 'linkAssets' => true,
-];
-
-$config['modules']['redactor'] = [
-    'class' => 'app\modules\RedactorModule',
-    'uploadDir' => '@webroot/images/uploads',
-    'uploadUrl' => '@web/images/uploads',
-    'imageAllowExtensions' => ['jpg', 'png', 'gif'],
+    'modules' => [
+        'redactor' => [
+            'class' => 'app\modules\RedactorModule',
+            'uploadDir' => '@webroot/images/uploads',
+            'uploadUrl' => '@web/images/uploads',
+            'imageAllowExtensions' => ['jpg', 'png', 'gif'],
+        ]
+    ],
 ];
 
 if (YII_ENV_DEV) {

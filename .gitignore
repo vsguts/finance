@@ -1,19 +1,21 @@
-/messages/*/*.local.php
-/config/components/db.php
-/config/components/constants.php
+# yii console commands
+/app
+/app_test
+/app_test.bat
+/plog.log
 
 # composer
 /vendor
 composer.phar
 
-# node
-node_modules
-
-# Mac DS_Store Files
-.DS_Store
-
+# IDEs
 .idea/
-# sublime project files
 *.sublime-*
+nbproject
+.buildpath
+.project
+.settings
 
-plog.log
+# OS
+.DS_Store
+Thumbs.db

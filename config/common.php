@@ -1,22 +1,24 @@
 <?php
 
-ini_set('memory_limit', '512M');
-
-class_alias('\yii\helpers\Html', 'Html');
-class_alias('\yii\helpers\Url', 'Url');
-
-$params = require(__DIR__ . '/../components/params.php');
-$db = require(__DIR__ . '/../components/db.php');
-
 $config = [
     'id' => 'app',
-    'basePath' => dirname(dirname(__DIR__)),
+    'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'log',
         'appBootstrap'
     ],
     'components' => [
-        'db' => $db,
+        'db' => [
+            'class' => 'yii\db\Connection',
+            'charset' => 'utf8',
+
+            // Need to set DSN
+
+            // Cache
+            'enableSchemaCache' => true,
+            'schemaCacheDuration' => 3600,
+            'schemaCache' => 'cache',
+        ],
         // 'redis' => [
         //     'class' => 'yii\redis\Connection',
         //     'port' => defined('REDIS_PORT') ? REDIS_PORT : 6379,
@@ -97,7 +99,6 @@ $config = [
             'class' => 'app\components\app\Currency',
         ],
     ],
-    'params' => $params,
     'timeZone' => 'Europe/Minsk',
 ];
 

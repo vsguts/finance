@@ -1,18 +1,10 @@
 <?php
 
-define('SECONDS_IN_DAY', 24 * 60 * 60);
-define('SECONDS_IN_YEAR', SECONDS_IN_DAY * 365);
-
 return [
 
     'user.passwordResetTokenExpire' => 3600,
 
     'cryptKey' => '123ewqasdcxz',
-
-    'dirs' => [
-        'file_safe' => '@app/files/',
-        'file_stored' => '@app/files/stored/',
-    ],
 
     'mime_types_to_display' => ['pdf', 'image'],
 
