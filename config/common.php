@@ -68,11 +68,8 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                // Custom
-                'currencies' => 'currency/index',
-                'counterparties' => 'counterparty/index',
-                'counterparty-categories' => 'counterparty-category/index',
                 // Common
+                '<controlletBase:[\w\-]+>ies' => '<controlletBase>y/index',
                 '<controller:[\w\-]+>s' => '<controller>/index',
                 '<controller:[\w\-]+>/<id:\d+>' => '<controller>/update',
             ],
