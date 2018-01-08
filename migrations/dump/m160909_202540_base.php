@@ -12,7 +12,7 @@ class m160909_202540_base extends Migration
             'table'    => $this->string(32)->notNull(),
             'field'    => $this->string(32)->notNull(),
             'code'     => $this->string(64)->notNull(),
-            'position' => $this->integer()->notNull(),
+            'position' => $this->integer()->notNull()->defaultValue(0),
             'name'     => $this->string()->notNull(),
             'UNIQUE KEY `code`(`table`, `field`, `code`)',
         ], $this->getTableOptions());
