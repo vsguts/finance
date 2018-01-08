@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f539de59aece2b0bd1bc110d2842d75",
+    "content-hash": "48bcd71e730cc80d9b6119ec4abb5090",
     "packages": [
         {
             "name": "bluezed/yii2-float-thead",
-            "version": "v1.0.7",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bluezed/yii2-floatThead.git",
-                "reference": "9f74b1c847948f70b2b0d9adfceb3e880f2bd49f"
+                "reference": "337e96f9bcf275ed053d311936aa28a0750db6ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bluezed/yii2-floatThead/zipball/9f74b1c847948f70b2b0d9adfceb3e880f2bd49f",
-                "reference": "9f74b1c847948f70b2b0d9adfceb3e880f2bd49f",
+                "url": "https://api.github.com/repos/bluezed/yii2-floatThead/zipball/337e96f9bcf275ed053d311936aa28a0750db6ac",
+                "reference": "337e96f9bcf275ed053d311936aa28a0750db6ac",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +50,7 @@
                 "thead",
                 "yii2"
             ],
-            "time": "2017-11-27T14:14:57+00:00"
+            "time": "2017-05-05T06:12:17+00:00"
         },
         {
             "name": "bower-asset/bootstrap",
