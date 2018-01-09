@@ -42,6 +42,7 @@ class SearchForm extends BActiveForm
         if (!$this->targetClass) {
             $controller = $this->getView()->context;
             $this->targetClass = $controller->id . '_' . $controller->action->id . '_search_form';
+            $this->targetClass = preg_replace('/[^a-zA-Z0-9_-]+/Sui', '-', $this->targetClass);
         }
 
         echo Html::beginTag('div', ['class' => 'panel panel-info search-form']);

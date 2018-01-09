@@ -95,7 +95,7 @@ if ($model->transaction) {
         ]);
     }
     if ($model->transaction->created_at) {
-        echo $form->field($model->transaction, 'created_at')->text(['formatter' => 'datetime']);
+        echo $form->field($model->transaction, 'created_at')->text(['format' => 'datetime']);
     }
 }
 

@@ -157,7 +157,7 @@ if (!$model->isNewRecord && $model->user) {
 }
 
 if (!$model->isNewRecord) {
-    echo $form->field($model, 'created_at')->text(['formatter' => 'datetime']);
+    echo $form->field($model, 'created_at')->text(['format' => 'datetime']);
 }
 
 ActiveForm::end();

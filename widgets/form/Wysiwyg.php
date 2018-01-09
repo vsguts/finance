@@ -21,5 +21,4 @@ class Wysiwyg extends Redactor
         list($this->clientOptions['lang']) = explode('-', \Yii::$app->language);
         parent::init();
     }
-
 }
