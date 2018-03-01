@@ -14,6 +14,7 @@ class AccountTurnoversReportExport extends ExportFormAbstract
     public function getColumnsSchema()
     {
         return [
+            'Account ID' => 'account.id',
             'Name' => 'account.name',
             'Currency' => 'account.currency.code',
             'Transactions' => 'transactions',

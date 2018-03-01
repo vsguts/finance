@@ -12,7 +12,7 @@ $this->registerJs(AppAsset::appLangs());
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= Html::encode($this->title) ?> - <?= Yii::$app->params['applicationName'] ?></title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -43,9 +43,7 @@ $this->registerJs(AppAsset::appLangs());
     <footer class="footer">
         <div class="container-fluid">
             <p class="pull-left">&copy; <?= Yii::$app->params['companyName'] ?> <?= date('Y') ?></p>
-            <?php if (Yii::$app->params['poweredBy']) : ?>
-            <p class="pull-right"><?= __('Powered by') . ' ' . Yii::$app->params['poweredBy'] ?></p>
-            <?php endif; ?>
+            <p class="pull-right"><?= __('Made by Vladimir Guts') ?></p>
         </div>
     </footer>
 

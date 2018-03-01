@@ -58,7 +58,11 @@ $formatter = Yii::$app->formatter;
         ?>
 
         <tr>
-            <td><?= $row['account']->fullName ?></td>
+            <td>
+                <a href="<?= Url::to(['account/update', 'id' => $row['account']->id]) ?>" class="app-modal" data-target-id="account_<?= $row['account']->id ?>">
+                    <?= $row['account']->fullName ?>
+                </a>
+            </td>
             <td>
                 <?= $row['account']->currency->code ?>
                 <?php if ($row['account']->currency->id != $data['currency']->id) : ?>

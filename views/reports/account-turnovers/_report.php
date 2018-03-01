@@ -27,17 +27,21 @@ $formatter = Yii::$app->formatter;
     <tbody>
     <?php foreach ($data['accounts'] as $row) : ?>
         <?php
-        $transactions_url = Url::to(['transaction/index',
+        $transactionsUrl = Url::to(['transaction/index',
             'account_id' => $row['account']->id,
             'timestamp' => $formatter->asDate($searchModel->timestamp),
             'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
         ]);
         ?>
         <tr>
-            <td><?= $row['account']->name ?></td>
+            <td>
+                <a href="<?= Url::to(['account/update', 'id' => $row['account']->id]) ?>" class="app-modal" data-target-id="account_<?= $row['account']->id ?>">
+                    <?= $row['account']->name ?>
+                </a>
+            </td>
             <td><?= $row['account']->currency->code ?></td>
             <td align="center">
-                <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $row['transactions'] ?></span></a>
+                <a href="<?= $transactionsUrl ?>" target="_blank"><span class="badge"><?= $row['transactions'] ?></span></a>
             </td>
             <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['opening_balance']) ?>"><?= $formatter->asMoneyWithSymbol($row['opening_balance'], $row['account']->currency_id) ?></td>
             <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($row['inflow'], $row['account']->currency_id) ?></td>
@@ -50,7 +54,7 @@ $formatter = Yii::$app->formatter;
 
     <tfoot>
     <?php
-    $transactions_url = Url::to(['transaction/index',
+    $transactionsUrl = Url::to(['transaction/index',
         'timestamp' => $formatter->asDate($searchModel->timestamp),
         'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
     ]);
@@ -59,7 +63,7 @@ $formatter = Yii::$app->formatter;
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td align="center">
-            <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= array_sum($data['totals']['transactions']) ?></span></a>
+            <a href="<?= $transactionsUrl ?>" target="_blank"><span class="badge"><?= array_sum($data['totals']['transactions']) ?></span></a>
         </td>
         <td align="right" class="nowrap"><?= ViewHelper::getCurrencyValues($data['totals']['opening_balance']) ?></td>
         <td align="right" class="nowrap"><?= ViewHelper::getCurrencyValues($data['totals']['inflow']) ?></td>
