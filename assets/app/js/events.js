@@ -2,16 +2,18 @@
 
 // Document ready
 $(document).ready(function() {
-    $.appCommonInit();
+    setTimeout(function(){
+        $.appCommonInit();
 
-    // Open modal
-    var hash = window.location.hash.replace('#', '');
-    if (hash.length) {
-        var elm = $('[data-target-id="'+hash+'"]');
-        if (elm.length) {
-            elm.first().click();
+        // Open modal
+        var hash = window.location.hash.replace('#', '');
+        if (hash.length) {
+            var elm = $('[data-target-id="'+hash+'"]');
+            if (elm.length) {
+                elm.first().click();
+            }
         }
-    }
+    }, 0);
 });
 
 // Events
@@ -250,6 +252,22 @@ $(document).on('keyup', function(e) {
             }
         }
     });
+});
+
+$(document).on('submit', function(e) {
+    var form = $(e.target);
+    if (form.hasClass('app-ajax')) {
+        $.appAjax('request', form.attr('action'), {
+            type: "post",
+            data: form.serialize(),
+            callback: function() {
+                if (form.data('cModal')) {
+                    $('#' + form.data('cModal')).modal('hide');
+                }
+            },
+        });
+        return false;
+    }
 });
 
 $(window).on('beforeunload', function(e) {

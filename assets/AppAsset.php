@@ -18,8 +18,8 @@ class AppAsset extends AssetBundle
     public $js = [
         'js/jq-extend.js',
         'js/jq-fn-extend.js',
-        'js/events.js',
         'js/ajax.js',
+        'js/events.js',
     ];
     
     public $depends = [
