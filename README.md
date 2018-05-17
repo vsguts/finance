@@ -111,17 +111,33 @@ Use following to create database
 CREATE DATABASE finance CHARACTER SET utf8;
 ```
 
-Use following to apply migrations:
+Restore dump:
 
 ```bash
-./yii migrate
+./app migrate/up --migrationPath=@migrations/dump --interactive=0
+```
+
+Or apply migrations:
+
+```bash
+./app migrate/up --interactive=0
 ```
 
 Use following to apply user roles:
 
 ```bash
-./app tools/rbac
+./app rbac/init
 ```
+
+### Configs
+
+Edit configs:
+~~~
+config/common-local.php
+config/console-local.php
+config/web-local.php
+config/params-local.php
+~~~
 
 RUNING
 ------
@@ -135,5 +151,5 @@ http://localhost/finance/web/
 To login use folowing:
 ~~~
 login: root@example.com
-password: root
+password: admin1
 ~~~
