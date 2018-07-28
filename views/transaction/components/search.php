@@ -5,6 +5,7 @@ use app\models\Classification;
 use app\models\Counterparty;
 use app\models\Currency;
 use app\models\User;
+use app\widgets\form\DatePickerRange;
 use app\widgets\form\SearchForm;
 
 ?>
@@ -33,7 +34,7 @@ use app\widgets\form\SearchForm;
             ]) ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'timestamp')->widget('app\widgets\form\DatePickerRange') ?>
+            <?= $form->field($model, 'timestamp')->widget(DatePickerRange::class) ?>
             <?= $form->field($model, 'description') ?>
             <?= $form->field($model, 'user_id')->dropDownList(User::find()->scroll(['empty' => true]), [
                 'class' => 'form-control app-select2',

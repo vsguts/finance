@@ -19,12 +19,14 @@ class DatePickerRange extends DatePicker
 
         if (empty($this->options)) {
             $this->options = [
+                'autocomplete' => 'off',
                 'placeholder' => __('Start date'),
             ];
         }
 
         if (empty($this->options2)) {
             $this->options2 = [
+                'autocomplete' => 'off',
                 'placeholder' => __('End date'),
             ];
         }

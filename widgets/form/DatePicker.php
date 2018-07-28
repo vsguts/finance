@@ -13,7 +13,8 @@ class DatePicker extends KDatePicker
     {
         // $id = $this->form_id ?: uniqid();
         // $this->options['id'] = $id . '_timestamp';
-        
+        $this->options['autocomplete'] = 'off';
+
         if ($this->model) {
             $value = $this->model->{$this->attribute};
             if (is_numeric($value)) {
