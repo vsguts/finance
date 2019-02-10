@@ -2,6 +2,7 @@
 
 /* @var \app\models\report\transactions\AbstractTransactionsReport $model */
 
+use app\models\Account;
 use app\widgets\form\DatePickerRange;
 use app\widgets\form\SearchForm;
 use app\widgets\PeriodLinks;
@@ -17,9 +18,13 @@ use app\widgets\PeriodLinks;
 
     <div class="row">
         <div class="col-md-6">
-            <?= $form->field($model, 'timestamp')->widget(DatePickerRange::class) ?>
+            <?= $form->field($model, 'account_id')->dropDownList(Account::find()->active($model->account_id)->scroll(), [
+                'class' => 'form-control app-select2',
+                'multiple' => true,
+            ]) ?>
         </div>
         <div class="col-md-6">
+            <?= $form->field($model, 'timestamp')->widget(DatePickerRange::class) ?>
         </div>
     </div>
 

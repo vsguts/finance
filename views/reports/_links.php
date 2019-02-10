@@ -37,7 +37,12 @@ foreach ($items as &$item) {
     if (Yii::$app->controller->id == $item['controllerId']) {
         $item['active'] = true;
     } else {
-        $item['url'] = [$item['controllerId'] . '/view', 'timestamp' => $searchModel->timestamp, 'timestamp_to' => $searchModel->timestamp_to];
+        $item['url'] = [
+            $item['controllerId'] . '/view',
+            'timestamp' => $searchModel->timestamp,
+            'timestamp_to' => $searchModel->timestamp_to,
+            'account_id' => $searchModel->account_id,
+        ];
     }
 }
 

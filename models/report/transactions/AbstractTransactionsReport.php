@@ -22,8 +22,12 @@ abstract class AbstractTransactionsReport extends ReportAbstract
     protected function getAccounts()
     {
         if (!$this->accounts) {
-            $this->accounts = Account::find()
-                ->permission()
+            $query = Account::find()
+                ->permission();
+            if ($this->account_id) {
+                $query->id($this->account_id);
+            }
+            $this->accounts = $query
                 ->sorted(SORT_ASC)
                 ->indexBy('id')
                 ->all();

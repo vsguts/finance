@@ -3,7 +3,6 @@
 namespace app\models\components;
 
 use app\helpers\StringHelper;
-use app\helpers\Tools;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\base\Model;
