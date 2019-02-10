@@ -186,9 +186,9 @@ abstract class AbstractTransactionsReport extends ReportAbstract
     protected function getChartDateMask()
     {
         $diff = $this->timestamp_to - $this->timestamp;
-        if ($diff > 10 * 365 * SECONDS_IN_DAY) {
+        if ($diff > 50 * 365 * SECONDS_IN_DAY) { // more than 50 years
             return 'Y'; // Year
-        } elseif ($diff > 10 * 30 * SECONDS_IN_DAY) {
+        } elseif ($diff > 50 * 30 * SECONDS_IN_DAY) { // more than 50 months
             return 'M Y'; // month
         } else {
             return 'd M'; // day
