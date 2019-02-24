@@ -31,6 +31,7 @@ $formatter = Yii::$app->formatter;
     $transactions_url = Url::to(['transaction/index',
         'timestamp' => $formatter->asDate($searchModel->timestamp),
         'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
+        'account_id' => $searchModel->account_id,
     ]);
     ?>
 

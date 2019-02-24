@@ -32,6 +32,7 @@ $formatter = Yii::$app->formatter;
     $transactions_url = Url::to(['transaction/index',
         'timestamp' => $formatter->asDate($searchModel->timestamp),
         'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
+        'account_id' => $searchModel->account_id,
     ]);
     ?>
     <tr class="app-table-totals">
@@ -52,6 +53,7 @@ $formatter = Yii::$app->formatter;
             'counterparty_id' => $counterparty['counterparty']->id,
             'timestamp' => $formatter->asDate($searchModel->timestamp),
             'timestamp_to' => $formatter->asDate($searchModel->timestamp_to),
+            'account_id' => $searchModel->account_id,
         ]);
         ?>
 
