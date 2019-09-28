@@ -11,7 +11,12 @@ class Bootstrap extends ServiceLocator
     public function init()
     {
         // Settings
-        $settings = Setting::settings();
+        $settings = [];
+        try {
+            $settings = Setting::settings();
+        } catch (\Throwable $e) {
+            Yii::error('Error get settings: ' . $e->getMessage());
+        }
         Yii::$app->params = array_merge(Yii::$app->params, $settings);
         
         // Base Url
@@ -24,9 +29,10 @@ class Bootstrap extends ServiceLocator
 
         // Mailer
         $mailer = Yii::$app->components['mailer'];
-        if ($settings['mailSendMethod'] == 'file') {
+        $mailSendMethod = $settings['mailSendMethod'] ?? '';
+        if ($mailSendMethod == 'file') {
             $mailer['useFileTransport'] = true;
-        } elseif ($settings['mailSendMethod'] == 'smtp') {
+        } elseif ($mailSendMethod == 'smtp') {
             if (strpos($settings['smtpHost'], ':')) {
                 list($settings['smtpHost'], $port) = explode(':', $settings['smtpHost']);
             } else {

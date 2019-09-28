@@ -23,6 +23,8 @@ return [
         12 => 'December',
     ],
 
+    'baseUrl' => env('BASE_URL', 'localhost'),
+
     // Will be merged by Setting::settings()
 
 ];
