@@ -32,6 +32,7 @@ services:
     #  - "6380:6379"
     volumes:
      - redisdata:/data
+    restart: always
 
   mysql:
     #image: percona:5.6
@@ -46,6 +47,7 @@ services:
     volumes:
      #- mysqldata:/var/lib/mysql
      - ./docker/data/mysql:/var/lib/mysql
+    restart: always
 
   #phpmyadmin:
   #  image: phpmyadmin/phpmyadmin
