@@ -9,6 +9,7 @@ git pull --rebase
 # rm -rf ./vendor
 composer install
 
+#./app migrate/up --migrationPath=migrations/dump
 ./app migrate/up --interactive=0
 ./app rbac/init
 

@@ -80,6 +80,8 @@ class m160909_202540_base extends Migration
             'auth_key' => 'JxTq8CyzZwAa85PYUVy1GuI0X3WmUWUW',
             'password_hash' => '$2y$13$CPWVAx9rW6IYpVD7dU.mNe/mUWty8WN6Dheo0IrRkVAvubamuPqxK',
             'status' => 1,
+            'created_at' => 0,
+            'updated_at' => 0,
         ]);
 
 
