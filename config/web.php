@@ -21,7 +21,7 @@ $config = [
                 'class' => 'yii\web\AssetConverter',
             ],
             'appendTimestamp' => true,
-            // 'linkAssets' => true,
+            'linkAssets' => env('LINK_ASSETS'),
         ],
     ],
     'modules' => [
@@ -35,17 +35,22 @@ $config = [
 ];
 
 if (YII_ENV_DEV) {
+    $localIps = array_merge(
+        explode(',', env('LOCAL_IP_ADDRESSES')),
+        ['127.0.0.1', '::1']
+    );
+
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
-        'allowedIPs' => ['127.0.0.1', '::1', '172.17.0.1'],
+        'allowedIPs' => $localIps,
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        'allowedIPs' => ['127.0.0.1', '::1', '172.17.0.1'],
+        'allowedIPs' => $localIps,
     ];
 }
 

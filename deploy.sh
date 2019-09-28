@@ -9,7 +9,7 @@ git pull --rebase
 # rm -rf ./vendor
 composer install
 
-./yii migrate/up --interactive=0
+./app migrate/up --interactive=0
 ./app rbac/init
 
 # Cache
