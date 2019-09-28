@@ -40,7 +40,7 @@ return [
             'app',
         ],
         'setCookieValidationKey' => [
-            'config/web-local.php',
+            'config/web.php',
         ],
     ],
     'Production' => [
@@ -54,7 +54,7 @@ return [
             'app',
         ],
         'setCookieValidationKey' => [
-            'config/web-local.php',
+            'config/web.php',
         ],
     ],
 ];
