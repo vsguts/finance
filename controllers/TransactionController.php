@@ -14,7 +14,6 @@ use app\models\Account;
 use app\models\FormTemplate;
 use app\models\search\TransactionSearch;
 use app\models\form\MoneyTransferForm;
-use app\models\search\TransactionReportSearch;
 
 class TransactionController extends AbstractController
 {
@@ -98,13 +97,16 @@ class TransactionController extends AbstractController
     /**
      * Updates an existing Transaction model.
      * If update is successful, the browser will be redirected to the 'index' page.
+     *
      * @param integer $id
      * @param integer $form_template_id
-     * @param null    $copy_id
+     * @param null $copy_id
+     * @param array $searchParams
      * @return mixed
      * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
      */
-    public function actionUpdate($id = null, $form_template_id = null, $copy_id = null)
+    public function actionUpdate($id = null, $form_template_id = null, $copy_id = null, array $searchParams = [])
     {
         $touch_account_ids = [];
 
@@ -139,6 +141,8 @@ class TransactionController extends AbstractController
                 $data = $copy_model->attributes;
                 unset($data['timestamp']);
                 $model->load($data, '');
+            } elseif ($searchParams) {
+                $model->load($searchParams, '');
             }
         }
 

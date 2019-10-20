@@ -150,4 +150,28 @@ class TransactionSearch extends Transaction
         return $totals;
     }
 
+    public function getAttributesForCreation()
+    {
+        $attributes = array_intersect_key($this->attributes, array_flip([
+            'account_id',
+            'currency_id',
+            'category_id',
+            'classification_category_id',
+            'timestamp',
+            'timestamp_to',
+            'description',
+        ]));
+
+        // Account fix
+        if (isset($attributes['account_id']) && is_array($attributes['account_id'])) {
+            $attributes['account_id'] = reset($attributes['account_id']);
+        }
+
+        // Timestamp fix
+        if (!empty($attributes['timestamp_to'])) {
+            $attributes['timestamp'] = $attributes['timestamp_to'];
+        }
+
+        return $attributes;
+    }
 }

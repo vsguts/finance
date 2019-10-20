@@ -62,6 +62,10 @@ class FormTemplate extends AbstractModel
 
     /**
      * Common methods
+     *
+     * @param $model
+     * @param $template_id
+     * @param array $lose_fields
      */
     
     public static function loadTemplate($model, $template_id, $lose_fields = [])

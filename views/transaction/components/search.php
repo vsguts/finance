@@ -8,6 +8,10 @@ use app\models\User;
 use app\widgets\form\DatePickerRange;
 use app\widgets\form\SearchForm;
 
+/**
+ * @var \app\models\search\TransactionSearch $model
+ */
+
 ?>
 
 <div class="transaction-search">

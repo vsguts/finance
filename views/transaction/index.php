@@ -7,6 +7,10 @@ use app\widgets\ActionsDropdown;
 use app\widgets\grid\GridView;
 use app\widgets\Tooltip;
 
+/**
+ * @var \app\models\search\TransactionSearch $searchModel
+ */
+
 $this->registerJs(AppAsset::appAccounts());
 $this->registerJs(AppAsset::appClassifications());
 
@@ -23,12 +27,18 @@ $detailsLink = function($model) {
     ];
 };
 
+$createTransactionLink = function($params = []) use ($searchModel) {
+    $url = ['update', '_return_url' => Url::to()];
+    $url['searchParams'] = $searchModel->getAttributesForCreation();
+    return $url + $params;
+};
+
 // Prepare template items
-$template_items = [];
+$templateItems = [];
 foreach ($templates as $template) {
-    $template_items[] = [
+    $templateItems[] = [
         'label' => $template->template,
-        'url' => Url::to(['update', 'form_template_id' => $template->id, '_return_url' => Url::to()]),
+        'url' => $createTransactionLink(['form_template_id' => $template->id]),
         'linkOptions' => [
             'class' => 'app-modal app-modal-force',
             'data-target-id' => 'transaction_create',
@@ -45,22 +55,22 @@ foreach ($templates as $template) {
         <?php if (Yii::$app->user->can('transaction_edit')) : ?>
             <div class="btn-group">
                 <?php
-                    echo Html::a(__('Create transaction'), ['update', '_return_url' => Url::to()], [
-                        'class' => 'btn btn-success app-modal app-modal-force',
+                    echo Html::a(__('Create transaction'), $createTransactionLink(), [
+                        'class' => 'btn btn-success app-modal app-modal-force_disabled',
                         'data-target-id' => 'transaction_create',
                     ]);
-                    if ($template_items) {
+                    if ($templateItems) {
                         echo ActionsDropdown::widget([
                             'layout' => 'success',
                             'label' => '',
-                            'items' => $template_items,
+                            'items' => $templateItems,
                         ]);
                     }
                 ?>
             </div>
             <div class="btn-group">
                 <?= Html::a(__('Create transfer'), ['transfer', '_return_url' => Url::to()], [
-                    'class' => 'btn btn-success app-modal app-modal-force',
+                    'class' => 'btn btn-success app-modal app-modal-force_disabled',
                     'data-target-id' => 'transaction_transfer',
                 ]) ?>
             </div>
