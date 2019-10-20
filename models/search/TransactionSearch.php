@@ -157,7 +157,6 @@ class TransactionSearch extends Transaction
             'currency_id',
             'category_id',
             'classification_category_id',
-            'timestamp',
             'timestamp_to',
             'description',
         ]));
