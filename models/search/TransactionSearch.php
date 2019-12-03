@@ -157,6 +157,7 @@ class TransactionSearch extends Transaction
             'currency_id',
             'category_id',
             'classification_category_id',
+            'counterparty_id',
             'timestamp_to',
             'description',
         ]));
@@ -176,6 +177,17 @@ class TransactionSearch extends Transaction
             }
 
             $attributes['timestamp'] = $timestamp;
+        }
+
+        return $attributes;
+    }
+
+    public function getAttributesForTransfer()
+    {
+        $attributes = $this->getAttributesForCreation();
+
+        if (isset($attributes['account_id'])) {
+            $attributes['account_id_from'] = $attributes['account_id_to'] = $attributes['account_id'];
         }
 
         return $attributes;

@@ -33,6 +33,12 @@ $createTransactionLink = function($params = []) use ($searchModel) {
     return $url + $params;
 };
 
+$createTransferLink = function($params = []) use ($searchModel) {
+    $url = ['transfer', '_return_url' => Url::to()];
+    $url['searchParams'] = $searchModel->getAttributesForTransfer();
+    return $url + $params;
+};
+
 // Prepare template items
 $templateItems = [];
 foreach ($templates as $template) {
@@ -69,7 +75,7 @@ foreach ($templates as $template) {
                 ?>
             </div>
             <div class="btn-group">
-                <?= Html::a(__('Create transfer'), ['transfer', '_return_url' => Url::to()], [
+                <?= Html::a(__('Create transfer'), $createTransferLink(), [
                     'class' => 'btn btn-success app-modal app-modal-force_disabled',
                     'data-target-id' => 'transaction_transfer',
                 ]) ?>

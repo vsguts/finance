@@ -153,12 +153,14 @@ class TransactionController extends AbstractController
 
     /**
      * Money transfer.
+     *
      * @param null $id
      * @param null $copy_id
+     * @param array $searchParams
      * @return mixed
      * @throws NotFoundHttpException
      */
-    public function actionTransfer($id = null, $copy_id = null)
+    public function actionTransfer($id = null, $copy_id = null, array $searchParams = [])
     {
         $touch_account_ids = [];
 
@@ -186,16 +188,21 @@ class TransactionController extends AbstractController
 
             return $this->redirect(['index']);
         }
-        $model->validate(); // Fill default values
-        $model->clearErrors();
-        if ($copy_id) {
-            $copy_model = MoneyTransferForm::findOne($copy_id);
-            if (!$copy_model) {
-                throw new NotFoundHttpException('The requested page does not exist.');
+
+        if (!$id) { // Is New
+            $model->validate(); // Fill default values
+            $model->clearErrors();
+            if ($copy_id) {
+                $copy_model = MoneyTransferForm::findOne($copy_id);
+                if (!$copy_model) {
+                    throw new NotFoundHttpException('The requested page does not exist.');
+                }
+                $data = $copy_model->attributes;
+                unset($data['timestamp'], $data['transaction']);
+                $model->load($data, '');
+            } elseif ($searchParams) {
+                $model->load($searchParams, '');
             }
-            $data = $copy_model->attributes;
-            unset($data['timestamp'], $data['transaction']);
-            $model->load($data, '');
         }
 
         return $this->render('transfer', [
