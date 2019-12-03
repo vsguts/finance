@@ -168,7 +168,14 @@ class TransactionSearch extends Transaction
 
         // Timestamp fix
         if (!empty($attributes['timestamp_to'])) {
-            $attributes['timestamp'] = $attributes['timestamp_to'];
+            $timestamp = Yii::$app->formatter->asTimestamp($attributes['timestamp_to']);
+
+            $now = time();
+            if ($timestamp > $now) {
+                $timestamp = $now;
+            }
+
+            $attributes['timestamp'] = $timestamp;
         }
 
         return $attributes;

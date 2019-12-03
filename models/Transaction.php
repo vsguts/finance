@@ -2,9 +2,12 @@
 
 namespace app\models;
 
+use app\models\behaviors\AttachmentsBehavior;
+use app\models\behaviors\TimestampBehavior;
+use app\models\behaviors\TimestampConvertBehavior;
 use app\models\behaviors\TransactionBehavior;
-use Yii;
 use app\models\query\TransactionQuery;
+use Yii;
 
 /**
  * This is the model class for table "transaction".
@@ -49,13 +52,13 @@ class Transaction extends AbstractModel
     public function behaviors()
     {
         return [
-            'app\models\behaviors\TransactionBehavior',
-            'app\models\behaviors\TimestampConvertBehavior',
+            TransactionBehavior::class,
+            TimestampConvertBehavior::class,
             [
-                'class' => 'app\models\behaviors\TimestampBehavior',
+                'class' => TimestampBehavior::class,
                 'updatedAtAttribute' => false,
             ],
-            'app\models\behaviors\AttachmentsBehavior',
+            AttachmentsBehavior::class,
         ];
     }
 
