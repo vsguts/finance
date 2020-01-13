@@ -1,7 +1,8 @@
 #!/bin/bash
 
-mkdir -p storage/dumps
-./app mysql/mysqldump storage/dumps/`date +'%Y%m%d_%H%M%S'`.sql
+# Backup
+#mkdir -p storage/dumps
+#./app mysql/mysqldump storage/dumps/`date +'%Y%m%d_%H%M%S'`.sql
 
 git pull --rebase
 
@@ -14,5 +15,6 @@ composer install
 ./app rbac/init
 
 # Cache
+./app cache/flush-all
 #rm web/css/app.css*
 #rm web/css/site.css*

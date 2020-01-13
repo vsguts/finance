@@ -20,55 +20,41 @@ else
 VERSION ?= 0.0.1
 endif
 
-%.env:
-	cp $@.dist $@
+.env:
+	cp .env.dist $@
 
-# Public targets
-.PHONY: .title
-.title:
-	$(info $(APP_NAME) v$(VERSION))
-
-.PHONY: provision
 provision:
-	docker-compose exec php /usr/bin/php /app/docker/provision/consul.php i
 	docker-compose exec php php artisan migrate:refresh --seed
 
-.PHONY: up
 up:
 	docker-compose up -d
 
-.PHONY: down
 down:
 	docker-compose down
 
-.PHONY: start
 start:
 	docker-compose start
 
-.PHONY: stop
 stop:
 	docker-compose stop
 
-.PHONY: reset
 reset: down up
 
-.PHONY: prune
 prune:
 	docker-compose down
 	docker volume prune -f
 	docker system prune -f
 
-.PHONY: bash
 bash:
 	docker-compose exec php bash
 
-.PHONY: help
 help: .title
 	@echo ''
 	@echo 'Usage: make [target] [ENV_VARIABLE=ENV_VALUE ...]'
 	@echo ''
 	@echo 'Available targets:'
 	@echo ''
+	@echo '  .env          Prepare .env'
 	@echo '  help          Show this help and exit'
 	@echo '  provision     Will start setting up Application provisioning'
 	@echo '  up            Starts and attaches to containers for a service'

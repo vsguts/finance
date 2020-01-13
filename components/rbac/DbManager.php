@@ -17,14 +17,15 @@ class DbManager extends \yii\rbac\DbManager
     /**
      * Getting roles list. Applying for checkboxes
      *
-     * @param  bool  $skip_system Skip roles list
+     * @param  bool  $skipDefault Skip roles list
      * @return array
      */
-    public function getRolesList($skip_system = false)
+    public function getRolesList($skipDefault = false)
     {
+        $defaultRoleIds = Yii::$app->authManager->defaultRoles;
         $roles = [];
         foreach ($this->getRoles() as $role) {
-            if ($skip_system && !empty($role->data['system'])) {
+            if ($skipDefault && in_array($role->name, $defaultRoleIds)) {
                 continue;
             }
             $roles[$role->name] = $role->description;
