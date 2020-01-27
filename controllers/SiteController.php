@@ -88,7 +88,7 @@ class SiteController extends AbstractController
             $dashboard[] = [
                 'name' => __('Transactions'),
                 'link' => Url::to(['transaction/index']),
-                'count' => Transaction::find()->count(),
+                'count' => Transaction::find()->permission()->count(),
             ];
         }
 
