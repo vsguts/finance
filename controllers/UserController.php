@@ -79,7 +79,7 @@ class UserController extends AbstractController
         $user = Yii::$app->user;
 
         if ($id) {
-            $model = $this->findModel($id, User::className());
+            $model = $this->findModel($id, User::class);
 
             if ($user->can('user_manage_own', ['user' => $model])) {
                 $allowed = true;
@@ -124,17 +124,18 @@ class UserController extends AbstractController
     /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param array|int $id
      * @return mixed
      */
-    public function actionDelete(array $id)
+    public function actionDelete()
     {
-        return $this->delete(User::className(), $id);
+        $id = (array)$this->getRequest('id');
+
+        return $this->delete(User::class, $id);
     }
 
     public function actionActOnBehalf($id)
     {
-        $model = $this->findModel($id, User::className());
+        $model = $this->findModel($id, User::class);
         Yii::$app->user->switchIdentity($model);
         return $this->goHome();
     }

@@ -20,7 +20,7 @@ class ClassificationController extends AbstractController
     {
         return array_merge(parent::behaviors(), [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -67,7 +67,7 @@ class ClassificationController extends AbstractController
     public function actionUpdate($id = null)
     {
         if ($id) {
-            $model = $this->findModel($id, Classification::className());
+            $model = $this->findModel($id, Classification::class);
         } else {
             $model = new Classification;
         }
@@ -89,12 +89,13 @@ class ClassificationController extends AbstractController
     /**
      * Deletes an existing Classification model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
      * @return mixed
      */
-    public function actionDelete(array $id)
+    public function actionDelete()
     {
-        return $this->delete(Classification::className(), $id);
+        $id = (array)$this->getRequest('id');
+
+        return $this->delete(Classification::class, $id);
     }
 
 }

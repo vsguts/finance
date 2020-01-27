@@ -28,7 +28,7 @@ class TransactionController extends AbstractController
     {
         return array_merge(parent::behaviors(), [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                     'recalculate-balance' => ['POST'],
@@ -111,7 +111,7 @@ class TransactionController extends AbstractController
         $touch_account_ids = [];
 
         if ($id) {
-            $model = $this->findModel($id, Transaction::className());
+            $model = $this->findModel($id, Transaction::class);
             $touch_account_ids[] = $model->account_id;
         } else {
             $model = new Transaction;
@@ -213,11 +213,12 @@ class TransactionController extends AbstractController
     /**
      * Deletes an existing Transaction model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param array|int $id
      * @return mixed
      */
-    public function actionDelete(array $id)
+    public function actionDelete()
     {
+        $id = (array)$this->getRequest('id');
+
         $ok_message = false;
         $models = Transaction::find()->where(['id' => $id])->all();
         if ($models) {
@@ -256,7 +257,7 @@ class TransactionController extends AbstractController
      */
     public function actionDownload($id, $field)
     {
-        $this->download($this->findModel($id, Transaction::className())->getPath($field));
+        $this->download($this->findModel($id, Transaction::class)->getPath($field));
     }
 
     public function actionExport()

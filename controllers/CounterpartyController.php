@@ -21,7 +21,7 @@ class CounterpartyController extends AbstractController
     {
         return array_merge(parent::behaviors(), [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -73,7 +73,7 @@ class CounterpartyController extends AbstractController
     public function actionUpdate($id = null)
     {
         if ($id) {
-            $model = $this->findModel($id, Counterparty::className());
+            $model = $this->findModel($id, Counterparty::class);
         } else {
             $model = new Counterparty;
             $model->validate(); // Fill default values
@@ -97,12 +97,13 @@ class CounterpartyController extends AbstractController
     /**
      * Deletes an existing Counterparty model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param array|int $id
      * @return mixed
      */
-    public function actionDelete(array $id)
+    public function actionDelete()
     {
-        return $this->delete(Counterparty::className(), $id);
+        $id = (array)$this->getRequest('id');
+
+        return $this->delete(Counterparty::class, $id);
     }
 
     /**
@@ -112,7 +113,7 @@ class CounterpartyController extends AbstractController
      */
     public function actionDownload($id, $field)
     {
-        $this->download($this->findModel($id, Counterparty::className())->getPath($field));
+        $this->download($this->findModel($id, Counterparty::class)->getPath($field));
     }
 
     public function actionOauth($id = null, $code = null)
@@ -120,7 +121,7 @@ class CounterpartyController extends AbstractController
         if ($id == null) {
             $id = Yii::$app->session['oauth_id'];
         }
-        $model = $this->findModel($id, Counterparty::className());
+        $model = $this->findModel($id, Counterparty::class);
 
         if ($model->getOauthIsConnected()) {
             $model->oauthDisconnect();
@@ -141,5 +142,4 @@ class CounterpartyController extends AbstractController
 
         return $this->redirect($url);
     }
-
 }

@@ -17,7 +17,7 @@ class CounterpartyCategoryController extends AbstractController
     {
         return array_merge(parent::behaviors(), [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -65,7 +65,7 @@ class CounterpartyCategoryController extends AbstractController
     public function actionUpdate($id = null)
     {
         if ($id) {
-            $model = $this->findModel($id, CounterpartyCategory::className());
+            $model = $this->findModel($id, CounterpartyCategory::class);
         } else {
             $model = new CounterpartyCategory();
         }
@@ -87,12 +87,13 @@ class CounterpartyCategoryController extends AbstractController
     /**
      * Deletes an existing CounterpartyCategory model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param array|int $id
      * @return mixed
      */
-    public function actionDelete(array $id)
+    public function actionDelete()
     {
-        return $this->delete(CounterpartyCategory::className(), $id);
+        $id = (array)$this->getRequest('id');
+
+        return $this->delete(CounterpartyCategory::class, $id);
     }
 
 }

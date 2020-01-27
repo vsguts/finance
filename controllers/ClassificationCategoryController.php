@@ -87,11 +87,12 @@ class ClassificationCategoryController extends AbstractController
     /**
      * Deletes an existing ClassificationCategory model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param array|int $id
      * @return mixed
      */
-    public function actionDelete(array $id)
+    public function actionDelete()
     {
+        $id = (array)$this->getRequest('id');
+
         return $this->delete(ClassificationCategory::className(), $id);
     }
 

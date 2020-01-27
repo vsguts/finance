@@ -66,7 +66,7 @@ class CurrencyController extends AbstractController
     public function actionUpdate($id = null)
     {
         if ($id) {
-            $model = $this->findModel($id, Currency::className());
+            $model = $this->findModel($id, Currency::class);
         } else {
             $model = new Currency;
         }
@@ -88,12 +88,12 @@ class CurrencyController extends AbstractController
     /**
      * Deletes an existing Currency model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
      * @return mixed
      */
-    public function actionDelete(array $id)
+    public function actionDelete()
     {
-        return $this->delete(Currency::className(), $id);
-    }
+        $id = (array)$this->getRequest('id');
 
+        return $this->delete(Currency::class, $id);
+    }
 }
