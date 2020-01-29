@@ -156,6 +156,7 @@ class TransactionSearch extends Transaction
             'account_id',
             'currency_id',
             'category_id',
+            'classification_id',
             'classification_category_id',
             'counterparty_id',
             'timestamp_to',
