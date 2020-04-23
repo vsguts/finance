@@ -8,8 +8,7 @@ use app\helpers\Url;
 
 foreach ($roles as $name => $role) {
     $roles[$name] .= ' ' . Html::a(Html::tag('span', '', ['class' => 'glyphicon glyphicon-link']), null, [
-        'href' => Url::to(['user-role/index', 'id' => $name, '#' => 'user-role_' . $name]),
-        'target' => '_blank',
+        'href' => Url::to(['user-role/index', 'id' => $name, '#' => 'user-role_' . $name])
     ]);
 }
 

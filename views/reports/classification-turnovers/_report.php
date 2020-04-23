@@ -38,7 +38,7 @@ $formatter = Yii::$app->formatter;
     <tr class="app-table-totals">
         <td colspan="2"><?= __('Totals') ?>:</td>
         <td align="center">
-            <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $data['transactions'] ?></span></a>
+            <a href="<?= $transactions_url ?>"><span class="badge"><?= $data['transactions'] ?></span></a>
         </td>
         <td align="right" class="nowrap <?= ViewHelper::getTextClass($data['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($data['inflow']) ?></td>
         <td align="right" class="nowrap <?= ViewHelper::getTextClass($data['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($data['outflow']) ?></td>
@@ -67,7 +67,7 @@ $formatter = Yii::$app->formatter;
                     </span>
             </td>
             <td align="center">
-                <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $classification['transactions'] ?></span></a>
+                <a href="<?= $transactions_url ?>"><span class="badge"><?= $classification['transactions'] ?></span></a>
             </td>
             <td align="right" class="nowrap <?= ViewHelper::getTextClass($classification['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($classification['inflow']) ?></td>
             <td align="right" class="nowrap <?= ViewHelper::getTextClass($classification['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($classification['outflow']) ?></td>
@@ -93,7 +93,7 @@ $formatter = Yii::$app->formatter;
                 <td>&nbsp;</td>
                 <td><?= $account['account']->name ?></td>
                 <td align="center">
-                    <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $account['transactions'] ?></span></a>
+                    <a href="<?= $transactions_url ?>"><span class="badge"><?= $account['transactions'] ?></span></a>
                 </td>
                 <td align="right" class="nowrap <?= ViewHelper::getTextClass($account['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($account['inflow']) ?></td>
                 <td align="right" class="nowrap <?= ViewHelper::getTextClass($account['outflow'], true) ?>"><?= $formatter->asMoneyWithSymbol($account['outflow']) ?></td>

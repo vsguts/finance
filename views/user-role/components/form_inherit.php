@@ -29,10 +29,9 @@ foreach ($items as $item) {
 }
 foreach ($roles as $name => $role) {
     $roles[$name]['label'] .= ' ' . Html::a(
-            Html::tag('span', '', ['class' => 'glyphicon glyphicon-link']),
-            Url::to(['user-role/index', 'id' => $name, '#' => 'user-role_' . $name]),
-            ['target' => '_blank']
-        );
+        Html::tag('span', '', ['class' => 'glyphicon glyphicon-link']),
+        Url::to(['user-role/index', 'id' => $name, '#' => 'user-role_' . $name])
+    );
 }
 
 echo $form

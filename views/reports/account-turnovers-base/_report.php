@@ -38,7 +38,7 @@ $formatter = Yii::$app->formatter;
     <tr class="app-table-totals">
         <td colspan="3"><?= __('Totals') ?>:</td>
         <td align="center">
-            <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $data['totals']['transactions'] ?></span></a>
+            <a href="<?= $transactions_url ?>"><span class="badge"><?= $data['totals']['transactions'] ?></span></a>
         </td>
         <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['opening_balance'], $data['currency']->symbol) ?></td>
         <td align="right" class="nowrap"><?= $formatter->asMoneyWithSymbol($data['totals']['inflow'], $data['currency']->symbol) ?></td>
@@ -77,7 +77,7 @@ $formatter = Yii::$app->formatter;
                 <?= $data['currency']->code ?>
             </td>
             <td align="center">
-                <a href="<?= $transactions_url ?>" target="_blank"><span class="badge"><?= $row['transactions'] ?></span></a>
+                <a href="<?= $transactions_url ?>"><span class="badge"><?= $row['transactions'] ?></span></a>
             </td>
             <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['opening_balance']) ?>"><?= $formatter->asMoneyWithSymbol($row['opening_balance'], $data['currency']->symbol) ?></td>
             <td align="right" class="nowrap <?= ViewHelper::getTextClass($row['inflow']) ?>"><?= $formatter->asMoneyWithSymbol($row['inflow'], $data['currency']->symbol) ?></td>
