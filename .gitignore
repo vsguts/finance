@@ -9,3 +9,4 @@
 /app
 /plog.log
 .env
+.docker-compose.yml
