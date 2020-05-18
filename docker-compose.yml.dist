@@ -12,7 +12,7 @@ services:
       - ./docker/logs/php:/var/log/php
     working_dir: /app
     environment:
-      TZ: Europe/Kiev
+      TZ: ${TIME_ZONE}
       XDEBUG_CONFIG: ${XDEBUG_CONFIG}
 
   nginx:
