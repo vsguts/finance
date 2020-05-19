@@ -30,7 +30,7 @@ git clone git@github.com:vsguts/finance.git
 
 Prepare configs
 ~~~
-cp docker-compose.yml.dist docker-compose.yml
+cp docker-compose-local.yml.dist docker-compose.yml
 cp .env.dist .env
 ~~~
 
