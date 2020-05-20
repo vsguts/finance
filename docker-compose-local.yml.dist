@@ -22,9 +22,9 @@ services:
       - "8080:80"
     volumes:
       - .:/app
-      - ./docker/config/nginx:/etc/nginx/conf.d
       - ./docker/logs/nginx:/var/log/nginx
     working_dir: /app
+    command: /app/docker/scripts/run_nginx.sh
 
   redis:
     image: redis:latest
