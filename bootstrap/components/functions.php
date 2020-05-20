@@ -68,6 +68,7 @@ function env($key, $default = null)
 
     return $value;
 }
+
 /**
  * Debuging
  */
