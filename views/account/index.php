@@ -1,7 +1,19 @@
 <?php
 
+use app\models\Account;
+use app\models\search\AccountSearch;
 use app\widgets\ActionsDropdown;
+use app\widgets\grid\ActionColumn;
+use app\widgets\grid\CounterColumn;
 use app\widgets\grid\GridView;
+use app\widgets\grid\LabeledColumn;
+use yii\data\ActiveDataProvider;
+use yii\grid\CheckboxColumn;
+
+/**
+ * @var AccountSearch $searchModel
+ * @var ActiveDataProvider $dataProvider
+ */
 
 $this->title = __('Accounts');
 $this->params['breadcrumbs'][] = $this->title;
@@ -66,9 +78,10 @@ $detailsLink = function($model) {
             ];
         },
         'columns' => [
-            ['class' => 'yii\grid\CheckboxColumn'],
+            ['class' => CheckboxColumn::class],
 
             [
+                'class' => LabeledColumn::class,
                 'attribute' => 'name',
                 'link' => $detailsLink,
             ],
@@ -82,7 +95,7 @@ $detailsLink = function($model) {
 
             [
                 'attribute' => 'import_processor',
-                'value' => function($model, $key, $index, $column){
+                'value' => function(Account $model, $key, $index, $column){
                     if ($model->import_processor) {
                         return $model->getLookupItem('import_processor', $model->import_processor);
                     }
@@ -91,7 +104,7 @@ $detailsLink = function($model) {
 
             [
                 'attribute' => 'status',
-                'value' => function($model, $key, $index, $column){
+                'value' => function(Account $model, $key, $index, $column){
                     if ($model->status) {
                         return $model->getLookupItem('status', $model->status);
                     }
@@ -99,14 +112,14 @@ $detailsLink = function($model) {
             ],
 
             [
-                'class' => 'app\widgets\grid\CounterColumn',
+                'class' => CounterColumn::class,
                 'label' => __('Transactions'),
                 'modelClass' => 'app\models\Transaction',
                 'modelField' => 'account_id'
             ],
 
             [
-                'class' => 'app\widgets\grid\ActionColumn',
+                'class' => ActionColumn::class,
                 'size' => 'xs',
                 'items' => [
                     $detailsLink,

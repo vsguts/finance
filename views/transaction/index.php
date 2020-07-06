@@ -2,13 +2,17 @@
 
 use app\assets\AppAsset;
 use app\helpers\ViewHelper;
+use app\models\search\TransactionSearch;
 use app\models\Transaction;
 use app\widgets\ActionsDropdown;
 use app\widgets\grid\GridView;
+use app\widgets\grid\LabeledColumn;
 use app\widgets\Tooltip;
+use yii\data\ActiveDataProvider;
 
 /**
- * @var \app\models\search\TransactionSearch $searchModel
+ * @var TransactionSearch $searchModel
+ * @var ActiveDataProvider $dataProvider
  */
 
 $this->registerJs(AppAsset::appAccounts());
@@ -165,6 +169,10 @@ foreach ($templates as $template) {
                 'format' => 'raw',
             ],
             [
+                'class' => LabeledColumn::class,
+                'labeledModel' => function ($model) {
+                    return $model->account;
+                },
                 'attribute' => 'account',
                 'label' => __('Account'),
                 'value' => function($model, $key, $index, $column){

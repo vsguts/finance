@@ -1,6 +1,7 @@
 <?php
 
 use app\helpers\ViewHelper;
+use app\widgets\LabelModel;
 use app\widgets\Tooltip;
 
 /** @var \app\models\report\transactions\AccountTurnoversBaseReport $searchModel */
@@ -61,7 +62,7 @@ $formatter = Yii::$app->formatter;
         <tr>
             <td>
                 <a href="<?= Url::to(['account/update', 'id' => $row['account']->id]) ?>" class="app-modal" data-target-id="account_<?= $row['account']->id ?>">
-                    <?= $row['account']->fullName ?>
+                    <?= LabelModel::widget(['model' => $row['account'], 'value' => $row['account']->fullName]) ?>
                 </a>
             </td>
             <td>

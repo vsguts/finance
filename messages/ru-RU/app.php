@@ -157,6 +157,10 @@ $messages = [
     'Presentation currency' => 'Валюта отображения',
     'Recalculate transaction balances' => 'Парасчитать балансы транзакций',
     'Your changes have been saved successfully.' => 'Ваши изменения были успешно сохранены.',
+    'Label' => 'Метка',
+    'Enable label' => 'Включить метку',
+    'Background color' => 'Фоновый цвет',
+    'Text color' => 'Цвет текста',
 ];
 
 return $messages;

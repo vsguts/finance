@@ -6,6 +6,7 @@ use Yii;
 use app\models\Account;
 use app\models\Counterparty;
 use app\models\search\AccountSearch;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -27,7 +28,7 @@ class AccountController extends AbstractController
                 ],
             ],
             'access' => [
-                'class' => 'yii\filters\AccessControl',
+                'class' => AccessControl::class,
                 'rules' => [
                     [
                         'allow' => true,
@@ -88,6 +89,11 @@ class AccountController extends AbstractController
             return $this->redirect(['index']);
         }
 
+        if (!$id) { // Is New
+            $model->validate(); // Fill default values
+            $model->clearErrors();
+        }
+
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -112,7 +118,7 @@ class AccountController extends AbstractController
      */
     public function actionDownload($id, $field)
     {
-        $this->download($this->findModel($id, Account::className())->getPath($field));
+        $this->download($this->findModel($id, Account::class)->getPath($field));
     }
 
 }

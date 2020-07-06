@@ -2,6 +2,7 @@
 
 use app\helpers\ViewHelper;
 use app\models\report\transactions\AccountTurnoversReport;
+use app\widgets\LabelModel;
 
 /* @var AccountTurnoversReport $searchModel */
 /* @var array $data */
@@ -36,7 +37,7 @@ $formatter = Yii::$app->formatter;
         <tr>
             <td>
                 <a href="<?= Url::to(['account/update', 'id' => $row['account']->id]) ?>" class="app-modal" data-target-id="account_<?= $row['account']->id ?>">
-                    <?= $row['account']->name ?>
+                    <?= LabelModel::widget(['model' => $row['account']]) ?>
                 </a>
             </td>
             <td><?= $row['account']->currency->code ?></td>

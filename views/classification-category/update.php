@@ -3,7 +3,10 @@
 use app\widgets\form\ActiveForm;
 use app\widgets\form\ButtonsContatiner;
 use app\widgets\Modal;
-use app\widgets\Checkboxes;
+
+/**
+ * @var \app\models\ClassificationCategory $model
+ */
 
 if ($model->isNewRecord) {
     $obj_id = 'classification-category_create';
