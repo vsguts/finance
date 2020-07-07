@@ -2,19 +2,19 @@
 
 # Backup
 #mkdir -p storage/dumps
-#./app mysql/mysqldump storage/dumps/`date +'%Y%m%d_%H%M%S'`.sql
+#docker-compose exec php ./app mysql/mysqldump storage/dumps/`date +'%Y%m%d_%H%M%S'`.sql
 
 git pull --rebase
 
-# composer self-update
-# rm -rf ./vendor
-composer install
+# docker-compose exec php composer self-update
+# docker-compose exec php rm -rf ./vendor
+docker-compose exec php composer install
 
-#./app migrate/up --migrationPath=migrations/dump
-./app migrate/up --interactive=0
-./app rbac/init
+#docker-compose exec php ./app migrate/up --migrationPath=migrations/dump
+docker-compose exec php ./app migrate/up --interactive=0
+docker-compose exec php ./app rbac/init
 
 # Cache
-./app cache/flush-all
-#rm web/css/app.css*
-#rm web/css/site.css*
+docker-compose exec php ./app cache/flush-all
+#docker-compose exec php rm web/css/app.css*
+#docker-compose exec php rm web/css/site.css*
