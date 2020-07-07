@@ -36,7 +36,7 @@ $formatter = Yii::$app->formatter;
         ?>
         <tr>
             <td>
-                <a href="<?= Url::to(['account/update', 'id' => $row['account']->id]) ?>" class="app-modal" data-target-id="account_<?= $row['account']->id ?>">
+                <a href="<?= Url::to(['account/update', 'id' => $row['account']->id, '_return_url' => Url::to()]) ?>" class="app-modal" data-target-id="account_<?= $row['account']->id ?>">
                     <?= LabelModel::widget(['model' => $row['account']]) ?>
                 </a>
             </td>

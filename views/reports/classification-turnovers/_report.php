@@ -1,6 +1,7 @@
 <?php
 
 use app\helpers\ViewHelper;
+use app\widgets\LabelModel;
 
 /* @var \app\models\report\transactions\ClassificationTurnoversReport $searchModel */
 /* @var array $data */
@@ -91,7 +92,7 @@ $formatter = Yii::$app->formatter;
 
             <tr class="">
                 <td>&nbsp;</td>
-                <td><?= $account['account']->name ?></td>
+                <td><?= LabelModel::widget(['model' => $account['account']]) ?></td>
                 <td align="center">
                     <a href="<?= $transactions_url ?>"><span class="badge"><?= $account['transactions'] ?></span></a>
                 </td>
