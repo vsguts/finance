@@ -34,3 +34,4 @@ services:
       - VIRTUAL_HOST=${BASE_URL}
       - LETSENCRYPT_HOST=${BASE_URL}
       - LETSENCRYPT_EMAIL=${ADMIN_EMAIL}
+      - HTTPS_METHOD=redirect # redirect|noredirect|nohttp|nohttps
