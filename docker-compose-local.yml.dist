@@ -35,8 +35,7 @@ services:
     restart: always
 
   mysql:
-    #image: percona:5.6
-    image: mysql:5.7.21
+    image: mysql:8.0
     ports:
      - "3307:3306"
     environment:

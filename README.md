@@ -8,7 +8,7 @@ System allows you to manage cash transactions, calculate balances and view repor
 - Multi currencies
 
 ###### Technologies
-- Written in PHP (>=5.4). Based on Yii 2 Framework.
+- Written in PHP (>=7.0). Based on Yii 2 Framework.
 - MySQL database (via ORM and DAO)
 - Bootstrap 3
 - Less
@@ -44,7 +44,7 @@ docker-compose up -d
 Install composer plugin using the following command:
 
 ~~~
-docker-compose exec php composer require "fxp/composer-asset-plugin:^1.3.1"
+docker-compose exec php composer require "fxp/composer-asset-plugin:^1.4.1" --no-plugins
 ~~~
 
 Install composer dependencies
