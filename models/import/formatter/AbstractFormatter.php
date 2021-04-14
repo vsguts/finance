@@ -3,9 +3,9 @@
 namespace app\models\import\formatter;
 
 use Yii;
-use yii\base\Object;
+use yii\base\BaseObject;
 
-abstract class AbstractFormatter extends Object
+abstract class AbstractFormatter extends BaseObject
 {
     public $encoding = 'UTF-8';
 

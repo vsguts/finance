@@ -4,9 +4,9 @@ namespace app\components\export\formatter;
 
 use app\helpers\FileHelper;
 use Yii;
-use yii\base\Object;
+use yii\base\BaseObject;
 
-abstract class AbstractFormatter extends Object
+abstract class AbstractFormatter extends BaseObject
 {
     public $columns = [];
 

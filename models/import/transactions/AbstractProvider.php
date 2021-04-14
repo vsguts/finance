@@ -3,9 +3,9 @@
 namespace app\models\import\transactions;
 
 use Yii;
-use yii\base\Object;
+use yii\base\BaseObject;
 
-abstract class AbstractProvider extends Object
+abstract class AbstractProvider extends BaseObject
 {
     public $account;
 
