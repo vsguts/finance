@@ -3,6 +3,10 @@
 use app\widgets\form\ButtonsContatiner;
 use app\widgets\Modal;
 
+/**
+ * @var \app\models\User $model
+ */
+
 if ($model->isNewRecord) {
     $obj_id = 'user_create';
     $header = __('Create user');
