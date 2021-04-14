@@ -69,6 +69,6 @@ class SearchForm extends BActiveForm
         
         echo Html::endTag('div');
 
-        parent::run();
+        return parent::run();
     }
 }

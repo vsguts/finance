@@ -37,7 +37,7 @@ $config = [
 if (YII_ENV_DEV) {
     $localIps = array_merge(
         explode(',', env('LOCAL_IP_ADDRESSES')),
-        ['127.0.0.1', '::1']
+        ['127.0.0.1', '::1', '172.17.0.1', '172.18.0.1']
     );
 
     // configuration adjustments for 'dev' environment
