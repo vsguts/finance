@@ -3,7 +3,7 @@ version: '3.3'
 services:
 
   php:
-    image: vsguts/php71-fpm:latest
+    build: ./docker/php
     restart: always
     volumes:
       - .:/app

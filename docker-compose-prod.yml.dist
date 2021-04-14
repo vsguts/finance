@@ -9,7 +9,7 @@ networks:
 services:
 
   php:
-    image: vsguts/php71-fpm:latest
+    build: ./docker/php
     restart: always
     volumes:
       - .:/app
