@@ -168,6 +168,20 @@ $menuItems = [
             ],
             [
                 [
+                    'label' => __('Countries'),
+                    'url' => ['/country/index'],
+                    'visible' => $user->can('country_view'),
+                    'active' => $controllerId == 'country',
+                ],
+                [
+                    'label' => __('States'),
+                    'url' => ['/state/index'],
+                    'visible' => $user->can('state_view'),
+                    'active' => $controllerId == 'state',
+                ],
+            ],
+            [
+                [
                     'label'   => __('Settings'),
                     'url'     => ['/setting/index'],
                     'visible' => $user->can('setting_view'),

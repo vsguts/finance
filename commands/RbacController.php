@@ -150,6 +150,18 @@ class RbacController extends Controller
         $permissions['setting_manage'] = $auth->createPermission('setting_manage');
         $permissions['setting_manage']->description = 'Administration::Settings::Manage';
 
+        $permissions['country_view'] = $auth->createPermission('country_view');
+        $permissions['country_view']->description = 'Administration::Countries::View';
+
+        $permissions['country_manage'] = $auth->createPermission('country_manage');
+        $permissions['country_manage']->description = 'Administration::Countries::Manage';
+
+        $permissions['state_view'] = $auth->createPermission('state_view');
+        $permissions['state_view']->description = 'Administration::States::View';
+
+        $permissions['state_manage'] = $auth->createPermission('state_manage');
+        $permissions['state_manage']->description = 'Administration::States::Manage';
+
         $permissions['user_manage_own'] = $auth->createPermission('user_manage_own');
         $permissions['user_manage_own']->description = 'Administration::Users::Manage own profile';
         $permissions['user_manage_own']->ruleName = $rules['owner']->name;
