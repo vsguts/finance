@@ -53,7 +53,7 @@ class AbstractController extends Controller
     {
         return [
             'ajax' => [
-                'class' => AjaxFilter::className(),
+                'class' => AjaxFilter::class,
             ],
         ];
     }

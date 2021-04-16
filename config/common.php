@@ -9,7 +9,7 @@ $config = [
     ],
     'components' => [
         'db' => [
-            'class' => 'yii\db\Connection',
+            'class' => yii\db\Connection::class,
             'dsn' => 'mysql:host=' . env('MYSQL_HOST') . ';dbname=' . env('MYSQL_DATABASE'),
             'username' => env('MYSQL_USER'),
             'password' => env('MYSQL_PASSWORD'),
@@ -21,7 +21,7 @@ $config = [
             'schemaCache' => 'cache',
         ],
         // 'redis' => [
-        //     'class' => 'yii\redis\Connection',
+        //     'class' => yii\redis\Connection::class,
         //     'port' => defined('REDIS_PORT') ? REDIS_PORT : 6379,
         // ],
         'cache' => [
@@ -38,11 +38,11 @@ $config = [
             ],
         ],
         'session' => [
-            // 'class' => 'yii\redis\Session',
-            'class' => 'yii\web\Session',
+            // 'class' => yii\redis\Session::class,
+            'class' => yii\web\Session::class,
         ],
         'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
+            'class' => yii\swiftmailer\Mailer::class,
 
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
@@ -50,7 +50,7 @@ $config = [
             'useFileTransport' => env('MAILER_USE_FILE_TRANSPORT'),
         ],
         'formatter' => [
-            'class' => 'app\components\app\Formatter',
+            'class' => app\components\app\Formatter::class,
             'locale' => 'en_US',
             'defaultTimeZone' => 'Europe/Minsk',
             'dateFormat' => 'dd.MM.yyyy',
@@ -61,11 +61,11 @@ $config = [
             'nullDisplay' => '',
         ],
         'security' => [
-            'class' => 'app\components\app\Security',
+            'class' => app\components\app\Security::class,
             'derivationIterations' => 10,
         ],
         'authManager' => [
-            'class' => 'app\components\rbac\DbManager',
+            'class' => app\components\rbac\DbManager::class,
             'defaultRoles' => ['role-guest', 'role-authorized'],
             'cache' => 'cache',
             'cacheKey' => 'rbac',
@@ -83,7 +83,7 @@ $config = [
         'i18n' => [
             'translations' => [
                 'app*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
+                    'class' => yii\i18n\PhpMessageSource::class,
                     // 'fileMap' => [
                     //     'app' => 'app.php',
                     //     'app/error' => 'error.php',
@@ -94,13 +94,13 @@ $config = [
 
         // Application components
         'appBootstrap' => [
-            'class' => 'app\components\app\Bootstrap',
+            'class' => app\components\app\Bootstrap::class,
         ],
         'calendar' => [
-            'class' => 'app\components\app\Calendar',
+            'class' => app\components\app\Calendar::class,
         ],
         'currency' => [
-            'class' => 'app\components\app\Currency',
+            'class' => app\components\app\Currency::class,
         ],
     ],
     'timeZone' => 'Europe/Minsk',

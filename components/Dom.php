@@ -2,9 +2,9 @@
 
 namespace app\components;
 
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class Dom extends Object
+class Dom extends BaseObject
 {
     public $html;
 

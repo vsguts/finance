@@ -3,7 +3,7 @@ version: '3.3'
 services:
 
   php:
-    image: vsguts/php71-fpm:latest
+    build: ./docker/php
     restart: always
     volumes:
       - .:/app
@@ -44,6 +44,7 @@ services:
       MYSQL_USER:          ${MYSQL_USER}
       MYSQL_PASSWORD:      ${MYSQL_PASSWORD}
     volumes:
+     - .:/app
      #- mysqldata:/var/lib/mysql
      - ./docker/data/mysql:/var/lib/mysql
     restart: always
