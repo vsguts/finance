@@ -58,6 +58,10 @@ $.extend({
             $(this).appCheckboxesGroupAllow();
         });
 
+        $('.app-modal-open-immediate', context).each(function(){
+            $(this).modal();
+        });
+
         var elms = $('.app-float-thead', context);
         if (elms.length) {
             elms.floatThead({

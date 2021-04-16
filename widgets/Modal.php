@@ -2,6 +2,7 @@
 
 namespace app\widgets;
 
+use Yii;
 use yii\helpers\Html;
 use yii\bootstrap\Modal as BModal;
 
@@ -32,6 +33,11 @@ class Modal extends BModal
                 'data-dismiss' => 'modal'
             ]);
             $this->footer .= PHP_EOL . $close_btn;
+        }
+
+        // TODO: try to find way to open Modal
+        if (!Yii::$app->getRequest()->getIsAjax()) {
+            $this->options['class'] = 'app-modal-open-immediate';
         }
 
         parent::init();

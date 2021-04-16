@@ -2,6 +2,7 @@
 
 use app\assets\AppAsset;
 use app\helpers\ViewHelper;
+use app\models\FormTemplate;
 use app\models\search\TransactionSearch;
 use app\models\Transaction;
 use app\widgets\ActionsDropdown;
@@ -13,6 +14,7 @@ use yii\data\ActiveDataProvider;
 /**
  * @var TransactionSearch $searchModel
  * @var ActiveDataProvider $dataProvider
+ * @var FormTemplate $templates
  */
 
 $this->registerJs(AppAsset::appAccounts());
