@@ -7,6 +7,7 @@ use app\models\behaviors\UserPasswordBehavior;
 use app\models\behaviors\UserRolesBehavior;
 use app\models\components\LookupTrait;
 use app\models\form\UserSignupForm;
+use app\models\query\UserQuery;
 use Yii;
 use yii\base\NotSupportedException;
 
@@ -82,7 +83,17 @@ class User extends AbstractModel implements \yii\web\IdentityInterface
 
 
     /**
-     * User
+     * @inheritdoc
+     * @return UserQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new UserQuery(get_called_class());
+    }
+
+
+    /**
+     * IdentityInterface
      */
 
     public static function findIdentity($id)

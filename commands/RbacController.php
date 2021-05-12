@@ -181,6 +181,7 @@ class RbacController extends Controller
         $permissions['user_role_manage'] = $auth->createPermission('user_role_manage');
         $permissions['user_role_manage']->description = 'Administration::Users::Roles manage';
 
+
         // Registries
 
         $permissions['account_view'] = $auth->createPermission('account_view');
@@ -220,6 +221,54 @@ class RbacController extends Controller
 
         $permissions['transaction_delete'] = $auth->createPermission('transaction_delete');
         $permissions['transaction_delete']->description = 'Transactions::Transactions::Delete';
+
+
+        // Partners
+
+        $permissions['partner_view'] = $auth->createPermission('partner_view');
+        $permissions['partner_view']->description = 'General::Partners::View all';
+
+        $permissions['partner_view_own'] = $auth->createPermission('partner_view_own');
+        $permissions['partner_view_own']->description = 'General::Partners::View own';
+
+        $permissions['partner_manage'] = $auth->createPermission('partner_manage');
+        $permissions['partner_manage']->description = 'General::Partners::Manage all';
+
+        $permissions['partner_manage_own'] = $auth->createPermission('partner_manage_own');
+        $permissions['partner_manage_own']->description = 'General::Partners::Manage own';
+
+        $permissions['public_tags_manage'] = $auth->createPermission('public_tags_manage');
+        $permissions['public_tags_manage']->description = 'General::Partners::Manage public tags';
+
+
+        // Communication
+
+        $permissions['communication_view'] = $auth->createPermission('communication_view');
+        $permissions['communication_view']->description = 'General::Communication::View all';
+
+        $permissions['communication_view_own'] = $auth->createPermission('communication_view_own');
+        $permissions['communication_view_own']->description = 'General::Communication::View own';
+
+        $permissions['communication_manage'] = $auth->createPermission('communication_manage');
+        $permissions['communication_manage']->description = 'General::Communication::Manage';
+
+        // $permissions['communication_manage_own'] = $auth->createPermission('communication_manage_own');
+        // $permissions['communication_manage_own']->description = 'General::Communication::Manage own';
+
+
+        // Tasks
+
+        $permissions['task_view'] = $auth->createPermission('task_view');
+        $permissions['task_view']->description = 'General::Tasks::View all';
+
+        $permissions['task_view_own'] = $auth->createPermission('task_view_own');
+        $permissions['task_view_own']->description = 'General::Tasks::View own';
+
+        $permissions['task_manage'] = $auth->createPermission('task_manage');
+        $permissions['task_manage']->description = 'General::Tasks::Manage';
+
+        // $permissions['task_manage_own'] = $auth->createPermission('task_manage_own');
+        // $permissions['task_manage_own']->description = 'General::Tasks::Manage own';
 
 
         return $permissions;

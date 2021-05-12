@@ -90,6 +90,24 @@ echo Nav::widget([
             'visible' => $user->can('transaction_view'),
             'active'  => strpos($controllerId, 'reports/') === 0,
         ],
+        [
+            'label' => Html::tag('b', __('Partners')),
+            'url' => ['/partner/index'],
+            'visible' => $user->can('partner_view') || $user->can('partner_view_own'),
+            'active' => $controllerId == 'partner',
+        ],
+        [
+            'label' => __('Communication'),
+            'url' => ['/communication/index'],
+            'visible' => $user->can('communication_view') || $user->can('communication_view_own'),
+            'active' => $controllerId == 'communication',
+        ],
+        [
+            'label' => __('Tasks'),
+            'url' => ['/task/index'],
+            'visible' => $user->can('task_view') || $user->can('task_view_own'),
+            'active' => $controllerId == 'task',
+        ],
     ],
 ]);
 
@@ -145,6 +163,18 @@ $menuItems = [
                     'visible' => $user->can('currency_view'),
                     'active' => $controllerId == 'currency',
                 ],
+                [
+                    'label' => __('Countries'),
+                    'url' => ['/country/index'],
+                    'visible' => $user->can('country_view'),
+                    'active' => $controllerId == 'country',
+                ],
+                [
+                    'label' => __('States'),
+                    'url' => ['/state/index'],
+                    'visible' => $user->can('state_view'),
+                    'active' => $controllerId == 'state',
+                ],
             ],
         ],
     ]),
@@ -165,20 +195,6 @@ $menuItems = [
                     'visible' => $user->can('user_role_view'),
                     'active'  => $controllerId == 'user-role',
                 ]
-            ],
-            [
-                [
-                    'label' => __('Countries'),
-                    'url' => ['/country/index'],
-                    'visible' => $user->can('country_view'),
-                    'active' => $controllerId == 'country',
-                ],
-                [
-                    'label' => __('States'),
-                    'url' => ['/state/index'],
-                    'visible' => $user->can('state_view'),
-                    'active' => $controllerId == 'state',
-                ],
             ],
             [
                 [

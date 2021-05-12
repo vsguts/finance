@@ -3,7 +3,7 @@
 use yii\db\Migration;
 use yii\db\Schema;
 
-class m160909_202540_base extends Migration
+class m160000_100100_base extends Migration
 {
     public function up()
     {
@@ -34,6 +34,26 @@ class m160909_202540_base extends Migration
         $this->insert('lookup', ['table'=>'account', 'field'=>'import_processor', 'code'=>'custom', 'name'=>'Custom']);
         $this->insert('lookup', ['table'=>'account', 'field'=>'import_processor', 'code'=>'inexfinance', 'name'=>'Inexfinance Dirty']);
 
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'type', 'position'=>10, 'code'=>1, 'name'=>'People']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'type', 'position'=>20, 'code'=>2, 'name'=>'Organization']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'type', 'position'=>30, 'code'=>3, 'name'=>'NPO']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'type', 'position'=>40, 'code'=>4, 'name'=>'Church']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'status', 'position'=>10, 'code'=>1, 'name'=>'Unachieved']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'status', 'position'=>20, 'code'=>2, 'name'=>'Knows']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'status', 'position'=>30, 'code'=>3, 'name'=>'Interested']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'status', 'position'=>40, 'code'=>4, 'name'=>'Prays']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'status', 'position'=>50, 'code'=>5, 'name'=>'Financial partner']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'communication_method', 'code'=>'email', 'name'=>'E-mail']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'communication_method', 'code'=>'postmail', 'name'=>'Postmail']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'communication_method', 'code'=>'phone', 'name'=>'Phone']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'communication_method', 'code'=>'vk', 'name'=>'VK']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'communication_method', 'code'=>'facebook', 'name'=>'Facebook']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'communication_method', 'code'=>'skype', 'name'=>'Skype']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'communication_method', 'code'=>'viber', 'name'=>'Viber']);
+        $this->insert('lookup', ['table'=>'partner', 'field'=>'communication_method', 'code'=>'telegram', 'name'=>'Telegram']);
+        $this->insert('lookup', ['table'=>'communication', 'field'=>'type', 'code'=>'email', 'name'=>'E-mail']);
+        $this->insert('lookup', ['table'=>'communication', 'field'=>'type', 'code'=>'visit', 'name'=>'Visit']);
+        $this->insert('lookup', ['table'=>'communication', 'field'=>'type', 'code'=>'call', 'name'=>'Call']);
 
         $this->createTable('setting', [
             'name' => Schema::TYPE_STRING . '(128) NOT NULL PRIMARY KEY',
@@ -959,6 +979,16 @@ class m160909_202540_base extends Migration
         ], $this->getTableOptions());
 
 
+        $this->createTable('image', [
+            'id'          => $this->primaryKey(),
+            'table'       => $this->string()->notNull(),
+            'object_id'   => $this->integer()->notNull(),
+            'object_type' => $this->string(32)->notNull()->defaultValue('main'),
+            'filename'    => $this->string()->notNull(),
+            'default'     => $this->integer(),
+        ], $this->getTableOptions());
+
+
         $this->createTable('form_template', [
             'id' => $this->primaryKey(),
             'model' => $this->string(64)->notNull(),
@@ -1076,6 +1106,7 @@ class m160909_202540_base extends Migration
         $this->dropTable('currency_rate');
         $this->dropTable('currency');
         $this->dropTable('form_template');
+        $this->dropTable('image');
         $this->dropTable('attachment');
         $this->dropTable('user');
         $this->dropTable('state');

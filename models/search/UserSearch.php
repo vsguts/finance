@@ -88,7 +88,8 @@ class UserSearch extends User
 
         if ($this->permission) {
             $authManager = Yii::$app->authManager;
-            $roles = $authManager->getRolesByPermission($this->permission);
+            $permission_roles = $authManager->getRolesByPermission($this->permission);
+            $roles = $authManager->getSubRolesByRoles($permission_roles);
             $query->andWhere(['user.id' => $authManager->getUserIdsByRole($roles)]);
         }
 

@@ -13,11 +13,13 @@ use app\models\form\UserLoginForm;
 use app\models\form\UserPasswordResetRequestForm;
 use app\models\form\UserResetPasswordForm;
 use app\models\form\UserSignupForm;
+use app\models\Partner;
 use app\models\Transaction;
 use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 
@@ -86,7 +88,7 @@ class SiteController extends AbstractController
 
         if ($user->can('transaction_view')) {
             $dashboard[] = [
-                'name' => __('Transactions'),
+                'name' => Html::tag('b', __('Transactions')),
                 'link' => Url::to(['transaction/index']),
                 'count' => Transaction::find()->permission()->count(),
             ];
@@ -97,6 +99,14 @@ class SiteController extends AbstractController
                 'name' => __('Accounts'),
                 'link' => Url::to(['account/index']),
                 'count' => Account::find()->count(),
+            ];
+        }
+
+        if ($user->can('partner_view') || $user->can('partner_view_own')) {
+            $dashboard[] = [
+                'name' => Html::tag('b', __('Partners')),
+                'link' => Url::to(['partner/index']),
+                'count' => Partner::find()->count(),
             ];
         }
 

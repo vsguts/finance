@@ -98,6 +98,7 @@ class DbManager extends \yii\rbac\DbManager
     {
         return [
             'accounts',
+            'public_tags',
         ];
     }
 
@@ -105,7 +106,10 @@ class DbManager extends \yii\rbac\DbManager
     {
         if (!$this->userObjects) {
             $data = array_fill_keys($this->getDataObjects(), []);
-            $role_names = $this->getAllUserItemNames(Yii::$app->user->id);
+            $role_names = array_merge(
+                $this->getAllUserItemNames(Yii::$app->user->id),
+                $this->defaultRoles
+            );
             $query = (new Query)
                 ->from($this->itemTable)
                 ->where([
@@ -139,13 +143,20 @@ class DbManager extends \yii\rbac\DbManager
 
     public function getRolesByPermission($permission)
     {
-        $parents = [];
-        foreach ($this->getChildrenList() as $parent => $children) {
-            foreach ($children as $child) {
-                $parents[$child][] = $parent;
-            }
-        }
-        return $this->getItemsRecursive($permission, $parents);
+        return  (new Query)->from($this->itemChildTable)
+            ->select('parent')
+            ->where(['child' => $permission])
+            ->column();
     }
 
+    public function getSubRolesByRoles($roles)
+    {
+        $items = [];
+        $children = $this->getChildrenList();
+        foreach ($roles as $role) {
+            $items = array_merge($items, $this->getItemsRecursive($role, $children));
+        }
+
+        return array_intersect(array_keys($children), $items);
+    }
 }
