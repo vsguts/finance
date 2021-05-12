@@ -9,7 +9,7 @@ class DatePickerRange extends DatePicker
 {
     public $type = DatePicker::TYPE_RANGE;
 
-    public $pluginOptions = ['autoclose' => true];
+    public $pluginOptions = ['autoclose' => true, 'zIndexOffset' => 501];
 
     public function init()
     {

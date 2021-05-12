@@ -110,6 +110,7 @@ $field = $form
         'class' => 'form-control app-input-calc',
         'id' => $form_id . '-inflow',
         'maxlength' => true,
+        'autocomplete' => 'off',
     ]);
 echo Html::tag('div', $field, ['class' => 'app-classification-inflow']);
 
@@ -121,6 +122,7 @@ $field = $form
         'class' => 'form-control app-input-calc',
         'id' => $form_id . '-outflow',
         'maxlength' => true,
+        'autocomplete' => 'off',
     ]);
 echo Html::tag('div', $field, ['class' => 'app-classification-outflow']);
 
