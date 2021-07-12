@@ -139,7 +139,7 @@ class TransactionController extends AbstractController
             } elseif ($copy_id) {
                 $copy_model = Transaction::findOne($copy_id);
                 $data = $copy_model->attributes;
-                unset($data['timestamp']);
+                //unset($data['timestamp']);
                 $model->load($data, '');
             } elseif ($searchParams) {
                 $model->load($searchParams, '');
