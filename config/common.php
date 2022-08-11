@@ -20,13 +20,14 @@ $config = [
             'schemaCacheDuration' => 3600,
             'schemaCache' => 'cache',
         ],
-        // 'redis' => [
-        //     'class' => yii\redis\Connection::class,
-        //     'port' => defined('REDIS_PORT') ? REDIS_PORT : 6379,
-        // ],
+//         'redis' => [
+//             'class' => yii\redis\Connection::class,
+//             'hostname' => env('REDIS_HOST', 'localhost'),
+//             'port' => env('REDIS_PORT', 6379),
+//         ],
         'cache' => [
-            // 'class' => 'yii\redis\Cache',
-            'class' => 'yii\caching\FileCache',
+//            'class' => 'yii\redis\Cache',
+             'class' => 'yii\caching\FileCache',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
