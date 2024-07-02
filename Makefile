@@ -1,7 +1,7 @@
 include .env
 
 
-APP_NAME = MySQL in docker-compose
+APP_NAME = MySQL in docker compose
 
 SHELL ?= /bin/bash
 ARGS = $(filter-out $@,$(MAKECMDGOALS))
@@ -27,27 +27,27 @@ endif
 	cp $@.dist $@
 
 up: ## Starts and attaches to containers for a service
-	docker-compose up -d
+	docker compose up -d
 
 down: ## Down all containers.
-	docker-compose down
+	docker compose down
 
 start: ## Start containers.
-	docker-compose start
+	docker compose start
 
 stop: ## Stop containers.
-	docker-compose stop
+	docker compose stop
 
 reset: down up
 
 bash: ## Go to the application container.
-	docker-compose exec php sh
+	docker compose exec php sh
 
 mysql: ## Start MySQL client.
-	docker-compose exec mysql mysql -u$(MYSQL_USER) -p$(MYSQL_PASSWORD) $(ARGS)
+	docker compose exec mysql mysql -u$(MYSQL_USER) -p$(MYSQL_PASSWORD) $(ARGS)
 
 mysqldump: ## MySQL Dump tool
-	docker-compose exec mysql mysqldump -u$(MYSQL_USER) -p$(MYSQL_PASSWORD) $(ARGS)
+	docker compose exec mysql mysqldump -u$(MYSQL_USER) -p$(MYSQL_PASSWORD) $(ARGS)
 
 help: ## Show this help and exit
 	$(info $(APP_NAME) v$(VERSION))
