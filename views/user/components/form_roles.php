@@ -15,4 +15,5 @@ foreach ($roles as $name => $role) {
 echo $form->field($model, 'roles')->checkboxList($roles, [
     'id' => $form_id . '-roles',
     'unselect' => null,
+    'encode' => false,
 ]);
