@@ -2,11 +2,10 @@
 
 namespace app\components\app;
 
-use Yii;
-use yii\base\Component;
-use yii\base\UserException;
 use app\models\Currency as MCurrency;
 use app\models\CurrencyRate;
+use Yii;
+use yii\base\Component;
 
 class Currency extends Component
 {
@@ -16,7 +15,7 @@ class Currency extends Component
      * Rates client class name
      * @var string
      */
-    public $ratesClass = 'app\components\currencyRates\Currencylayer';
+    public $ratesClass = 'app\components\currencyRates\FawazCurrencyApi';
 
     /**
      * Currencies map

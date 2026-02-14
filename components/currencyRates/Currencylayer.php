@@ -5,6 +5,9 @@ namespace app\components\currencyRates;
 use Yii;
 use yii\base\Component;
 
+/**
+ * Deprecated
+ */
 class Currencylayer extends AbstractCurrencyRate
 {
     public $link = 'http://apilayer.net/api/historical';
